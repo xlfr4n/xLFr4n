@@ -41,20 +41,42 @@ I build projects around **software, automation, Linux, security, Web3 and techni
 
 ---
 
+## 🖥️ terminal // identity
+
+```text
+$ whoami
+xlfr4n
+
+$ mission
+BUILD SYSTEMS
+UNDERSTAND SYSTEMS
+VERIFY SYSTEMS
+
+$ philosophy
+evidence > assumptions
+reproducibility > magic
+useful tooling > decoration
+
+$ next
+AUTOMATE → DOCUMENT → REPEAT
+```
+
+---
+
 ## 🧠 What I work with
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=linux,bash,python,typescript,javascript,react,nextjs,postgres,supabase,git,github,docker&perline=6" alt="Technology stack">
 </p>
 
-| Area | Focus |
+| Laboratory | Focus |
 |---|---|
 | 🛡️ Security | Web security, defensive tooling, technical investigation |
 | 🔬 Forensics | Static analysis, reconstruction, reproducible research |
-| 🐧 Linux | Kali, BSPWM, shell tooling, automation and custom environments |
-| 🌐 Web | Next.js, React, TypeScript, Supabase, Vercel |
+| 🐧 Systems | Kali, BSPWM, shell tooling, automation, virtual machines |
+| 🌐 Full-Stack | Next.js, React, TypeScript, Supabase, Vercel |
 | ⛓️ Web3 | Ethereum, Immutable, wallets, NFT / collectibles data |
-| 🤖 Automation | Scripts, CLI workflows, data pipelines and developer tooling |
+| 🤖 Automation | CLI workflows, scripts, data pipelines and developer tooling |
 
 ---
 
@@ -116,61 +138,34 @@ A tiny original browser FPS/raycaster made specifically for the profile.
 
 ---
 
-## 🧪 My lab
+## 🧪 The lab // workflow
 
 <details>
-<summary><strong>Open the lab workflow</strong></summary>
-
-<strong>[01] INVESTIGATE</strong> → understand the problem
-
-<strong>[02] BUILD</strong> → create the smallest useful system
-
-<strong>[03] VERIFY</strong> → test what actually happened
-
-<strong>[04] AUTOMATE</strong> → remove repetitive work
-
-<strong>[05] DOCUMENT</strong> → leave a reproducible trail
-
-</details>
-
-I prefer **evidence over assumptions**, **reproducible steps over magic**, and **useful tooling over decoration**.
-
----
-
-## 🧩 Projects by laboratory
-
-<details>
-<summary><strong>🛡️ Security / Forensics</strong></summary>
-
-- Web security research
-- Static JavaScript analysis
-- Runtime reconstruction
-- Defensive scripts and investigation tooling
-- Reproducible forensic notes
-
+<summary><strong>01 → INVESTIGATE</strong></summary>
+Understand the problem before changing it.
 </details>
 
 <details>
-<summary><strong>🐧 Linux / Systems</strong></summary>
-
-- Kali Linux environments
-- BSPWM desktop engineering
-- Shell automation
-- Virtual machine integration
-- CLI tooling and system diagnostics
-
+<summary><strong>02 → BUILD</strong></summary>
+Create the smallest useful system that can prove the idea.
 </details>
 
 <details>
-<summary><strong>🌐 Full-Stack / Web3</strong></summary>
-
-- Next.js / React applications
-- Supabase backends
-- Vercel deployments
-- Ethereum / Immutable data
-- NFT and collectibles portfolio tooling
-
+<summary><strong>03 → VERIFY</strong></summary>
+Test the actual result instead of trusting assumptions.
 </details>
+
+<details>
+<summary><strong>04 → AUTOMATE</strong></summary>
+Turn repeated work into reliable tooling.
+</details>
+
+<details>
+<summary><strong>05 → DOCUMENT</strong></summary>
+Leave enough evidence for someone — including future me — to reproduce it.
+</details>
+
+**Evidence over assumptions. Reproducibility over magic. Useful tooling over decoration.**
 
 ---
 
@@ -185,6 +180,20 @@ I prefer **evidence over assumptions**, **reproducible steps over magic**, and *
 <p align="center">
   <sub>Public work is only one part of the lab. Some experiments are private, unfinished or intentionally kept local.</sub>
 </p>
+
+---
+
+## 🔭 What's next
+
+This profile is deliberately a **living lab**.
+
+- `STATUS` — honest project/status information
+- `TERMINAL` — command-style navigation
+- `EASTER EGGS` — hidden details for people who explore
+- `LAB INDEX` — clearer navigation between repositories
+- More small experiments that can be opened directly from the profile
+
+No fake metrics. No invented activity. Only things that can actually be verified.
 
 ---
 
