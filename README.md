@@ -1,7 +1,7 @@
 <!-- xlfr4n // personal GitHub identity -->
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=170&section=header&text=xLFr4n&fontSize=64&fontColor=FFFFFF&fontAlign=50&fontAlignY=40&desc=Cybersecurity%20%7C%20Full-Stack%20%7C%20Linux%20%7C%20Web3&descSize=18&descAlign=50&descAlignY=62&color=0:080B10,100:FF3344" width="100%" alt="xLFr4n header">
+  <img src="./assets/xlfr4n-banner.svg" width="100%" alt="xLFr4n custom banner">
 </p>
 
 <p align="center">
