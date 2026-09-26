@@ -1,1 +1,1 @@
-{"name":"xlfr4n // LAB","short_name":"xlfr4n","start_url":"./","display":"standalone","background_color":"#07090d","theme_color":"#07090d","description":"xlfr4n personal technical laboratory."}
+{"name":"xlfr4n // LAB","short_name":"xlfr4n","start_url":"./","scope":"./","display":"standalone","background_color":"#06080c","theme_color":"#06080c","description":"xlfr4n personal technical laboratory.","icons":[{"src":"assets/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
