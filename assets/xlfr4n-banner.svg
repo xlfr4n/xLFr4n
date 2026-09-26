@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="420" viewBox="0 0 1600 420" role="img" aria-labelledby="title desc">
+  <title id="title">xLFr4n — Cybersecurity Full-Stack Linux Web3</title>
+  <desc id="desc">Personal banner for the xlfr4n GitHub profile.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#070A0F"/>
+      <stop offset="65%" stop-color="#0E141C"/>
+      <stop offset="100%" stop-color="#1A0B10"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF3344"/>
+      <stop offset="100%" stop-color="#FF6B78"/>
+    </linearGradient>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M42 0H0V42" fill="none" stroke="#26303D" stroke-width="1" opacity=".4"/>
+    </pattern>
+    <filter id="glow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1600" height="420" fill="url(#bg)"/>
+  <rect width="1600" height="420" fill="url(#grid)" opacity=".55"/>
+  <path d="M0 350H1600" stroke="#FF3344" stroke-width="2" opacity=".5"/>
+  <path d="M0 352H520" stroke="url(#accent)" stroke-width="6"/>
+  <circle cx="1390" cy="90" r="105" fill="none" stroke="#FF3344" stroke-width="1.5" opacity=".25"/>
+  <circle cx="1390" cy="90" r="66" fill="none" stroke="#E6EDF3" stroke-width="1" opacity=".12"/>
+  <path d="M1280 90h220M1390 -20v220" stroke="#FF3344" opacity=".2"/>
+  <g font-family="JetBrains Mono, ui-monospace, monospace">
+    <text x="90" y="175" fill="#F0F3F7" font-size="72" font-weight="700" letter-spacing="2">xLFr4n</text>
+    <text x="94" y="225" fill="#FF3344" font-size="22" font-weight="700">CYBERSECURITY · FULL-STACK · LINUX · WEB3</text>
+    <text x="94" y="270" fill="#A9B3BF" font-size="18">investigate → build → verify → document</text>
+    <text x="94" y="322" fill="#7D8794" font-size="16">[ terminal ] [ automation ] [ forensics ] [ Habbo Collectibles ]</text>
+    <text x="1430" y="352" fill="#FF3344" text-anchor="middle" font-size="14" font-weight="700">⚡ XLFR4N</text>
+  </g>
+  <rect x="90" y="292" width="430" height="2" fill="#FF3344" opacity=".75" filter="url(#glow)"/>
+</svg>
