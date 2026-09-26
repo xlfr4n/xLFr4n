@@ -1,6 +1,5 @@
 <!--
   xlfr4n // GitHub profile
-  Spanish + English · Friendly · Modern · Technical · Human
 -->
 
 <p align="center">
