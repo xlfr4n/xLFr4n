@@ -1,110 +1,222 @@
 <!-- xlfr4n // personal GitHub identity -->
 
 <p align="center">
-  <img src="./assets/xlfr4n-banner.svg" width="100%" alt="xLFr4n custom banner">
+  <img src="./assets/xlfr4n-banner.svg" width="100%" alt="xlfr4n custom banner">
 </p>
-
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com/?font=JetBrains+Mono&weight=600&size=22&duration=3000&pause=700&color=FF3344&center=true&vCenter=true&width=820&height=90&lines=%F0%9F%9B%A1%EF%B8%8F+Cybersecurity+%26+Web+Security;%F0%9F%92%BB+Full-Stack+%26+Automation;%F0%9F%96%A5%EF%B8%8F+Linux+%2F+BSPWM+%2F+VMware;%F0%9F%92%8E+Web3+%26+Habbo+Collectibles;%F0%9F%94%AC+Forensics+%26+Reverse+Engineering" alt="Typing SVG">
-</p>
-
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=xlfr4n&label=PROFILE+VIEWS&color=FF3344&style=for-the-badge" alt="Profile views">
-  <img src="https://img.shields.io/github/followers/xlfr4n?label=FOLLOWERS&style=for-the-badge&color=111827" alt="Followers">
-  <img src="https://img.shields.io/github/stars/xlfr4n?label=STARS&style=for-the-badge&color=111827" alt="Stars">
-</p>
-
----
-
-## 👋 Sobre mí / About me
-
-### 🇪🇸 Español
-
-Soy **xlfr4n**. Construyo cosas alrededor de **software, automatización, Linux, seguridad y Web3**.
-
-Mi GitHub es un laboratorio personal: **investigar → construir → comprobar → documentar**. No busco llenar repositorios de demos sin contexto; prefiero que cada proyecto tenga una razón, una historia y una forma reproducible de entenderlo.
-
-> ⚡ **Build it. Understand it. Automate it. Document it.**
->
-> 🧩 **Menos humo. Más terminal.**
-
-### 🇬🇧 English
-
-I’m **xlfr4n**. I build projects around **software, automation, Linux, security and Web3**.
-
-My GitHub is a personal lab: **investigate → build → verify → document**. I would rather have projects with a reason, a story and a reproducible path than a pile of disconnected demos.
-
-> ⚡ **Build it. Understand it. Automate it. Document it.**
->
-> 🧩 **Less noise. More terminal.**
-
----
-
-## 🧩 Toolbox
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Linux-111827?style=for-the-badge&logo=linux&logoColor=white">
-  <img src="https://img.shields.io/badge/Kali-557C94?style=for-the-badge&logo=kalilinux&logoColor=white">
-  <img src="https://img.shields.io/badge/Windows-11-0078D6?style=for-the-badge&logo=windows&logoColor=white">
-  <img src="https://img.shields.io/badge/VMware-607078?style=for-the-badge&logo=vmware&logoColor=white">
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=111827">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
-  <img src="https://img.shields.io/badge/Bash-121011?style=for-the-badge&logo=gnubash&logoColor=white">
-  <img src="https://img.shields.io/badge/SQL-336791?style=for-the-badge&logo=postgresql&logoColor=white">
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Next.js-111827?style=for-the-badge&logo=nextdotjs&logoColor=white">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
-  <img src="https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=3ECF8E">
-  <img src="https://img.shields.io/badge/Vercel-111827?style=for-the-badge&logo=vercel&logoColor=white">
-</p>
-
----
-
-## 🚀 Proyectos / Projects
-
-| Proyecto | En una línea |
-|---|---|
-| 🖥️ [Kali BSPWM 2026](https://github.com/xlfr4n/kali-bspwm-2026) | Kali + BSPWM + VMware + estética cyber. |
-| 📡 [Habbo Furni Radar](https://github.com/xlfr4n/habbo-furni-radar) | Radar automático para nuevos Habbo Collectibles. |
-| 💎 [HabboPortfolioPro](https://github.com/xlfr4n/HabboPortfolioPro) | Inteligencia de cartera para Habbo Collectibles. |
-| 🤖 [DevsAI](https://github.com/xlfr4n/DevsAI) | Plataforma web, IA, comunidad y automatización. |
-| 🔎 [desencryp](https://github.com/xlfr4n/desencryp) | Análisis forense y reconstrucción estática. |
-
-### 🇪🇸 Mi firma
-
-Cada repositorio puede tener una estética distinta, pero todos llevan la misma idea: **hacerlo útil, entenderlo y dejarlo documentado**.
-
-### 🇬🇧 My signature
-
-Each repository can have its own visual identity, but they all follow the same idea: **make it useful, understand it, and document it**.
-
----
-
-## 🧭 Filosofía / Philosophy
-
-🔧 **Build** · 🔬 **Understand** · 🤖 **Automate** · 📚 **Document** · 🛡️ **Secure**
 
 <p align="center">
   <strong>⚡ xlfr4n</strong><br>
-  <sub>Cybersecurity · Full-Stack · Linux · Web3 · Automation</sub><br>
-  <sub>Built with curiosity. Documented with intent.</sub>
+  <sub>Cybersecurity · Full-Stack · Linux · Web3 · Automation</sub>
+</p>
+
+<p align="center">
+  <a href="https://github.com/xlfr4n"><img src="https://img.shields.io/badge/GITHUB-xlfr4n-111827?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+  <a href="https://github.com/xlfr4n?tab=repositories"><img src="https://img.shields.io/badge/REPOSITORIES-EXPLORE-FF3344?style=for-the-badge" alt="Repositories"></a>
+  <a href="https://github.com/xlfr4n/kali-bspwm-2026"><img src="https://img.shields.io/github/stars/xlfr4n/kali-bspwm-2026?style=for-the-badge&label=KALI%20BSPWM&color=111827" alt="Kali BSPWM"></a>
+</p>
+
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=xlfr4n&label=PROFILE+VIEWS&color=FF3344&style=flat-square" alt="Profile views">
+</p>
+
+---
+
+## ⚡ whoami
+
+### 🇪🇸 Español
+
+Soy **xlfr4n**.
+
+Construyo herramientas y sistemas alrededor de **software, automatización, Linux, seguridad, Web3 y análisis técnico**. Mi GitHub funciona como un laboratorio personal: no solo quiero que algo funcione; quiero poder **entenderlo, probarlo, reproducirlo y documentarlo**.
+
+<strong>Build → Understand → Verify → Automate → Document.</strong>
+
+### 🇬🇧 English
+
+I'm **xlfr4n**.
+
+I build projects around **software, automation, Linux, security, Web3 and technical analysis**. I treat GitHub as a personal laboratory: I don't just want something to work — I want to **understand it, verify it, reproduce it and document it**.
+
+<strong>Build → Understand → Verify → Automate → Document.</strong>
+
+---
+
+## 🧠 What I work with
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=linux,bash,python,typescript,javascript,react,nextjs,postgres,supabase,git,github,docker&perline=6" alt="Technology stack">
+</p>
+
+| Area | Focus |
+|---|---|
+| 🛡️ Security | Web security, defensive tooling, technical investigation |
+| 🔬 Forensics | Static analysis, reconstruction, reproducible research |
+| 🐧 Linux | Kali, BSPWM, shell tooling, automation and custom environments |
+| 🌐 Web | Next.js, React, TypeScript, Supabase, Vercel |
+| ⛓️ Web3 | Ethereum, Immutable, wallets, NFT / collectibles data |
+| 🤖 Automation | Scripts, CLI workflows, data pipelines and developer tooling |
+
+---
+
+## 🚀 Selected work
+
+### 🖥️ Kali BSPWM 2026
+**A personal Kali Linux desktop layer built around BSPWM, automation and the <code>xlfr4n</code> identity.**
+
+<code>BSPWM</code> · <code>SXHKD</code> · <code>Polybar</code> · <code>Rofi</code> · <code>Kitty</code> · <code>Picom</code> · <code>Zsh</code> · <code>VirtualBox</code>
+
+→ [Open the project](https://github.com/xlfr4n/kali-bspwm-2026)
+
+### 🔎 desencryp
+**Forensic analysis and reconstruction work with an emphasis on traceability and reproducibility.**
+
+<code>JavaScript</code> · <code>Forensics</code> · <code>Static Analysis</code> · <code>Reverse Engineering</code>
+
+→ [Open the project](https://github.com/xlfr4n/desencryp)
+
+### 🤖 DevsAI
+**Web platform work combining AI, community features, automation and modern full-stack development.**
+
+<code>Next.js</code> · <code>React</code> · <code>TypeScript</code> · <code>Supabase</code> · <code>Vercel</code>
+
+→ [Open the project](https://github.com/xlfr4n/DevsAI)
+
+### 💎 HabboPortfolioPro
+**Portfolio tooling for Habbo Collectibles and blockchain-backed asset data.**
+
+<code>Web3</code> · <code>Ethereum</code> · <code>Immutable</code> · <code>Portfolio Data</code>
+
+→ [Open the project](https://github.com/xlfr4n/HabboPortfolioPro)
+
+### 📡 Habbo Furni Radar
+**Tracking and discovery tooling for new Habbo Collectibles.**
+
+<code>Automation</code> · <code>Data</code> · <code>Habbo Collectibles</code>
+
+→ [Open the project](https://github.com/xlfr4n/habbo-furni-radar)
+
+---
+
+## 🎮 ./play
+
+I wanted the profile to have something that is actually **interactive**, not just another wall of badges.
+
+### ⚡ MICRODOOM
+
+A tiny original browser FPS/raycaster made specifically for the profile.
+
+- 🖥️ Desktop: keyboard controls
+- 📱 Mobile: touch controls
+- 🔥 Original code/assets — no Doom game files included
+- 🧪 Small technical playground rather than a full game
+
+**Play:** [xlfr4n // MICRODOOM](https://xlfr4n.github.io/xlfr4n/play/)
+
+> If the Pages URL has not been activated yet, the game source is available at [play/index.html](./play/index.html).
+
+---
+
+## 🧪 My lab
+
+<details>
+<summary><strong>Open the lab workflow</strong></summary>
+
+<strong>[01] INVESTIGATE</strong> → understand the problem
+
+<strong>[02] BUILD</strong> → create the smallest useful system
+
+<strong>[03] VERIFY</strong> → test what actually happened
+
+<strong>[04] AUTOMATE</strong> → remove repetitive work
+
+<strong>[05] DOCUMENT</strong> → leave a reproducible trail
+
+</details>
+
+I prefer **evidence over assumptions**, **reproducible steps over magic**, and **useful tooling over decoration**.
+
+---
+
+## 🧩 Projects by laboratory
+
+<details>
+<summary><strong>🛡️ Security / Forensics</strong></summary>
+
+- Web security research
+- Static JavaScript analysis
+- Runtime reconstruction
+- Defensive scripts and investigation tooling
+- Reproducible forensic notes
+
+</details>
+
+<details>
+<summary><strong>🐧 Linux / Systems</strong></summary>
+
+- Kali Linux environments
+- BSPWM desktop engineering
+- Shell automation
+- Virtual machine integration
+- CLI tooling and system diagnostics
+
+</details>
+
+<details>
+<summary><strong>🌐 Full-Stack / Web3</strong></summary>
+
+- Next.js / React applications
+- Supabase backends
+- Vercel deployments
+- Ethereum / Immutable data
+- NFT and collectibles portfolio tooling
+
+</details>
+
+---
+
+## 📊 GitHub
+
+<p align="center">
+  <a href="https://github.com/xlfr4n?tab=repositories">
+    <img src="https://img.shields.io/badge/→_ALL_REPOSITORIES-111827?style=for-the-badge&logo=github&logoColor=white" alt="All repositories">
+  </a>
+</p>
+
+<p align="center">
+  <sub>Public work is only one part of the lab. Some experiments are private, unfinished or intentionally kept local.</sub>
+</p>
+
+---
+
+## 🧭 Philosophy
+
+> **Make it work.**
+>
+> **Understand why it works.**
+>
+> **Prove that it works.**
+>
+> **Make it reproducible.**
+>
+> **Then make it yours.**
+
+---
+
+## ⚡ xlfr4n
+
+<p align="center">
+  <strong>One signature. Different laboratories.</strong><br>
+  <sub>Una firma. Diferentes laboratorios.</sub>
+</p>
+
+<p align="center">
+  <a href="https://github.com/xlfr4n">GitHub</a> ·
+  <a href="https://github.com/xlfr4n?tab=repositories">Repositories</a> ·
+  <a href="https://github.com/xlfr4n/kali-bspwm-2026">Kali BSPWM</a> ·
+  <a href="https://github.com/xlfr4n/desencryp">Forensics</a> ·
+  <a href="https://github.com/xlfr4n/DevsAI">DevsAI</a>
 </p>
 
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&height=110&section=footer&color=0:080B10,100:FF3344" width="100%" alt="Footer">
-</p>
-
----
-
-## ⚡ xlfr4n // Signature
-
-<p align="center">
-  <a href="./BRAND.md">🧩 Identity / Identidad</a> · <a href="https://github.com/xlfr4n">⚡ github.com/xlfr4n</a>
-  <br><sub>One signature. Different laboratories. · Una firma. Diferentes laboratorios.</sub>
 </p>
