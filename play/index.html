@@ -1,1 +1,116 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#06080c"><meta name="description" content="MICRODOOM — original xlfr4n browser raycaster playground."><link rel="icon" href="../assets/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/xlfr4n.css"><title>xlfr4n // MICRODOOM</title><style>.game-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:15px 0 9px}.game-head .hint{color:var(--muted);font-size:11px}#wrap{position:relative;border:1px solid var(--line);background:#000;box-shadow:var(--shadow);overflow:hidden}canvas{display:block;width:100%;height:auto;image-rendering:pixelated}#hud{position:absolute;inset:0;pointer-events:none;padding:12px;display:flex;justify-content:space-between;align-items:flex-start;text-shadow:0 2px #000;font-size:11px}.hudbox{border:1px solid rgba(255,255,255,.12);background:rgba(5,7,10,.58);padding:7px 9px}.hudbox b{color:var(--red)}#msg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:min(330px,84%);text-align:center;background:rgba(6,8,12,.95);border:1px solid rgba(255,51,68,.72);box-shadow:0 0 45px rgba(255,51,68,.14);padding:20px;pointer-events:none}#msg strong{display:block;color:var(--red);font-size:17px;margin-bottom:5px}.sub{color:var(--muted);font-size:11px}#cross{position:absolute;left:50%;top:50%;width:18px;height:18px;transform:translate(-50%,-50%);pointer-events:none}#cross:before,#cross:after{content:"";position:absolute;background:rgba(255,255,255,.75)}#cross:before{left:8px;top:2px;width:2px;height:14px}#cross:after{left:2px;top:8px;width:14px;height:2px}#touch{display:none;position:absolute;left:10px;right:10px;bottom:10px;justify-content:space-between;align-items:end;pointer-events:none}.pad{display:grid;grid-template-columns:repeat(3,48px);gap:5px}.pad button,.fire{pointer-events:auto;background:rgba(12,18,27,.84);color:#fff;border:1px solid rgba(255,51,68,.45);border-radius:8px;height:48px;font:inherit}.pad button:nth-child(1){grid-column:2}.fire{width:92px}.game-notes{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:10px;color:var(--muted);font-size:10px}@media(max-width:700px){.game-head{font-size:12px}.game-head .hint{display:none}#touch{display:flex}.shell{padding-bottom:18px}}</style></head><body><div class="shell"><header class="nav"><a class="brand" href="../"><span class="sig">⚡</span> xlfr4n // PLAY</a><nav class="navlinks"><a href="../">LAB</a><a href="../status/">STATUS</a><a href="../terminal/">TERMINAL</a><a href="https://github.com/xlfr4n">GITHUB ↗</a></nav></header><main><div class="game-head"><strong>MICRODOOM <span style="color:var(--red)">// SECTOR 01</span></strong><span class="hint">WASD / arrows · SPACE fire · mouse look · R restart</span></div><div id="wrap"><canvas id="c" width="960" height="540"></canvas><div id="hud"><div class="hudbox" id="stats">HP 100 · AMMO 24 · KILLS 0/4</div><div class="hudbox"><b>XLFR4N</b> // SECTOR 01</div></div><div id="cross"></div><div id="msg"><strong>MICRODOOM</strong><span class="sub">CLICK / TAP TO ENTER<br>clear the red sector</span></div><div id="touch"><div class="pad"><button data-k="ArrowUp">▲</button><button data-k="ArrowLeft">◀</button><button data-k="ArrowDown">▼</button><button data-k="ArrowRight">▶</button></div><button class="fire" data-k=" ">FIRE</button></div></div><div class="game-notes"><span>Original raycaster · no external game assets</span><span>ESC releases mouse · R restarts</span></div></main><footer class="footer"><span><span class="sig">⚡</span> xlfr4n</span><span>Technical playground / browser canvas</span><span data-year>2026</span></footer></div><script src="../assets/xlfr4n.js"></script><script>const c=document.querySelector("#c"),ctx=c.getContext("2d"),W=c.width,H=c.height,keys={};const map=["111111111111","100000000001","101111011101","100001000001","111101011101","100001010001","101111010101","100000010001","101111110101","100000000001","111111111111"];const FOV=Math.PI/3;let p={x:2.5,y:2.5,a:0,hp:100,ammo:24,kills:0},enemies=[{x:9.5,y:2.5,hp:3},{x:8.5,y:8.5,hp:3},{x:3.5,y:8.5,hp:3},{x:6.5,y:5.5,hp:3}],started=false,ended=false,last=performance.now(),flash=0,elapsed=0;function wall(a,b){const y=Math.floor(b),row=map[y];return !row||row[Math.floor(a)]!=="0"}function reset(){p={x:2.5,y:2.5,a:0,hp:100,ammo:24,kills:0};enemies=[{x:9.5,y:2.5,hp:3},{x:8.5,y:8.5,hp:3},{x:3.5,y:8.5,hp:3},{x:6.5,y:5.5,hp:3}];started=true;ended=false;elapsed=0;last=performance.now();document.querySelector("#msg").style.display="none";if(innerWidth>800)c.requestPointerLock?.()}function move(dx,dy){const nx=p.x+dx,ny=p.y+dy,pad=.18;if(!wall(nx+Math.sign(dx)*pad,p.y))p.x=nx;if(!wall(p.x,ny+Math.sign(dy)*pad))p.y=ny}function cast(a){let rx=Math.cos(a),ry=Math.sin(a),d=0;while(d<20){d+=.025;if(wall(p.x+rx*d,p.y+ry*d))return d}return 20}function visibleEnemy(e){const dx=e.x-p.x,dy=e.y-p.y,dist=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)-p.a;return{dist,ang:Math.atan2(Math.sin(ang),Math.cos(ang))}}function shoot(){if(!started||ended||p.ammo<=0)return;p.ammo--;flash=.08;let best=null,bestDist=Infinity;for(const e of enemies.filter(e=>e.hp>0)){const v=visibleEnemy(e);if(Math.abs(v.ang)<.055&&v.dist<cast(p.a)+.15&&v.dist<bestDist){best=e;bestDist=v.dist}}if(best){best.hp--;if(best.hp<=0)p.kills++}}function update(dt){if(!started||ended)return;elapsed+=dt;flash=Math.max(0,flash-dt);const sp=2.6*dt,turn=2.5*dt;if(keys.w||keys.ArrowUp)move(Math.cos(p.a)*sp,Math.sin(p.a)*sp);if(keys.s||keys.ArrowDown)move(-Math.cos(p.a)*sp,-Math.sin(p.a)*sp);if(keys.a)move(Math.cos(p.a-Math.PI/2)*sp,Math.sin(p.a-Math.PI/2)*sp);if(keys.d)move(Math.cos(p.a+Math.PI/2)*sp,Math.sin(p.a+Math.PI/2)*sp);if(keys.ArrowLeft)p.a-=turn;if(keys.ArrowRight)p.a+=turn;for(const e of enemies.filter(e=>e.hp>0)){const dx=p.x-e.x,dy=p.y-e.y,dist=Math.hypot(dx,dy);if(dist<7&&dist>.2){const step=.34*dt;if(!wall(e.x+dx/dist*step,e.y))e.x+=dx/dist*step;if(!wall(e.x,e.y+dy/dist*step))e.y+=dy/dist*step}if(dist<.62)p.hp-=11*dt}if(p.hp<=0||p.kills===enemies.length){ended=true;document.exitPointerLock?.()}}function draw(){ctx.fillStyle="#080a0f";ctx.fillRect(0,0,W,H/2);ctx.fillStyle="#171117";ctx.fillRect(0,H/2,W,H/2);for(let i=0;i<192;i++){const a=p.a+(i/191-.5)*FOV,d=cast(a),correct=d*Math.cos(a-p.a),h=Math.min(H*1.85,H/(correct+.01)),shade=Math.max(18,115-correct*8);ctx.fillStyle="rgb("+(shade+38)+","+(shade/2)+","+(shade/2)+")";ctx.fillRect(i*5,H/2-h/2,6,h)}const sorted=enemies.filter(e=>e.hp>0).map(e=>({e,...visibleEnemy(e)})).filter(v=>Math.abs(v.ang)<FOV*.68).sort((a,b)=>b.dist-a.dist);for(const v of sorted){const sx=W/2+v.ang/FOV*W,size=Math.min(210,H/v.dist*.60),scale=Math.max(.25,1-v.dist/10);ctx.fillStyle="#ff3344";ctx.globalAlpha=.35+.55*scale;ctx.fillRect(sx-size/2,H/2-size/2,size,size);ctx.globalAlpha=1;ctx.fillStyle="#08090c";ctx.fillRect(sx-size*.22,H/2-size*.08,size*.12,size*.13);ctx.fillRect(sx+size*.10,H/2-size*.08,size*.12,size*.13)}if(flash>0){ctx.fillStyle="rgba(255,255,255,.12)";ctx.fillRect(0,0,W,H)}if(started)document.querySelector("#stats").textContent="HP "+Math.max(0,p.hp|0)+" · AMMO "+p.ammo+" · KILLS "+p.kills+"/"+enemies.length+" · "+elapsed.toFixed(1)+"s";if(ended){const win=p.kills===enemies.length;document.querySelector("#msg").innerHTML=win?"<strong>SECTOR CLEARED</strong><span class='sub'>"+elapsed.toFixed(2)+"s · R to run again</span>":"<strong>YOU DIED</strong><span class='sub'>KILLS "+p.kills+"/"+enemies.length+" · R to restart";document.querySelector("#msg").style.display="block"}}function loop(t){const dt=Math.min(.05,(t-last)/1000||0);last=t;update(dt);draw();requestAnimationFrame(loop)}requestAnimationFrame(loop);addEventListener("keydown",e=>{keys[e.key]=true;if(e.key===" "){e.preventDefault();shoot()}if(e.key.toLowerCase()==="r")reset()});addEventListener("keyup",e=>keys[e.key]=false);document.querySelector("#wrap").addEventListener("click",()=>{if(!started||ended)reset();else c.requestPointerLock?.()});document.addEventListener("mousemove",e=>{if(started&&!ended&&document.pointerLockElement===c)p.a+=e.movementX*.0022});document.querySelectorAll("[data-k]").forEach(b=>{const k=b.dataset.k;b.addEventListener("touchstart",e=>{e.preventDefault();keys[k]=true;if(k===" ")shoot()},{passive:false});b.addEventListener("touchend",e=>{e.preventDefault();keys[k]=false},{passive:false})});</script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#06080c"><meta name="description" content="MICRODOOM — original xlfr4n browser raycaster playground."><link rel="icon" href="../assets/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/xlfr4n.css"><title>xlfr4n // MICRODOOM</title><style>
+.game-wrap{max-width:980px;margin:18px auto 0}.game-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:15px 0 8px;font:700 11px monospace;text-transform:uppercase;letter-spacing:.08em}.game-head .hint{color:var(--muted);font-size:9px;text-align:right}#frame{background:#000;border:2px solid #222;box-shadow:0 0 0 1px #000,0 16px 50px rgba(0,0,0,.45)}#game{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges;background:#000}.under{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted);font:9px/1.5 monospace;margin-top:8px;text-transform:uppercase;letter-spacing:.05em}.note{color:#ddd}@media(max-width:700px){.game-head{align-items:start;flex-direction:column}.game-head .hint{text-align:left}.game-wrap{margin-top:10px}}
+</style></head><body><div class="shell"><header class="nav"><a class="brand" href="../"><span class="sig">⚡</span> xlfr4n // PLAY</a><nav class="navlinks"><a href="../">LAB</a><a href="../status/">STATUS</a><a href="../terminal/">TERMINAL</a><a href="https://github.com/xlfr4n">GITHUB ↗</a></nav></header><main class="game-wrap">
+<div class="game-head">
+<strong>MICRODOOM <span style="color:var(--red)">// 1993 MODE</span></strong>
+<span class="hint">ARROWS/WASD · SHIFT RUN · ALT/A/D STRAFE · CTRL/SPACE FIRE · R RESTART</span>
+</div>
+<div id="frame"><canvas id="game" width="320" height="200" aria-label="MICRODOOM retro first-person game"></canvas></div>
+<div class="under"><span class="note">320x200 LOW-RES // ORIGINAL CODE // ORIGINAL PIXEL ART</span><span>ONE MAP // CLEAR IT // FIND THE EXIT</span></div>
+</main><footer class="footer"><span><span class="sig">⚡</span> xlfr4n</span><span>Technical playground / browser canvas</span><span data-year>2026</span></footer></div><script src="../assets/xlfr4n.js"></script><script>
+(function(){
+"use strict";
+const c=document.getElementById("game"),x=c.getContext("2d",{alpha:false}),W=320,V=160,H=200,FOV=Math.PI/3;
+x.imageSmoothingEnabled=false;
+const M=[
+"###############","#.............#","#.#####.#####.#","#.#...#.#...#.#","#.#.#.#.#.#.#.#","#...#...#.#...#","###.#####.###.#","#...#.....#...#","#.###.###.###.#","#...#...#.....#","#.#.#.#.#####.#","#.#...#.......#","#.#####.#####.#","#.............#","###############"
+];
+const wall=(a,b)=>{const y=Math.floor(b),row=M[y];return !row||row[Math.floor(a)]!=="."};
+const P={x:1.5,y:1.5,a:0,hp:100,armor:0,ammo:50,kills:0,run:false,started:false,dead:false,won:false,time:0,flash:0,shot:0};
+const spawn=()=>[
+{x:11.5,y:1.5,hp:3,cd:1.1},
+{x:7.5,y:5.5,hp:3,cd:1.7},
+{x:3.5,y:9.5,hp:3,cd:2.2},
+{x:11.5,y:11.5,hp:3,cd:1.5}
+];
+let E=spawn(),shots=[],keys=Object.create(null),last=performance.now();
+
+function reset(){Object.assign(P,{x:1.5,y:1.5,a:0,hp:100,armor:0,ammo:50,kills:0,started:false,dead:false,won:false,time:0,flash:0,shot:0});E=spawn();shots=[];}
+function start(){if(!P.started&&!P.dead&&!P.won)P.started=true;}
+function diff(a,b){let d=a-b;while(d>Math.PI)d-=Math.PI*2;while(d<-Math.PI)d+=Math.PI*2;return d;}
+function blocked(px,py,r=.13){return wall(px-r,py-r)||wall(px+r,py-r)||wall(px-r,py+r)||wall(px+r,py+r);}
+function move(dx,dy){const nx=P.x+dx,ny=P.y+dy;if(!blocked(nx,P.y,.14))P.x=nx;if(!blocked(P.x,ny,.14))P.y=ny;}
+function ray(a){const sx=Math.cos(a),sy=Math.sin(a);let d=0;while(d<25){d+=.03;if(wall(P.x+sx*d,P.y+sy*d))return d;}return 25;}
+function vis(o){const dx=o.x-P.x,dy=o.y-P.y;return{d:Math.hypot(dx,dy),a:diff(Math.atan2(dy,dx),P.a)};}
+function see(a,b){const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy),n=Math.ceil(d/.15);for(let i=1;i<n;i++){const t=i/n;if(wall(a.x+dx*t,a.y+dy*t))return false;}return true;}
+function hurt(n){const a=Math.min(P.armor,n*.5);P.armor-=a;P.hp-=n-a;P.flash=.2;if(P.hp<=0){P.hp=0;P.dead=true;}}
+function fire(){
+ if(!P.started||P.dead||P.won||P.shot>0||P.ammo<=0)return;
+ P.ammo--;P.shot=.17;P.flash=.07;
+ let hit=null,bd=999;
+ for(const e of E)if(e.hp>0){const q=vis(e);if(Math.abs(q.a)<.07&&q.d<bd&&q.d<ray(P.a)+.25&&see(P,e)){hit=e;bd=q.d;}}
+ if(hit){hit.hp--;if(hit.hp<=0)P.kills++;}
+}
+function enemy(dt){
+ for(const e of E)if(e.hp>0){
+  const dx=P.x-e.x,dy=P.y-e.y,d=Math.hypot(dx,dy);e.cd-=dt;
+  if(d<.7){hurt(10*dt);continue;}
+  if(d<8&&see(e,P)){
+   if(d>1.2){const s=.32*dt;const mx=dx/d*s,my=dy/d*s;if(!blocked(e.x+mx,e.y,.1))e.x+=mx;if(!blocked(e.x,e.y+my,.1))e.y+=my;}
+   if(d<6&&e.cd<=0){shots.push({x:e.x,y:e.y,a:Math.atan2(dy,dx),d:2.4,l:2.5});e.cd=1.4;}
+  }
+ }
+}
+function updateShots(dt){
+ for(const q of shots){q.l-=dt;const s=q.d*dt,nx=q.x+Math.cos(q.a)*s,ny=q.y+Math.sin(q.a)*s;if(wall(nx,ny)){q.l=0;continue;}q.x=nx;q.y=ny;if(Math.hypot(q.x-P.x,q.y-P.y)<.25){hurt(16);q.l=0;}}
+ shots=shots.filter(q=>q.l>0);
+}
+function update(dt){
+ if(!P.started||P.dead||P.won)return;
+ P.time+=dt;P.flash=Math.max(0,P.flash-dt);P.shot=Math.max(0,P.shot-dt);
+ const turn=2.0*dt,speed=(keys.Shift||keys.shift?3.3:2.0)*dt;
+ if(keys.ArrowLeft)P.a-=turn;if(keys.ArrowRight)P.a+=turn;
+ let f=(keys.ArrowUp||keys.w?1:0)-(keys.ArrowDown||keys.s?1:0);
+ let st=(keys.a?-1:0)+(keys.d?1:0)+(keys.alt?1:0);
+ if(f)move(Math.cos(P.a)*speed*f,Math.sin(P.a)*speed*f);
+ if(st){const a=P.a+(st>0?Math.PI/2:-Math.PI/2),m=Math.min(1,Math.abs(st));move(Math.cos(a)*speed*m,Math.sin(a)*speed*m);}
+ if(keys.Control||keys[" "])fire();
+ enemy(dt);updateShots(dt);
+ if(P.kills===E.length){const d=Math.hypot(P.x-13.2,P.y-13.2);if(d<.7)P.won=true;}
+}
+function rect(a,b,c,d,col){x.fillStyle=col;x.fillRect(a,b,c,d);}
+function txt(t,a,b,s,col,align="left"){x.font="700 "+s+"px monospace";x.textAlign=align;x.textBaseline="top";x.fillStyle=col;x.fillText(t,a,b);}
+function world(){
+ rect(0,0,W,V*.5,"#171a20");rect(0,V*.5,W,V*.5,"#352725");
+ for(let i=0;i<W;i++){
+  const a=P.a+(i/W-.5)*FOV,d=ray(a),cd=d*Math.cos(diff(a,P.a)),wh=Math.min(V+24,V/(cd+.01)),top=Math.floor((V-wh)/2);
+  const shade=Math.max(22,108-cd*7),brick=i%10===0?"#5b5048":"rgb("+(shade+17)+","+(shade+14)+","+(shade+12)+")";
+  rect(i,top,1,wh,brick);
+  if((i%32)<16)rect(i,top+Math.floor(wh*.48),1,1,"#232222");
+  if(i%48===0)rect(i,top,1,wh,"#251f1d");
+ }
+ const list=[];
+ for(const e of E)if(e.hp>0){const q=vis(e);if(Math.abs(q.a)<FOV*.8)list.push({t:0,o:e,q});}
+ for(const q0 of shots){const q=vis(q0);if(Math.abs(q.a)<FOV*.8)list.push({t:1,o:q0,q});}
+ list.sort((a,b)=>b.q.d-a.q.d);
+ for(const s of list){if(ray(P.a+s.q.a)<s.q.d-.05)continue;const sx=W/2+s.q.a/FOV*W;if(s.t===0)demon(sx,s.q.d,s.o);else fireball(sx,s.q.d);}
+ weapon();
+}
+function demon(s,d,e){const sc=Math.min(1.7,12/d),w=Math.max(6,23*sc),h=Math.max(9,42*sc),cx=Math.round(s),cy=80-h*.5;rect(cx-w/2,cy+h*.18,w,h*.65,"#421611");rect(cx-w*.34,cy,w*.68,h*.48,"#9f2923");rect(cx-w*.16,cy+h*.08,w*.1,h*.09,"#ffd35c");rect(cx+w*.06,cy+h*.08,w*.1,h*.09,"#ffd35c");rect(cx-w*.16,cy+h*.11,w*.05,h*.05,"#111");rect(cx+w*.11,cy+h*.11,w*.05,h*.05,"#111");rect(cx-w*.22,cy+h*.3,w*.44,h*.08,"#2a0c0a");if(e.hp<3){rect(cx-w*.4,cy-3,w*.8,2,"#222");rect(cx-w*.4,cy-3,w*.8*(e.hp/3),2,"#d23a32");}}
+function fireball(s,d){const z=Math.max(2,6*Math.min(1,10/d));rect(s-z/2,80-z/2,z,z,"#ff4d1f");rect(s-z*.16,80-z*.16,z*.32,z*.32,"#ffe45d");}
+function weapon(){const b=Math.sin(P.time*7)*1.2,y=137+b;rect(156,y,8,24,"#202020");rect(150,y+15,20,11,"#4c392b");rect(153,y+9,14,9,"#76533a");rect(158,y-7,4,18,"#383838");if(P.flash>0){rect(155,y-16,10,3,"#ff6b26");rect(159,y-22,3,8,"#ffd95a");}}
+function face(){const bx=286,by=168;rect(bx-13,by-7,26,24,"#202020");rect(bx-9,by-4,18,18,P.hp<35?"#763e2b":"#a96a45");rect(bx-6,by+1,4,2,"#f6d27a");rect(bx+2,by+1,4,2,"#f6d27a");rect(bx-5,by+1,2,2,"#111");rect(bx+3,by+1,2,2,"#111");rect(bx-6,by+9,12,3,"#3a1813");rect(bx-2,by+9,4,1,"#eee");}
+function hud(){
+ rect(0,160,W,40,"#303030");rect(0,160,W,2,"#575757");
+ txt("XLFR4N",31,166,6,"#aaa","center");txt("1 2 3 4",31,176,6,"#ddd","center");
+ txt("AMMO",89,164,6,"#aaa","center");txt(String(P.ammo).padStart(2,"0"),89,172,14,"#e1e1e1","center");
+ txt("HEALTH",149,164,6,"#aaa","center");txt(String(P.hp|0).padStart(3,"0")+"%",149,172,11,P.hp<35?"#e23":"#e9e9e9","center");
+ txt("ARMOR",217,164,6,"#aaa","center");txt(String(P.armor|0).padStart(3,"0")+"%",217,172,11,"#e9e9e9","center");
+ face();txt("KILLS "+P.kills+"/"+E.length,286,190,6,"#aaa","center");
+}
+function overlay(){
+ if(P.started&& !P.dead&&!P.won)return;
+ rect(0,0,W,V,"rgba(0,0,0,.72)");
+ if(!P.started){txt("MICRODOOM",160,50,14,"#ddd","center");txt("XLFR4N SECTOR 01",160,70,7,"#b33","center");txt("PRESS ENTER OR FIRE",160,97,7,"#fff","center");txt("ARROWS MOVE / TURN   A D STRAFE",160,110,6,"#aaa","center");}
+ else if(P.dead){txt("YOU DIED",160,60,15,"#d33","center");txt("PRESS R TO RESTART",160,91,7,"#fff","center");}
+ else {txt("SECTOR CLEARED",160,60,13,"#ddd","center");txt("TIME "+P.time.toFixed(1)+"s",160,82,7,"#d33","center");txt("PRESS R TO RESTART",160,99,7,"#fff","center");}
+}
+function draw(){world();hud();overlay();}
+addEventListener("keydown",e=>{keys[e.key]=true;const k=e.key.toLowerCase();if(k==="alt")keys.alt=true;if(k==="r")reset();if(k==="enter")start();if(k==="control"){start();fire();}if(e.key===" "){e.preventDefault();start();fire();}if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key))e.preventDefault();});
+addEventListener("keyup",e=>{keys[e.key]=false;const k=e.key.toLowerCase();if(k==="alt")keys.alt=false;});
+c.addEventListener("mousedown",()=>{if(!P.started){start();fire();}else if(P.dead||P.won)reset();else fire();});
+c.addEventListener("touchstart",e=>{e.preventDefault();if(!P.started){start();fire();}else fire();},{passive:false});
+function loop(t){const dt=Math.min(.05,(t-last)/1000||0);last=t;update(dt);draw();requestAnimationFrame(loop);}
+reset();requestAnimationFrame(loop);
+})();
+</script></body></html>
