@@ -15,7 +15,52 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  validate:
+    name: Validate static site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Validate required files and local links
+        shell: python
+        run: |
+          from pathlib import Path
+          from html import unescape
+          import re
+
+          root = Path(".")
+          required = [
+              "README.md","BRAND.md","index.html","404.html","manifest.json",
+              "robots.txt","sitemap.xml","assets/xlfr4n.css","assets/xlfr4n.js",
+              "assets/icon.svg","assets/xlfr4n-banner.svg",
+              "status/index.html","terminal/index.html","play/index.html",
+              ".github/workflows/pages.yml",
+          ]
+          missing = [p for p in required if not (root / p).is_file()]
+          if missing:
+              raise SystemExit("Missing required files: " + ", ".join(missing))
+
+          pattern = re.compile(r"""(?:href|src)=["']([^"']+)["']""", re.I)
+          html_files = list(root.rglob("*.html"))
+          for file in html_files:
+              source = unescape(file.read_text(encoding="utf-8"))
+              for target in pattern.findall(source):
+                  if target.startswith(("http://","https://","//","#","mailto:","javascript:")):
+                      continue
+                  clean = target.split("#",1)[0].split("?",1)[0]
+                  if not clean:
+                      continue
+                  resolved = (file.parent / clean).resolve()
+                  if resolved.is_dir():
+                      resolved = resolved / "index.html"
+                  if not resolved.is_file():
+                      raise SystemExit(f"Broken local link in {file}: {target}")
+
+          print(f"Validated {len(html_files)} HTML files and all local paths.")
+
   deploy:
+    name: Deploy to GitHub Pages
+    needs: validate
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
