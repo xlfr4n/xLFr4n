@@ -2,9 +2,9 @@
 
 <div align="center">
 
-<a href="https://github.com/xlfr4n">
-<img src="./assets/xlfr4n-banner.svg" alt="xlfr4n — Personal Technical Laboratory" width="100%">
-</a>
+<p>
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=22&duration=2800&pause=900&color=FF3344&center=true&vCenter=true&width=760&lines=Hola%2C+soy+xlfr4n+%F0%9F%91%8B;Hello%2C+I'm+xlfr4n+%F0%9F%91%8B;Construyo.+Investigo.+Verifico.+%E2%9A%A1;I+build.+I+investigate.+I+verify.+%E2%9A%A1;Bienvenido+a+mi+laboratorio+%F0%9F%A7%AA;Welcome+to+my+technical+lab+%F0%9F%A7%AA" alt="ES / EN animated introduction">
+</p>
 
 <h3>⚡ SOFTWARE · 🐧 LINUX · 🔐 SECURITY · 🔎 FORENSICS · 🌐 FULL-STACK · ⛓️ WEB3 · 🤖 AUTOMATION</h3>
 
