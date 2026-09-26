@@ -45,7 +45,7 @@ jobs:
           for file in html_files:
               source = unescape(file.read_text(encoding="utf-8"))
               for target in pattern.findall(source):
-                  if target.startswith(("http://","https://","//","#","mailto:","javascript:")):
+                  if target.startswith(("http://","https://","//","/","#","mailto:","javascript:")):
                       continue
                   clean = target.split("#",1)[0].split("?",1)[0]
                   if not clean:
