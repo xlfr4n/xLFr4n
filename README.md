@@ -99,3 +99,12 @@ Each repository can have its own visual identity, but they all follow the same i
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&height=110&section=footer&color=0:080B10,100:FF3344" width="100%" alt="Footer">
 </p>
+
+---
+
+## ⚡ xlfr4n // Signature
+
+<p align="center">
+  <a href="./BRAND.md">🧩 Identity / Identidad</a> · <a href="https://github.com/xlfr4n">⚡ github.com/xlfr4n</a>
+  <br><sub>One signature. Different laboratories. · Una firma. Diferentes laboratorios.</sub>
+</p>
