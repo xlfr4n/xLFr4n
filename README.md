@@ -1,105 +1,117 @@
-<!--
-  xlfr4n // GitHub profile
--->
+<!-- xlfr4n // profile README // ES + EN -->
 
-<p align="center">
-  <a href="https://github.com/xlfr4n">
-    <img src="./assets/xlfr4n-banner.svg" alt="xlfr4n — personal technical laboratory" width="100%">
-  </a>
+<div align="center">
+
+<a href="https://github.com/xlfr4n">
+<img src="./assets/xlfr4n-banner.svg" alt="xlfr4n — Personal Technical Laboratory" width="100%">
+</a>
+
+<h3>⚡ SOFTWARE · 🐧 LINUX · 🔐 SECURITY · 🔎 FORENSICS · 🌐 FULL-STACK · ⛓️ WEB3 · 🤖 AUTOMATION</h3>
+
+<p>
+<strong>ES</strong> · Construyo, investigo, verifico y automatizo.<br>
+<strong>EN</strong> · I build, investigate, verify and automate.
 </p>
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=22&duration=2800&pause=900&color=FF3344&center=true&vCenter=true&width=760&lines=Hola%2C+soy+xlfr4n+%F0%9F%91%8B;Hello%2C+I'm+xlfr4n+%F0%9F%91%8B;Construyo.+Investigo.+Verifico.+%E2%9A%A1;I+build.+I+investigate.+I+verify.+%E2%9A%A1;Bienvenido+a+mi+laboratorio+%F0%9F%A7%AA;Welcome+to+my+technical+lab+%F0%9F%A7%AA" alt="Typing introduction">
+<p>
+<a href="https://xlfr4n.github.io/xlfr4n/"><img src="https://img.shields.io/badge/%E2%9A%A1%20ENTER%20LAB-ff3344?style=for-the-badge&labelColor=080b10" alt="Enter xlfr4n Lab"></a>
+<a href="https://xlfr4n.github.io/xlfr4n/terminal/"><img src="https://img.shields.io/badge/%E2%8C%A8%EF%B8%8F%20OPEN%20TERMINAL-ff3344?style=for-the-badge&labelColor=080b10" alt="Open terminal"></a>
+<a href="https://xlfr4n.github.io/xlfr4n/status/"><img src="https://img.shields.io/badge/%F0%9F%93%A1%20STATUS-ff3344?style=for-the-badge&labelColor=080b10" alt="Open status"></a>
+<a href="https://xlfr4n.github.io/xlfr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20MICRODOOM-ff3344?style=for-the-badge&labelColor=080b10" alt="Play MICRODOOM"></a>
 </p>
 
-<p align="center">
-  <strong>⚡ SOFTWARE · 🐧 LINUX · 🔐 SECURITY · 🔎 FORENSICS · 🌐 FULL-STACK · ⛓️ WEB3 · 🤖 AUTOMATION</strong>
+<p>
+<a href="https://github.com/xlfr4n"><img src="https://img.shields.io/badge/GitHub-@xlfr4n-080b10?style=for-the-badge&logo=github&logoColor=white&labelColor=080b10&color=ff3344" alt="GitHub @xlfr4n"></a>
+<a href="https://github.com/xlfr4n?tab=repositories"><img src="https://img.shields.io/badge/%F0%9F%93%81%20REPOSITORIES-080b10?style=for-the-badge&labelColor=080b10&color=ff3344" alt="Repositories"></a>
+<a href="https://github.com/xlfr4n?tab=overview"><img src="https://img.shields.io/badge/%F0%9F%91%80%20OVERVIEW-080b10?style=for-the-badge&labelColor=080b10&color=ff3344" alt="Profile overview"></a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/xlfr4n"><img src="https://img.shields.io/badge/GitHub-@xlfr4n-080b10?style=for-the-badge&logo=github&logoColor=white&labelColor=080b10&color=ff3344" alt="GitHub @xlfr4n"></a>
-  <a href="https://xlfr4n.github.io/xlfr4n/"><img src="https://img.shields.io/badge/%E2%9A%A1_LAB-ENTER-080b10?style=for-the-badge&labelColor=080b10&color=ff3344" alt="Enter xlfr4n Lab"></a>
-  <a href="https://xlfr4n.github.io/xlfr4n/terminal/"><img src="https://img.shields.io/badge/%E2%8C%A8%EF%B8%8F_TERMINAL-OPEN-080b10?style=for-the-badge&labelColor=080b10&color=ff3344" alt="Open terminal"></a>
-  <a href="https://xlfr4n.github.io/xlfr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE_MICRODOOM-PLAY-080b10?style=for-the-badge&labelColor=080b10&color=ff3344" alt="Play MICRODOOM"></a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/xlfr4n/xlfr4n/actions/workflows/pages.yml"><img src="https://github.com/xlfr4n/xlfr4n/actions/workflows/pages.yml/badge.svg" alt="GitHub Pages validation and deployment"></a>
-  <img src="https://komarev.com/ghpvc/?username=xlfr4n&label=PROFILE+VIEWS&color=ff3344&style=flat-square" alt="Profile views">
-  <img src="https://img.shields.io/github/followers/xlfr4n?label=FOLLOWERS&style=flat-square&color=252d38&labelColor=080b10" alt="GitHub followers">
-</p>
-
-<p align="center">
-  <sub>🧭 <strong>BUILD</strong> → <strong>UNDERSTAND</strong> → <strong>VERIFY</strong> → <strong>AUTOMATE</strong> → <strong>DOCUMENT</strong> 📚</sub>
-</p>
+</div>
 
 ---
 
-# 👋 HOLA / HELLO
+# 👋 Hola / Hello
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-## 🇪🇸 Español
+## ES 🇪🇸
 
 ¡Bienvenido! 👋
 
-Soy **xlfr4n** y este perfil es mi **laboratorio técnico personal**.
+Soy **xlfr4n** y este perfil funciona como mi **laboratorio técnico personal**.
 
-Aquí mezclo 🐧 Linux, 💻 software, 🔐 seguridad, 🔎 análisis técnico, 🌐 desarrollo web, ⛓️ Web3, 🤖 automatización y 🧪 experimentos.
+Aquí mezclo:
 
-No intento que las cosas parezcan más complicadas de lo que son. Prefiero construir algo que otra persona pueda **entender, probar, comprobar y reutilizar**.
+🐧 Linux & sistemas  
+💻 Software & desarrollo  
+🔐 Seguridad  
+🔎 Forensics & análisis técnico  
+🌐 Full-stack & web  
+🤖 Automatización  
+⛓️ Web3 & datos  
+🧪 Experimentos
 
-### 💡 Mi forma de pensar
+No intento hacer que una herramienta parezca más compleja de lo que realmente es.
 
-> 🔍 Investigar → 🛠️ Construir → ✅ Comprobar → ⚙️ Automatizar → 📚 Documentar
+Prefiero construir cosas que puedan **entenderse, probarse, verificarse y reutilizarse**.
 
-### ❤️ Y sí...
+### 🧭 Mi ciclo
 
-También me gusta hacer cosas simplemente porque son divertidas.
-
-Por eso aquí puedes encontrar tanto investigación técnica como una terminal interactiva o un pequeño juego retro. 🎮
+**🔍 Investigar → 🛠️ Construir → ✅ Comprobar → ⚙️ Automatizar → 📚 Documentar**
 
 </td>
 <td width="50%" valign="top">
 
-## 🇬🇧 English
+## EN
 
 Welcome! 👋
 
-I'm **xlfr4n**, and this profile is my **personal technical laboratory**.
+I'm **xlfr4n**, and this profile works as my **personal technical laboratory**.
 
-Here I mix 🐧 Linux, 💻 software, 🔐 security, 🔎 technical analysis, 🌐 web development, ⛓️ Web3, 🤖 automation and 🧪 experiments.
+Here I mix:
 
-I don't try to make things look more complicated than they are. I prefer building things that other people can **understand, try, verify and reuse**.
+🐧 Linux & systems  
+💻 Software & development  
+🔐 Security  
+🔎 Forensics & technical analysis  
+🌐 Full-stack & web  
+🤖 Automation  
+⛓️ Web3 & data  
+🧪 Experiments
 
-### 💡 How I think
+I don't try to make tools look more complicated than they really are.
 
-> 🔍 Investigate → 🛠️ Build → ✅ Verify → ⚙️ Automate → 📚 Document
+I prefer building things that can be **understood, tested, verified and reused**.
 
-### ❤️ And yes...
+### 🧭 My loop
 
-I also like building things simply because they're fun.
-
-That's why this profile can contain serious technical work, an interactive terminal and a tiny retro game. 🎮
+**🔍 Investigate → 🛠️ Build → ✅ Verify → ⚙️ Automate → 📚 Document**
 
 </td>
 </tr>
 </table>
 
+> ❤️ **ES:** La claridad importa. La evidencia importa. Y divertirse también.
+>
+> ❤️ **EN:** Clarity matters. Evidence matters. And having fun matters too.
+
 ---
 
-# 🧭 NAVEGACIÓN / NAVIGATION
+# 🧭 Navegación / Navigation
 
-<p align="center">
-  <a href="#-laboratorio-en-vivo--live-lab">⚡ LAB</a> ·
-  <a href="#-proyectos--projects">🚀 PROJECTS</a> ·
-  <a href="#-stack-tecnológico--technology-stack">🧰 STACK</a> ·
-  <a href="#-cómo-trabajo--how-i-work">🧪 METHOD</a> ·
-  <a href="#-señal-pública--public-signal">📊 ACTIVITY</a> ·
-  <a href="#-mapa--map">🗂️ MAP</a>
-</p>
+<div align="center">
+
+<a href="#-laboratorio-en-vivo--live-lab">⚡ LAB</a> ·
+<a href="#-proyectos--projects">🚀 PROJECTS</a> ·
+<a href="#-stack--stack">🧰 STACK</a> ·
+<a href="#-microdoom">🎮 MICRODOOM</a> ·
+<a href="#-terminal">⌨️ TERMINAL</a> ·
+<a href="#-actividad-pública--public-signal">📊 SIGNAL</a> ·
+<a href="#-mapa--map">🗂️ MAP</a>
+
+</div>
 
 <table>
 <tr>
@@ -107,202 +119,217 @@ That's why this profile can contain serious technical work, an interactive termi
 
 ### ⚡ LAB
 
-Interfaz pública  
-Public interface
+**ES:** entra al laboratorio  
+**EN:** enter the laboratory
 
-**[ENTRAR →](https://xlfr4n.github.io/xlfr4n/)**
+<a href="https://xlfr4n.github.io/xlfr4n/">ABRIR / OPEN →</a>
 
 </td>
 <td align="center" width="25%">
 
 ### ⌨️ TERMINAL
 
-Explora el perfil  
-Explore the profile
+**ES:** explora por comandos  
+**EN:** explore by commands
 
-**[ABRIR →](https://xlfr4n.github.io/xlfr4n/terminal/)**
+<a href="https://xlfr4n.github.io/xlfr4n/terminal/">ABRIR / OPEN →</a>
 
 </td>
 <td align="center" width="25%">
 
 ### 📡 STATUS
 
-Trabajo visible  
-Visible work
+**ES:** registro público  
+**EN:** public register
 
-**[VER →](https://xlfr4n.github.io/xlfr4n/status/)**
+<a href="https://xlfr4n.github.io/xlfr4n/status/">VER / VIEW →</a>
 
 </td>
 <td align="center" width="25%">
 
 ### 🎮 PLAY
 
-MICRODOOM retro  
-Retro MICRODOOM
+**ES:** prueba MICRODOOM  
+**EN:** play MICRODOOM
 
-**[JUGAR →](https://xlfr4n.github.io/xlfr4n/play/)**
+<a href="https://xlfr4n.github.io/xlfr4n/play/">JUGAR / PLAY →</a>
 
 </td>
 </tr>
 </table>
 
-> 🎯 **Primera visita / First visit:** empieza en el **LAB**, prueba la **TERMINAL** y luego entra en **MICRODOOM**. 😄
-
 ---
 
-# ⚡ LABORATORIO EN VIVO / LIVE LAB
-
-<p align="center">
-  <img src="https://img.shields.io/badge/PUBLIC_INTERFACE-LIVE-080b10?style=for-the-badge&labelColor=080b10&color=77e0a5" alt="Public interface live">
-  <img src="https://img.shields.io/badge/REAL_TIME_CLOCK-ON-080b10?style=for-the-badge&labelColor=080b10&color=ff3344" alt="Real time clock">
-  <img src="https://img.shields.io/badge/LANGUAGE_SELECTOR-ON-080b10?style=for-the-badge&labelColor=080b10&color=ff3344" alt="Language selector">
-</p>
+# ⚡ Laboratorio en vivo / Live Lab
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### 🇪🇸
+## ES
 
-El perfil tiene su propia pequeña interfaz web.
+🌐 **LAB público**  
+Una pequeña interfaz web construida alrededor del perfil.
 
-🕐 **Reloj en tiempo real**  
-Muestra hora, segundos, fecha, día y zona horaria local.
+🕐 **Reloj real**  
+Hora, segundos, fecha, día y zona horaria local del visitante.
 
-🌍 **Selector de idiomas**  
-La interfaz carga un selector de traducción en tiempo de ejecución.
+🌍 **Idiomas**  
+Selector de traducción cargado en tiempo de ejecución.
 
-⌨️ **Terminal interactiva**  
+⌨️ **Terminal**  
 Comandos, historial, autocompletado y accesos rápidos.
 
-🎮 **MICRODOOM**  
-Pequeño experimento FPS retro en baja resolución.
+🎮 **Playground**  
+MICRODOOM en 320×200 y estética retro.
 
 </td>
 <td width="50%" valign="top">
 
-### 🇬🇧
+## EN
 
-The profile has its own small web interface.
+🌐 **Public LAB**  
+A small web interface built around the profile.
 
 🕐 **Real-time clock**  
-Shows local time, seconds, date, weekday and timezone.
+Local time, seconds, date, weekday and timezone.
 
-🌍 **Language selector**  
-The interface loads a runtime translation selector.
+🌍 **Languages**  
+Runtime translation selector.
 
-⌨️ **Interactive terminal**  
+⌨️ **Terminal**  
 Commands, history, completion and shortcuts.
 
-🎮 **MICRODOOM**  
-A tiny low-resolution retro FPS experiment.
+🎮 **Playground**  
+MICRODOOM at 320×200 with a retro presentation.
 
 </td>
 </tr>
 </table>
 
-<p align="center">
-  <a href="https://xlfr4n.github.io/xlfr4n/"><img src="https://img.shields.io/badge/⚡_ENTER_LAB-ff3344?style=for-the-badge&labelColor=080b10" alt="Enter Lab"></a>
-  <a href="https://xlfr4n.github.io/xlfr4n/terminal/"><img src="https://img.shields.io/badge/⌨️_OPEN_TERMINAL-ff3344?style=for-the-badge&labelColor=080b10" alt="Open Terminal"></a>
-  <a href="https://xlfr4n.github.io/xlfr4n/status/"><img src="https://img.shields.io/badge/📡_CHECK_STATUS-ff3344?style=for-the-badge&labelColor=080b10" alt="Check Status"></a>
-  <a href="https://xlfr4n.github.io/xlfr4n/play/"><img src="https://img.shields.io/badge/🎮_PLAY_MICRODOOM-ff3344?style=for-the-badge&labelColor=080b10" alt="Play MICRODOOM"></a>
-</p>
+<div align="center">
+<a href="https://xlfr4n.github.io/xlfr4n/"><img src="https://img.shields.io/badge/%E2%9A%A1%20ENTER%20THE%20LAB-ff3344?style=for-the-badge&labelColor=080b10" alt="Enter the lab"></a>
+</div>
 
 ---
 
-# 🚀 PROYECTOS / PROJECTS
+# 🚀 Proyectos / Projects
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-## 🐧 01 · kali-bspwm-2026
+## 🐧 kali-bspwm-2026
 
 **PUBLIC · Linux / Desktop / Shell**
 
-Un entorno personalizado de Kali Linux alrededor de BSPWM, SXHKD, Polybar, Rofi, Kitty, Picom y tooling de shell.
+**ES:** entorno personalizado de Kali Linux alrededor de BSPWM, SXHKD, Polybar, Rofi, Kitty, Picom y shell tooling.
 
-🎯 Personalización  
-⚙️ Automatización  
+**EN:** a personalized Kali Linux desktop environment around BSPWM, SXHKD, Polybar, Rofi, Kitty, Picom and shell tooling.
+
+🎯 Personalización / Personalization  
+⚙️ Automatización / Automation  
 🐧 Linux desktop
 
-**[→ Ver repositorio](https://github.com/xlfr4n/kali-bspwm-2026)**
+<p>
+<a href="https://github.com/xlfr4n/kali-bspwm-2026"><img src="https://img.shields.io/badge/VIEW%20REPOSITORY-ff3344?style=for-the-badge&logo=github&logoColor=white" alt="View kali-bspwm-2026"></a>
+</p>
 
 </td>
 <td width="50%" valign="top">
 
-## 📡 02 · habbo-furni-radar
+## 📡 habbo-furni-radar
 
 **PUBLIC · Data / Automation**
 
-Proyecto público para seguimiento y descubrimiento de Habbo Collectibles.
+**ES:** tooling público para seguimiento y descubrimiento de Habbo Collectibles.
 
-📊 Datos  
-🤖 Automatización  
-🔎 Observación
+**EN:** public tooling for tracking and discovering Habbo Collectibles.
 
-**[→ Ver repositorio](https://github.com/xlfr4n/habbo-furni-radar)**
+📊 Datos / Data  
+🤖 Automatización / Automation  
+🔎 Observación / Monitoring
+
+<p>
+<a href="https://github.com/xlfr4n/habbo-furni-radar"><img src="https://img.shields.io/badge/VIEW%20REPOSITORY-ff3344?style=for-the-badge&logo=github&logoColor=white" alt="View habbo-furni-radar"></a>
+</p>
 
 </td>
 </tr>
+
 <tr>
 <td width="50%" valign="top">
 
-## 🔎 03 · desencryp
+## 🔎 desencryp
 
 **PRIVATE LAB 🔒 · Forensics**
 
-Análisis y reconstrucción de JavaScript con énfasis en:
+Análisis y reconstrucción de JavaScript con:
 
 🔬 análisis estático  
 🧠 comportamiento runtime  
 🧾 trazabilidad  
 ✅ evidencia reproducible
 
-🔒 El repositorio es privado actualmente.
+**ES:** privado actualmente.  
+**EN:** currently private.
 
 </td>
 <td width="50%" valign="top">
 
-## 🤖 04 · DevsAI
+## 🤖 DevsAI
 
-**PRIVATE LAB 🔒 · Full-Stack**
+**PRIVATE LAB 🔒 · Full-Stack / AI**
 
 Trabajo alrededor de:
 
-⚛️ React · ▲ Next.js · 🔷 TypeScript  
-🗄️ Supabase · ▲ Vercel · 🤖 AI
+⚛️ React  
+▲ Next.js  
+🔷 TypeScript  
+🗄️ Supabase  
+▲ Vercel  
+🤖 AI
 
-🔒 El repositorio es privado actualmente.
+**ES:** privado actualmente.  
+**EN:** currently private.
 
 </td>
 </tr>
+
 <tr>
 <td width="50%" valign="top">
 
-## 💎 05 · HabboPortfolioPro
+## 💎 HabboPortfolioPro
 
 **PRIVATE LAB 🔒 · Web3 / Data**
 
 Herramientas para trabajar con datos de Habbo Collectibles y activos respaldados por blockchain.
 
-⛓️ Blockchain · 💼 Portfolio · 📊 Data
+⛓️ Blockchain  
+💼 Portfolio  
+📊 Data
 
-🔒 El repositorio es privado actualmente.
+**ES:** privado actualmente.  
+**EN:** currently private.
 
 </td>
 <td width="50%" valign="top">
 
-## 🎮 06 · MICRODOOM
+## 🎮 MICRODOOM
 
 **PUBLIC PLAYGROUND**
 
-Experimento escrito específicamente para este perfil.
+Un pequeño experimento FPS creado para este perfil.
 
-🖥️ 320×200 · 🎨 Pixel art original  
-💻 Canvas + JavaScript · 👾 Retro FPS
+🖥️ 320×200  
+🎨 Pixel art original  
+🧱 Raycasting / Canvas  
+👾 Enemigos + combate  
+❤️ Vida + armadura  
+🔫 Munición  
+🚪 Una fase + una salida
 
-**[→ JUGAR AHORA](https://xlfr4n.github.io/xlfr4n/play/)**
+<a href="https://xlfr4n.github.io/xlfr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20PLAY%20NOW-ff3344?style=for-the-badge&labelColor=080b10" alt="Play MICRODOOM"></a>
 
 </td>
 </tr>
@@ -311,142 +338,52 @@ Experimento escrito específicamente para este perfil.
 <details>
 <summary><strong>🔐 ¿Por qué PUBLIC y PRIVATE? / Why PUBLIC and PRIVATE?</strong></summary>
 
-🇪🇸 Si alguien no puede abrir un repositorio, no quiero presentarlo como código público. La transparencia empieza por describir correctamente qué puede ver un visitante.
+**ES:** Si un visitante no puede abrir un repositorio, no quiero presentarlo como si fuera público.
 
-🇬🇧 If someone cannot open a repository, I don't want to present it as public code. Transparency starts by describing what a visitor can actually see.
+**EN:** If a visitor cannot open a repository, I don't want to present it as public.
+
+La visibilidad correcta también forma parte de la transparencia. 🤝
 
 </details>
 
 ---
 
-# 🧰 STACK TECNOLÓGICO / TECHNOLOGY STACK
+# 🧰 Stack / Stack
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=linux,bash,python,javascript,typescript,react,nextjs,postgres,supabase,git,github,docker,vercel&perline=7" alt="xlfr4n technology stack">
-</p>
+<div align="center">
+
+<img src="https://skillicons.dev/icons?i=linux,bash,python,javascript,typescript,react,nextjs,postgres,supabase,git,github,docker,vercel&perline=7" alt="Technology stack">
+
+</div>
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### 🇪🇸
+### ES 🇪🇸
 
-🐧 **Sistemas**  
-Linux · Kali · BSPWM · Bash · Shell
-
-💻 **Programación**  
-Python · JavaScript · TypeScript · Git
-
-🌐 **Web**  
-React · Next.js · PostgreSQL · Supabase · Vercel
-
-🔎 **Investigación**  
-Forensics · Static Analysis · Runtime Analysis · Reconstruction
-
-⛓️ **Web3 / Data**  
-Ethereum · Immutable · Wallet Data · Collectibles
-
-🤖 **Automatización**  
-CLI · Scripts · CI/CD · Data workflows
+🐧 **Sistemas:** Linux · Kali · BSPWM · Bash · Shell  
+💻 **Programación:** Python · JavaScript · TypeScript · Git  
+🌐 **Web:** React · Next.js · PostgreSQL · Supabase · Vercel  
+🔎 **Investigación:** Forensics · Static Analysis · Runtime Analysis · Reconstruction  
+⛓️ **Web3 / Data:** Ethereum · Immutable · Wallet Data · Collectibles  
+🤖 **Automatización:** CLI · Scripts · CI/CD · Data workflows
 
 </td>
 <td width="50%" valign="top">
 
-### 🇬🇧
+### EN
 
-🐧 **Systems**  
-Linux · Kali · BSPWM · Bash · Shell
-
-💻 **Programming**  
-Python · JavaScript · TypeScript · Git
-
-🌐 **Web**  
-React · Next.js · PostgreSQL · Supabase · Vercel
-
-🔎 **Research**  
-Forensics · Static Analysis · Runtime Analysis · Reconstruction
-
-⛓️ **Web3 / Data**  
-Ethereum · Immutable · Wallet Data · Collectibles
-
-🤖 **Automation**  
-CLI · Scripts · CI/CD · Data workflows
+🐧 **Systems:** Linux · Kali · BSPWM · Bash · Shell  
+💻 **Programming:** Python · JavaScript · TypeScript · Git  
+🌐 **Web:** React · Next.js · PostgreSQL · Supabase · Vercel  
+🔎 **Research:** Forensics · Static Analysis · Runtime Analysis · Reconstruction  
+⛓️ **Web3 / Data:** Ethereum · Immutable · Wallet Data · Collectibles  
+🤖 **Automation:** CLI · Scripts · CI/CD · Data workflows
 
 </td>
 </tr>
 </table>
-
----
-
-# 🧪 CÓMO TRABAJO / HOW I WORK
-
-<p align="center">
-  <strong>🔍 INVESTIGATE → 🛠️ BUILD → ✅ VERIFY → ⚙️ AUTOMATE → 📚 DOCUMENT</strong>
-</p>
-
-<table>
-<tr>
-<td align="center" width="20%">
-
-### 🔍 01
-**INVESTIGATE**
-
-Entender antes de tocar.
-
-Understand before changing.
-
-</td>
-<td align="center" width="20%">
-
-### 🛠️ 02
-**BUILD**
-
-Crear algo útil.
-
-Build something useful.
-
-</td>
-<td align="center" width="20%">
-
-### ✅ 03
-**VERIFY**
-
-Comprobar el resultado real.
-
-Verify the real result.
-
-</td>
-<td align="center" width="20%">
-
-### ⚙️ 04
-**AUTOMATE**
-
-Eliminar trabajo repetitivo.
-
-Remove repeated work.
-
-</td>
-<td align="center" width="20%">
-
-### 📚 05
-**DOCUMENT**
-
-Dejar un camino claro.
-
-Leave a clear trail.
-
-</td>
-</tr>
-</table>
-
-<details>
-<summary><strong>💬 Filosofía / Philosophy</strong></summary>
-
-🇪🇸 No necesito que un proyecto parezca enorme para que sea interesante. Prefiero algo pequeño, claro y comprobable.
-
-🇬🇧 A project doesn't need to look huge to be interesting. I prefer something small, clear and verifiable.
-
-</details>
 
 ---
 
@@ -456,145 +393,234 @@ Leave a clear trail.
 <tr>
 <td width="50%" valign="top">
 
-### 🇪🇸
+### ES 🇪🇸
 
-Una pequeña pieza de código hecha para experimentar y divertirse.
+Quería un juego que pareciera un experimento pequeño y directo, no una página web disfrazada de videojuego.
+
+Por eso:
 
 🖥️ **320×200**  
 🎨 **Pixel art original**  
-🧱 **Raycasting / Canvas**  
-👾 **Enemigos y combate**  
+🧱 **Raycasting**  
+👾 **Enemigos**  
+🔫 **Combate**  
 🏃 **Movimiento + strafe**  
-❤️ **Vida + armadura**  
-🔫 **Munición**  
-🚪 **Una fase + una salida**
+❤️ **Health + armor**  
+🚪 **Una única fase**
 
-La idea es mantenerlo **simple, directo y retro**.
+**Objetivo:** entrar, explorar, disparar y encontrar la salida. 😄
 
 </td>
 <td width="50%" valign="top">
 
-### 🇬🇧
+### EN
 
-A small piece of code built for experimentation and fun.
+I wanted a game that felt like a small, direct experiment rather than a modern webpage pretending to be a game.
+
+So:
 
 🖥️ **320×200**  
 🎨 **Original pixel art**  
-🧱 **Raycasting / Canvas**  
-👾 **Enemies + combat**  
+🧱 **Raycasting**  
+👾 **Enemies**  
+🔫 **Combat**  
 🏃 **Movement + strafing**  
 ❤️ **Health + armor**  
-🔫 **Ammo**  
-🚪 **One map + one exit**
+🚪 **One single map**
 
-The goal is to keep it **simple, direct and retro**.
+**Goal:** enter, explore, shoot and find the exit. 😄
 
 </td>
 </tr>
 </table>
 
-<p align="center">
-  <a href="https://xlfr4n.github.io/xlfr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE_PLAY_MICRODOOM-ff3344?style=for-the-badge&labelColor=080b10" alt="Play MICRODOOM"></a>
-</p>
+<div align="center">
+<a href="https://xlfr4n.github.io/xlfr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20PLAY%20MICRODOOM-ff3344?style=for-the-badge&labelColor=080b10" alt="Play MICRODOOM"></a>
+</div>
 
 ---
 
-# ⌨️ TERMINAL
+# ⌨️ Terminal
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### 🇪🇸
+### ES 🇪🇸
 
-La terminal es un pequeño homenaje a la forma en que me gusta trabajar. 😄
+La terminal es una pequeña interfaz para curiosear el perfil. 😄
 
 Prueba:
 
-`help` · `about` · `whoami` · `neofetch` · `labs`  
-`projects` · `stack` · `status` · `play` · `open NAME` · `secret`
+\`help\` · \`about\` · \`whoami\` · \`neofetch\`  
+\`labs\` · \`projects\` · \`stack\` · \`status\`  
+\`play\` · \`open NAME\` · \`secret\`
 
-También puedes usar ↑ / ↓ para historial y TAB para completar comandos.
+También funciona el historial ↑ / ↓ y el autocompletado TAB.
 
 </td>
 <td width="50%" valign="top">
 
-### 🇬🇧
+### EN
 
-The terminal is a small tribute to the way I like to work. 😄
+The terminal is a small interface for exploring the profile. 😄
 
 Try:
 
-`help` · `about` · `whoami` · `neofetch` · `labs`  
-`projects` · `stack` · `status` · `play` · `open NAME` · `secret`
+\`help\` · \`about\` · \`whoami\` · \`neofetch\`  
+\`labs\` · \`projects\` · \`stack\` · \`status\`  
+\`play\` · \`open NAME\` · \`secret\`
 
-You can also use ↑ / ↓ for history and TAB for completion.
+History ↑ / ↓ and TAB completion are also supported.
 
 </td>
 </tr>
 </table>
 
-<p align="center">
-  **[⌨️ ABRIR TERMINAL / OPEN TERMINAL →](https://xlfr4n.github.io/xlfr4n/terminal/)**
-</p>
+<div align="center">
+<a href="https://xlfr4n.github.io/xlfr4n/terminal/"><img src="https://img.shields.io/badge/%E2%8C%A8%EF%B8%8F%20OPEN%20TERMINAL-ff3344?style=for-the-badge&labelColor=080b10" alt="Open terminal"></a>
+</div>
 
 ---
 
-# 📊 SEÑAL PÚBLICA / PUBLIC SIGNAL
+# 📊 Actividad pública / Public signal
 
-> 📌 Las siguientes tarjetas se generan dinámicamente a partir de información pública de GitHub mediante servicios externos. No son métricas escritas manualmente.
+<div align="center">
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=xlfr4n&show_icons=true&hide_border=true&include_all_commits=true&count_private=false&theme=transparent&title_color=ff3344&text_color=8993a1&icon_color=ff3344&ring_color=ff3344&bg_color=00000000" alt="GitHub statistics for xlfr4n" width="49%">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=xlfr4n&layout=compact&hide_border=true&langs_count=8&count_private=false&theme=transparent&title_color=ff3344&text_color=8993a1&bg_color=00000000" alt="Public language statistics for xlfr4n" width="49%">
-</p>
+<a href="https://github.com/xlfr4n">
+<img src="https://img.shields.io/github/followers/xlfr4n?label=FOLLOWERS&style=for-the-badge&color=ff3344&labelColor=080b10" alt="GitHub followers">
+</a>
+<a href="https://github.com/xlfr4n/kali-bspwm-2026">
+<img src="https://img.shields.io/github/commit-activity/m/xlfr4n/kali-bspwm-2026?label=KALI%20ACTIVITY&style=for-the-badge&color=ff3344&labelColor=080b10" alt="Kali repository activity">
+</a>
+<a href="https://github.com/xlfr4n/habbo-furni-radar">
+<img src="https://img.shields.io/github/commit-activity/m/xlfr4n/habbo-furni-radar?label=RADAR%20ACTIVITY&style=for-the-badge&color=ff3344&labelColor=080b10" alt="Habbo Furni Radar activity">
+</a>
 
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=xlfr4n&bg_color=00000000&color=8993a1&line=ff3344&point=ffffff&area=true&hide_border=true&custom_title=xlfr4n%20%2F%2F%20PUBLIC%20ACTIVITY" alt="xlfr4n public GitHub activity graph" width="100%">
-</p>
+<br>
+
+<a href="https://github.com/xlfr4n?tab=activity">
+<img src="https://img.shields.io/badge/%F0%9F%94%8E%20VIEW%20GITHUB%20ACTIVITY-080b10?style=for-the-badge&labelColor=080b10&color=ff3344" alt="View GitHub activity">
+</a>
+<a href="https://github.com/xlfr4n?tab=repositories">
+<img src="https://img.shields.io/badge/%F0%9F%93%81%20VIEW%20ALL%20REPOSITORIES-080b10?style=for-the-badge&labelColor=080b10&color=ff3344" alt="View repositories">
+</a>
+
+</div>
+
+> **ES:** Esta sección muestra señal pública real de GitHub en lugar de depender de widgets de estadísticas externos que pueden dejar de renderizarse.
+>
+> **EN:** This section shows real public GitHub signals instead of depending on third-party statistics widgets that may stop rendering.
 
 ---
 
-# ❤️ UN PERFIL HUMANO / A HUMAN PROFILE
+# 🧪 Cómo trabajo / How I work
+
+<table>
+<tr>
+<td align="center" width="20%">
+
+### 🔍 01
+**INVESTIGATE**
+
+Entender primero.  
+Understand first.
+
+</td>
+<td align="center" width="20%">
+
+### 🛠️ 02
+**BUILD**
+
+Construir algo útil.  
+Build something useful.
+
+</td>
+<td align="center" width="20%">
+
+### ✅ 03
+**VERIFY**
+
+Comprobar lo real.  
+Verify the real result.
+
+</td>
+<td align="center" width="20%">
+
+### ⚙️ 04
+**AUTOMATE**
+
+Quitar trabajo repetitivo.  
+Remove repeated work.
+
+</td>
+<td align="center" width="20%">
+
+### 📚 05
+**DOCUMENT**
+
+Dejar un camino claro.  
+Leave a clear trail.
+
+</td>
+</tr>
+</table>
+
+<details>
+<summary><strong>💬 Filosofía / Philosophy</strong></summary>
+
+### ES 🇪🇸
+
+No necesito que un proyecto sea enorme para que sea interesante.
+
+Prefiero algo **pequeño, claro, útil y comprobable**.
+
+### EN
+
+A project doesn't need to be huge to be interesting.
+
+I prefer something **small, clear, useful and verifiable**.
+
+</details>
+
+---
+
+# ❤️ Un perfil humano / A human profile
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### 🇪🇸
+### ES 🇪🇸
 
-No todo tiene que ser productividad.
+No todo tiene que ser productividad. 😄
 
 A veces quiero:
 
-🤔 investigar algo raro  
+🤔 investigar algo extraño  
 ⚙️ automatizar algo aburrido  
-🔬 entender una tecnología  
-💻 construir una herramienta  
-🎮 hacer algo simplemente porque es divertido
+🔬 aprender cómo funciona algo  
+💻 crear una herramienta  
+🎮 hacer algo simplemente porque mola
 
-Y está bien. 😄
-
-GitHub también puede ser un laboratorio para **aprender, experimentar y pasarlo bien**.
+GitHub también puede ser un laboratorio para aprender y experimentar.
 
 </td>
 <td width="50%" valign="top">
 
-### 🇬🇧
+### EN
 
-Not everything has to be productivity.
+Not everything has to be productivity. 😄
 
 Sometimes I want to:
 
 🤔 investigate something weird  
 ⚙️ automate something boring  
-🔬 understand a technology  
+🔬 learn how something works  
 💻 build a tool  
-🎮 make something simply because it's fun
+🎮 make something simply because it is fun
 
-And that's okay. 😄
-
-GitHub can also be a laboratory for **learning, experimenting and having fun**.
+GitHub can also be a laboratory for learning and experimenting.
 
 </td>
 </tr>
@@ -602,80 +628,91 @@ GitHub can also be a laboratory for **learning, experimenting and having fun**.
 
 ---
 
-# 🔐 PRINCIPIOS / PRINCIPLES
+# 🔐 Principios / Principles
+
+<div align="center">
+
+🔎 **EVIDENCE** · 🔁 **REPRODUCIBILITY** · ⚙️ **AUTOMATION** · 📚 **DOCUMENTATION** · ❤️ **CURIOSITY**
+
+</div>
 
 <table>
 <tr>
 <td align="center" width="25%">
 
-### 🔎 EVIDENCE
+### 🔎
 
-🇪🇸 Mostrar lo que puede comprobarse.
+**EVIDENCE**
 
-🇬🇧 Show what can be verified.
-
-</td>
-<td align="center" width="25%">
-
-### 🔁 REPRODUCE
-
-🇪🇸 Dejar un camino repetible.
-
-🇬🇧 Leave a repeatable path.
+ES · Mostrar lo comprobable.  
+EN · Show what can be verified.
 
 </td>
 <td align="center" width="25%">
 
-### ⚙️ AUTOMATE
+### 🔁
 
-🇪🇸 Automatizar lo repetitivo.
+**REPRODUCE**
 
-🇬🇧 Automate repetitive work.
+ES · Dejar un camino repetible.  
+EN · Leave a repeatable path.
 
 </td>
 <td align="center" width="25%">
 
-### 📚 DOCUMENT
+### ⚙️
 
-🇪🇸 Mantener vivo el contexto.
+**AUTOMATE**
 
-🇬🇧 Keep the context alive.
+ES · Automatizar lo repetitivo.  
+EN · Automate repetitive work.
+
+</td>
+<td align="center" width="25%">
+
+### 📚
+
+**DOCUMENT**
+
+ES · Mantener el contexto.  
+EN · Keep the context alive.
 
 </td>
 </tr>
 </table>
 
-> ❤️ **Regla / Rule:**  
-> **No afirmar lo que no se ha comprobado. / Don't claim what has not been checked.**
+> ❤️ **ES:** No afirmar lo que no se ha comprobado.
+>
+> ❤️ **EN:** Don't claim what has not been checked.
 
 ---
 
-# 🗂️ MAPA / MAP
+# 🗂️ Mapa / Map
 
-| 🧩 Surface | 🇪🇸 Español | 🇬🇧 English |
+| Surface | ES 🇪🇸 | EN |
 |---|---|---|
-| `README.md` | Perfil e identidad | Profile and identity |
-| `BRAND.md` | Sistema visual y de escritura | Visual and writing system |
-| `index.html` | Landing pública | Public landing page |
-| `status/` | Registro de trabajo visible | Visible work register |
-| `terminal/` | Terminal interactiva | Interactive terminal |
-| `play/` | MICRODOOM | MICRODOOM playground |
-| `assets/` | Sistema visual compartido | Shared visual system |
-| `.github/workflows/` | Validación + despliegue | Validation + deployment |
+| \`README.md\` | Perfil e identidad | Profile and identity |
+| \`BRAND.md\` | Sistema visual y de escritura | Visual and writing system |
+| \`index.html\` | Landing del LAB | LAB landing page |
+| \`status/\` | Registro público | Public register |
+| \`terminal/\` | Terminal interactiva | Interactive terminal |
+| \`play/\` | MICRODOOM | MICRODOOM playground |
+| \`assets/\` | Sistema visual + runtime | Shared visual system + runtime |
+| \`.github/workflows/\` | Validación + despliegue | Validation + deployment |
 
 ---
 
-# 🔭 FUTURO / WHAT'S NEXT
+# 🌱 Futuro / What's next
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### 🇪🇸
+### ES 🇪🇸
 
-Este perfil está pensado para crecer sin perder claridad. 🌱
+Quiero que el perfil pueda crecer sin perder claridad.
 
-Las nuevas piezas deberían aportar algo real:
+Cada nueva pieza debería aportar al menos una de estas cosas:
 
 ✨ utilidad  
 🧠 aprendizaje  
@@ -686,11 +723,11 @@ Las nuevas piezas deberían aportar algo real:
 </td>
 <td width="50%" valign="top">
 
-### 🇬🇧
+### EN
 
-This profile is designed to grow without losing clarity. 🌱
+I want the profile to grow without losing clarity.
 
-New pieces should add something real:
+Every new piece should contribute at least one of:
 
 ✨ usefulness  
 🧠 learning  
@@ -704,44 +741,31 @@ New pieces should add something real:
 
 ---
 
-# 🙌 GRACIAS / THANK YOU
+# 🙌 Gracias / Thank you
 
-<table>
-<tr>
-<td width="50%" valign="top" align="center">
+<div align="center">
 
-### 🇪🇸
+### ES 🇪🇸
 
-Gracias por pasarte por aquí. 👋
+Gracias por pasar por aquí. 👋
 
-Explora el perfil, entra al LAB, prueba la terminal y rompe un par de cosas en MICRODOOM. 😄
+Explora. Curiosea. Prueba cosas. Y rompe alguna cosa en MICRODOOM. 😄
 
-</td>
-<td width="50%" valign="top" align="center">
-
-### 🇬🇧
+### EN
 
 Thanks for stopping by. 👋
 
-Explore the profile, enter the LAB, try the terminal and break a few things in MICRODOOM. 😄
+Explore. Be curious. Try things. And break something in MICRODOOM. 😄
 
-</td>
-</tr>
-</table>
+<br>
 
-<p align="center">
-  <a href="https://github.com/xlfr4n"><img src="https://img.shields.io/badge/%E2%9A%A1_GITHUB-ff3344?style=for-the-badge&labelColor=080b10" alt="GitHub"></a>
-  <a href="https://github.com/xlfr4n?tab=repositories"><img src="https://img.shields.io/badge/%F0%9F%93%81_REPOSITORIES-ff3344?style=for-the-badge&labelColor=080b10" alt="Repositories"></a>
-  <a href="https://xlfr4n.github.io/xlfr4n/"><img src="https://img.shields.io/badge/%E2%9A%A1_LAB-ff3344?style=for-the-badge&labelColor=080b10" alt="LAB"></a>
-  <a href="https://xlfr4n.github.io/xlfr4n/terminal/"><img src="https://img.shields.io/badge/%E2%8C%A8%EF%B8%8F_TERMINAL-ff3344?style=for-the-badge&labelColor=080b10" alt="Terminal"></a>
-  <a href="https://xlfr4n.github.io/xlfr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE_PLAY-ff3344?style=for-the-badge&labelColor=080b10" alt="Play"></a>
-</p>
+<a href="https://github.com/xlfr4n"><img src="https://img.shields.io/badge/%E2%9A%A1%20GITHUB-ff3344?style=for-the-badge&labelColor=080b10" alt="GitHub"></a>
+<a href="https://github.com/xlfr4n?tab=repositories"><img src="https://img.shields.io/badge/%F0%9F%93%81%20REPOSITORIES-ff3344?style=for-the-badge&labelColor=080b10" alt="Repositories"></a>
+<a href="https://xlfr4n.github.io/xlfr4n/"><img src="https://img.shields.io/badge/%E2%9A%A1%20LAB-ff3344?style=for-the-badge&labelColor=080b10" alt="LAB"></a>
 
-<p align="center">
-  <strong>⚡ UNA FIRMA. DIFERENTES LABORATORIOS.</strong><br>
-  <sub>⚡ ONE SIGNATURE. DIFFERENT LABORATORIES.</sub>
-</p>
+<br><br>
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=120&section=footer&color=0:070A0F,100:FF3344" width="100%" alt="xlfr4n profile footer">
-</p>
+<strong>⚡ UNA FIRMA. DIFERENTES LABORATORIOS.</strong><br>
+<strong>⚡ ONE SIGNATURE. DIFFERENT LABORATORIES.</strong>
+
+</div>
