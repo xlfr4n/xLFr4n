@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://xlfr4n.github.io/xlfr4n/sitemap.xml
