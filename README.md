@@ -1,8 +1,8 @@
-<!-- xlfr4n // profile README // ES + EN -->
+<!-- xLFr4n // profile README // ES + EN -->
 
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=24&duration=2800&pause=900&color=FF3344&center=true&vCenter=true&width=900&lines=Hola%2C+soy+xlfr4n+%F0%9F%91%8B;Hello%2C+I'm+xlfr4n+%F0%9F%91%8B;Construyo.+Investigo.+Verifico.+%E2%9A%A1;I+build.+I+investigate.+I+verify.+%E2%9A%A1;Bienvenido+a+mi+laboratorio+%F0%9F%A7%AA;Welcome+to+my+technical+lab+%F0%9F%A7%AA" alt="xlfr4n Spanish and English animated introduction">
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=24&duration=2800&pause=900&color=FF3344&center=true&vCenter=true&width=900&lines=Hola%2C+soy+xLFr4n+%F0%9F%91%8B;Hello%2C+I'm+xLFr4n+%F0%9F%91%8B;Construyo.+Investigo.+Verifico.+%E2%9A%A1;I+build.+I+investigate.+I+verify.+%E2%9A%A1;Bienvenido+a+mi+laboratorio+%F0%9F%A7%AA;Welcome+to+my+technical+lab+%F0%9F%A7%AA" alt="xLFr4n Spanish and English animated introduction">
 
 <p>
 <strong>⚡ SOFTWARE</strong> ·
@@ -16,20 +16,20 @@
 </p>
 
 <p>
-<a href="https://xlfr4n.github.io/xlfr4n/"><img src="https://img.shields.io/badge/%E2%9A%A1%20ENTER%20LAB-ff3344?style=for-the-badge&labelColor=080b10" alt="Enter xlfr4n Lab"></a>
-<a href="https://xlfr4n.github.io/xlfr4n/terminal/"><img src="https://img.shields.io/badge/%E2%8C%A8%EF%B8%8F%20OPEN%20TERMINAL-ff3344?style=for-the-badge&labelColor=080b10" alt="Open terminal"></a>
-<a href="https://xlfr4n.github.io/xlfr4n/status/"><img src="https://img.shields.io/badge/%F0%9F%93%A1%20STATUS-ff3344?style=for-the-badge&labelColor=080b10" alt="Open status"></a>
-<a href="https://xlfr4n.github.io/xlfr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20MICRODOOM-ff3344?style=for-the-badge&labelColor=080b10" alt="Play MICRODOOM"></a>
+<a href="https://xlfr4n.github.io/xLFr4n/"><img src="https://img.shields.io/badge/%E2%9A%A1%20ENTER%20LAB-ff3344?style=for-the-badge&labelColor=080b10" alt="Enter xLFr4n Lab"></a>
+<a href="https://xlfr4n.github.io/xLFr4n/terminal/"><img src="https://img.shields.io/badge/%E2%8C%A8%EF%B8%8F%20OPEN%20TERMINAL-ff3344?style=for-the-badge&labelColor=080b10" alt="Open terminal"></a>
+<a href="https://xlfr4n.github.io/xLFr4n/status/"><img src="https://img.shields.io/badge/%F0%9F%93%A1%20STATUS-ff3344?style=for-the-badge&labelColor=080b10" alt="Open status"></a>
+<a href="https://xlfr4n.github.io/xLFr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20MICRODOOM-ff3344?style=for-the-badge&labelColor=080b10" alt="Play MICRODOOM"></a>
 </p>
 
 <p>
-<a href="https://github.com/xlfr4n"><img src="https://img.shields.io/badge/GitHub-@xlfr4n-080b10?style=for-the-badge&logo=github&logoColor=white&labelColor=080b10&color=ff3344" alt="GitHub @xlfr4n"></a>
+<a href="https://github.com/xlfr4n"><img src="https://img.shields.io/badge/GitHub-@xLFr4n-080b10?style=for-the-badge&logo=github&logoColor=white&labelColor=080b10&color=ff3344" alt="GitHub @xLFr4n"></a>
 <a href="https://github.com/xlfr4n?tab=repositories"><img src="https://img.shields.io/badge/%F0%9F%93%81%20REPOSITORIES-080b10?style=for-the-badge&labelColor=080b10&color=ff3344" alt="Repositories"></a>
 <a href="https://github.com/xlfr4n?tab=activity"><img src="https://img.shields.io/badge/%F0%9F%94%8E%20ACTIVITY-080b10?style=for-the-badge&labelColor=080b10&color=ff3344" alt="GitHub activity"></a>
 </p>
 
 <p>
-<a href="https://github.com/xlfr4n/xlfr4n/actions/workflows/pages.yml"><img src="https://github.com/xlfr4n/xlfr4n/actions/workflows/pages.yml/badge.svg" alt="GitHub Pages CI"></a>
+<a href="https://github.com/xlfr4n/xLFr4n/actions/workflows/pages.yml"><img src="https://github.com/xlfr4n/xLFr4n/actions/workflows/pages.yml/badge.svg" alt="GitHub Pages CI"></a>
 <img src="https://img.shields.io/github/followers/xlfr4n?label=FOLLOWERS&style=flat-square&color=ff3344&labelColor=080b10" alt="GitHub followers">
 <img src="https://komarev.com/ghpvc/?username=xlfr4n&label=PROFILE+VIEWS&color=ff3344&style=flat-square" alt="Profile views">
 </p>
@@ -52,7 +52,7 @@
 
 ¡Bienvenido! 👋
 
-Soy **xlfr4n** y este perfil es mi **laboratorio técnico personal**.
+Soy **xLFr4n** y este perfil es mi **laboratorio técnico personal**.
 
 Aquí mezclo:
 
@@ -82,7 +82,7 @@ Y la filosofía que conecta todo:
 
 Welcome! 👋
 
-I'm **xlfr4n**, and this profile is my **personal technical laboratory**.
+I'm **xLFr4n**, and this profile is my **personal technical laboratory**.
 
 I work across:
 
@@ -175,7 +175,7 @@ And the philosophy connecting everything:
 
 <div align="center">
 
-<a href="https://xlfr4n.github.io/xlfr4n/"><img src="https://img.shields.io/badge/%E2%9A%A1%20ENTER%20THE%20LAB-ff3344?style=for-the-badge&labelColor=080b10" alt="Enter the Lab"></a>
+<a href="https://xlfr4n.github.io/xLFr4n/"><img src="https://img.shields.io/badge/%E2%9A%A1%20ENTER%20THE%20LAB-ff3344?style=for-the-badge&labelColor=080b10" alt="Enter the Lab"></a>
 
 </div>
 
@@ -276,7 +276,7 @@ And the philosophy connecting everything:
 
 🖥️ 320×200 · 🎨 Pixel art original · 🧱 Raycasting · 👾 Enemigos · 🔫 Combate · ❤️ Vida + armadura
 
-<a href="https://xlfr4n.github.io/xlfr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20PLAY%20NOW-ff3344?style=for-the-badge&labelColor=080b10" alt="Play MICRODOOM"></a>
+<a href="https://xlfr4n.github.io/xLFr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20PLAY%20NOW-ff3344?style=for-the-badge&labelColor=080b10" alt="Play MICRODOOM"></a>
 
 </td>
 </tr>
@@ -297,7 +297,7 @@ And the philosophy connecting everything:
 
 <div align="center">
 
-<img src="https://skillicons.dev/icons?i=linux,bash,python,javascript,typescript,react,nextjs,postgres,supabase,git,github,docker,vercel&perline=7" alt="xlfr4n technology stack">
+<img src="https://skillicons.dev/icons?i=linux,bash,python,javascript,typescript,react,nextjs,postgres,supabase,git,github,docker,vercel&perline=7" alt="xLFr4n technology stack">
 
 </div>
 
@@ -346,7 +346,7 @@ And the philosophy connecting everything:
 
 <div align="center">
 
-<a href="https://xlfr4n.github.io/xlfr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20PLAY%20MICRODOOM-ff3344?style=for-the-badge&labelColor=080b10" alt="Play MICRODOOM"></a>
+<a href="https://xlfr4n.github.io/xLFr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20PLAY%20MICRODOOM-ff3344?style=for-the-badge&labelColor=080b10" alt="Play MICRODOOM"></a>
 
 </div>
 
@@ -432,7 +432,7 @@ You can also use ↑ / ↓ for history and TAB for completion.
 
 <div align="center">
 
-<a href="https://xlfr4n.github.io/xlfr4n/terminal/"><img src="https://img.shields.io/badge/%E2%8C%A8%EF%B8%8F%20OPEN%20TERMINAL-ff3344?style=for-the-badge&labelColor=080b10" alt="Open Terminal"></a>
+<a href="https://xlfr4n.github.io/xLFr4n/terminal/"><img src="https://img.shields.io/badge/%E2%8C%A8%EF%B8%8F%20OPEN%20TERMINAL-ff3344?style=for-the-badge&labelColor=080b10" alt="Open Terminal"></a>
 
 </div>
 
@@ -443,11 +443,11 @@ You can also use ↑ / ↓ for history and TAB for completion.
 <div align="center">
 
 <a href="https://github.com/xlfr4n">
-<img src="https://github-readme-stats.vercel.app/api?username=xlfr4n&show_icons=true&hide_border=true&include_all_commits=true&count_private=false&theme=transparent&title_color=ff3344&text_color=8993a1&icon_color=ff3344&ring_color=ff3344&bg_color=00000000" alt="GitHub statistics for xlfr4n" width="49%">
+<img src="https://github-readme-stats.vercel.app/api?username=xlfr4n&show_icons=true&hide_border=true&include_all_commits=true&count_private=false&theme=transparent&title_color=ff3344&text_color=8993a1&icon_color=ff3344&ring_color=ff3344&bg_color=00000000" alt="GitHub statistics for xLFr4n" width="49%">
 </a>
 
 <a href="https://github.com/xlfr4n?tab=repositories">
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=xlfr4n&layout=compact&hide_border=true&langs_count=8&count_private=false&theme=transparent&title_color=ff3344&text_color=8993a1&bg_color=00000000" alt="Public language statistics for xlfr4n" width="49%">
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=xlfr4n&layout=compact&hide_border=true&langs_count=8&count_private=false&theme=transparent&title_color=ff3344&text_color=8993a1&bg_color=00000000" alt="Public language statistics for xLFr4n" width="49%">
 </a>
 
 </div>
@@ -455,7 +455,7 @@ You can also use ↑ / ↓ for history and TAB for completion.
 <div align="center">
 
 <a href="https://github.com/xlfr4n?tab=activity">
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=xlfr4n&bg_color=00000000&color=8993a1&line=ff3344&point=ffffff&area=true&hide_border=true&custom_title=xlfr4n%20%2F%2F%20PUBLIC%20ACTIVITY" alt="xlfr4n public GitHub activity graph" width="100%">
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=xlfr4n&bg_color=00000000&color=8993a1&line=ff3344&point=ffffff&area=true&hide_border=true&custom_title=xLFr4n%20%2F%2F%20PUBLIC%20ACTIVITY" alt="xLFr4n public GitHub activity graph" width="100%">
 </a>
 
 </div>
@@ -728,9 +728,9 @@ Explore, be curious, try things and break something in MICRODOOM. 😄
 
 <a href="https://github.com/xlfr4n"><img src="https://img.shields.io/badge/%E2%9A%A1%20GITHUB-ff3344?style=for-the-badge&labelColor=080b10" alt="GitHub"></a>
 <a href="https://github.com/xlfr4n?tab=repositories"><img src="https://img.shields.io/badge/%F0%9F%93%81%20REPOSITORIES-ff3344?style=for-the-badge&labelColor=080b10" alt="Repositories"></a>
-<a href="https://xlfr4n.github.io/xlfr4n/"><img src="https://img.shields.io/badge/%E2%9A%A1%20LAB-ff3344?style=for-the-badge&labelColor=080b10" alt="LAB"></a>
-<a href="https://xlfr4n.github.io/xlfr4n/terminal/"><img src="https://img.shields.io/badge/%E2%8C%A8%EF%B8%8F%20TERMINAL-ff3344?style=for-the-badge&labelColor=080b10" alt="Terminal"></a>
-<a href="https://xlfr4n.github.io/xlfr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20PLAY-ff3344?style=for-the-badge&labelColor=080b10" alt="Play"></a>
+<a href="https://xlfr4n.github.io/xLFr4n/"><img src="https://img.shields.io/badge/%E2%9A%A1%20LAB-ff3344?style=for-the-badge&labelColor=080b10" alt="LAB"></a>
+<a href="https://xlfr4n.github.io/xLFr4n/terminal/"><img src="https://img.shields.io/badge/%E2%8C%A8%EF%B8%8F%20TERMINAL-ff3344?style=for-the-badge&labelColor=080b10" alt="Terminal"></a>
+<a href="https://xlfr4n.github.io/xLFr4n/play/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE%20PLAY-ff3344?style=for-the-badge&labelColor=080b10" alt="Play"></a>
 
 <br><br>
 
@@ -740,5 +740,5 @@ Explore, be curious, try things and break something in MICRODOOM. 😄
 </div>
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=120&section=footer&color=0:070A0F,100:FF3344" width="100%" alt="xlfr4n profile footer">
+  <img src="https://capsule-render.vercel.app/api?type=waving&height=120&section=footer&color=0:070A0F,100:FF3344" width="100%" alt="xLFr4n profile footer">
 </p>
