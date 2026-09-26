@@ -119,9 +119,9 @@ AUTOMATE → DOCUMENT → REPEAT
 
 ---
 
-## 🎮 ./play
+## 🧭 ./lab
 
-I wanted the profile to have something that is actually **interactive**, not just another wall of badges.
+The profile now has a small companion site: navigation, project status, terminal experiments and an interactive playground.
 
 ### ⚡ MICRODOOM
 
@@ -132,9 +132,9 @@ A tiny original browser FPS/raycaster made specifically for the profile.
 - 🔥 Original code/assets — no Doom game files included
 - 🧪 Small technical playground rather than a full game
 
-**Play:** [xlfr4n // MICRODOOM](https://xlfr4n.github.io/xlfr4n/play/)
+**Lab:** [xlfr4n // LAB](https://xlfr4n.github.io/xlfr4n/) · **Terminal:** [OPEN](https://xlfr4n.github.io/xlfr4n/terminal/) · **Status:** [OPEN](https://xlfr4n.github.io/xlfr4n/status/) · **Play:** [MICRODOOM](https://xlfr4n.github.io/xlfr4n/play/)
 
-> If the Pages URL has not been activated yet, the game source is available at [play/index.html](./play/index.html).
+> The companion site is published from this repository. The game source remains available at [play/index.html](./play/index.html).
 
 ---
 
@@ -187,10 +187,10 @@ Leave enough evidence for someone — including future me — to reproduce it.
 
 This profile is deliberately a **living lab**.
 
-- `STATUS` — honest project/status information
+- `STATUS` — public high-level project state
 - `TERMINAL` — command-style navigation
 - `EASTER EGGS` — hidden details for people who explore
-- `LAB INDEX` — clearer navigation between repositories
+- `LAB INDEX` — dedicated companion site for the repositories
 - More small experiments that can be opened directly from the profile
 
 No fake metrics. No invented activity. Only things that can actually be verified.
