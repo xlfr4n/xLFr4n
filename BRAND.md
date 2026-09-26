@@ -1,24 +1,24 @@
-# ⚡ xlfr4n // Brand System
+# ⚡ xLFr4n // Brand System
 
 > One signature. Different laboratories.
 
 ## 01 — Identity
 
-**Name:** xlfr4n  
-**Signature:** ⚡ xlfr4n  
+**Name:** xLFr4n  
+**Signature:** ⚡ xLFr4n  
 **Core fields:** Cybersecurity · Full-Stack · Linux · Web3 · Automation  
 **Language style:** Spanish + English where useful  
 **Tone:** technical, direct, curious, evidence-led
 
 ### 🇪🇸 Principio
 
-La marca xlfr4n representa una forma de trabajar más que un stack concreto:
+La marca xLFr4n representa una forma de trabajar más que un stack concreto:
 
 **investigar → construir → comprobar → automatizar → documentar**
 
 ### 🇬🇧 Principle
 
-The xlfr4n identity is a way of working rather than a single stack:
+The xLFr4n identity is a way of working rather than a single stack:
 
 **investigate → build → verify → automate → document**
 
@@ -28,13 +28,13 @@ The xlfr4n identity is a way of working rather than a single stack:
 
 | Token | Hex | Use |
 |---|---|---|
-| xlfr4n-red | #FF3344 | primary accent / alerts / links |
-| xlfr4n-red-2 | #FF6875 | highlight / secondary accent |
-| xlfr4n-bg | #06080C | main background |
-| xlfr4n-panel | #0C1118 | cards / terminal surfaces |
-| xlfr4n-text | #F5F7FA | primary text |
-| xlfr4n-muted | #8993A1 | secondary text |
-| xlfr4n-line | #252D38 | borders / separators |
+| xLFr4n-red | #FF3344 | primary accent / alerts / links |
+| xLFr4n-red-2 | #FF6875 | highlight / secondary accent |
+| xLFr4n-bg | #06080C | main background |
+| xLFr4n-panel | #0C1118 | cards / terminal surfaces |
+| xLFr4n-text | #F5F7FA | primary text |
+| xLFr4n-muted | #8993A1 | secondary text |
+| xLFr4n-line | #252D38 | borders / separators |
 
 The visual language should feel like a **personal engineering lab**: dark surfaces, precise spacing, red signal accents, monospace UI and restrained glow.
 
@@ -81,7 +81,7 @@ Claims such as:
 
 ## 05 — Signature
 
-**⚡ xlfr4n**
+**⚡ xLFr4n**
 
 **One signature. Different laboratories.**
 
