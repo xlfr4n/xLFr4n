@@ -185,7 +185,7 @@ One practical rule:
 
 This profile is a **living lab**, not a static résumé.
 
-Future additions should follow the same rule: they should be useful, inspectable and honest about their state.
+The public LAB also exposes a runtime translation layer with automatic browser-language detection and an interactive language selector. Translation availability follows the provider catalogue at runtime.\n\nFuture additions should follow the same rule: they should be useful, inspectable and honest about their state.
 
 No fake activity.  
 No invented metrics.  
