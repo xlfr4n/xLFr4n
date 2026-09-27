@@ -5,6 +5,10 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    groups:
+      xLFr4n-maintenance:
+        patterns:
+          - "*"
     labels:
       - "dependencies"
       - "automated"
