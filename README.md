@@ -742,3 +742,24 @@ Explore, be curious, try things and break something in MICRODOOM. 😄
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&height=120&section=footer&color=0:070A0F,100:FF3344" width="100%" alt="xLFr4n profile footer">
 </p>
+
+## 🧭 Repository standards / Estándares del repositorio
+
+The profile repository is the public entry point for **⚡ xLFr4n**.
+
+Shared standards:
+- `BRAND.md` — canonical identity, visual language and writing rules.
+- `CONTRIBUTING.md` — how to extend the profile and its experiments.
+- `SECURITY.md` — safe reporting and data boundaries.
+- `CODE_OF_CONDUCT.md` — collaboration baseline.
+
+### Signature rule
+
+The **display identity is `xLFr4n`**. The GitHub account/repository path remains **`xlfr4n`** because GitHub slugs are lowercase here. Both forms intentionally refer to the same author identity.
+
+### Public-profile rule
+
+This profile favors **real links, observable work and truthful status** over vanity metrics. External counters, graphs or badges are presentation layers and are never treated as primary evidence.
+
+> **⚡ xLFr4n — One signature. Different laboratories.**
+
