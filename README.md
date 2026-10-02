@@ -745,6 +745,8 @@ Explore, be curious, try things and break something in MICRODOOM. 😄
 
 ## 🧭 Repository standards / Estándares del repositorio
 
+> 📐 **Canonical ecosystem standard:** [ECOSYSTEM.md](./ECOSYSTEM.md) — naming, documentation, visual language and repository-wide conventions.
+
 The profile repository is the public entry point for **⚡ xLFr4n**.
 
 Shared standards:
