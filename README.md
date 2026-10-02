@@ -257,20 +257,20 @@ And the philosophy connecting everything:
 <tr>
 <td width="50%" valign="top">
 
-## 🤖 xLFr4n-DevsAI
+## 🔎 xLFr4n-Desencryp — AegisPot
 
-**PRIVATE LAB 🔒 · Forensics**
+**PRIVATE LAB 🔒 · Security / Honeypot**
 
-🇪🇸 Análisis y reconstrucción de JavaScript con énfasis en análisis estático, runtime, trazabilidad y evidencia reproducible.
+🇪🇸 Capa xLFr4n para un laboratorio T-Pot CE, manteniendo upstream y procedencia separados.
 
-🇬🇧 JavaScript analysis and reconstruction focused on static analysis, runtime behavior, traceability and reproducible evidence.
+🇬🇧 xLFr4n layer around a T-Pot CE lab, keeping upstream and provenance separate.
 
 🔒 Repositorio privado / Private repository.
 
 </td>
 <td width="50%" valign="top">
 
-## 🤖 DevsAI
+## 🤖 xLFr4n-DevsAI
 
 **PRIVATE LAB 🔒 · Full-Stack / AI**
 
