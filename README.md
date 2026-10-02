@@ -191,9 +191,9 @@ And the philosophy connecting everything:
 
 **PUBLIC · Linux / Desktop / Shell**
 
-🇪🇸 Entorno personalizado de Kali Linux alrededor de BSPWM, SXHKD, Polybar, Rofi, Kitty, Picom y shell tooling.
+🇪🇸 Entorno personalizado de Kali Linux alrededor de BSPWM, SXHKD, Polybar, Rofi, Ghostty, Picom y shell tooling.
 
-🇬🇧 Personalized Kali Linux desktop environment around BSPWM, SXHKD, Polybar, Rofi, Kitty, Picom and shell tooling.
+🇬🇧 Personalized Kali Linux desktop environment around BSPWM, SXHKD, Polybar, Rofi, Ghostty, Picom and shell tooling.
 
 🎯 Personalización / Personalization  
 ⚙️ Automatización / Automation  
@@ -224,7 +224,40 @@ And the philosophy connecting everything:
 <tr>
 <td width="50%" valign="top">
 
-## 🔎 desencryp
+## 🔎 xLFr4n-OSINT
+
+**PUBLIC · Security / Research / Python**
+
+🇪🇸 Laboratorio de investigación OSINT con providers públicos, provenance, normalización y reporting reproducible.
+
+🇬🇧 OSINT research laboratory built around public providers, provenance, normalization and reproducible reporting.
+
+🔎 Open-source intelligence  
+🧾 Evidence / Provenance  
+⚙️ Automation / Research
+
+<a href="https://github.com/xlfr4n/xLFr4n-OSINT"><img src="https://img.shields.io/badge/VIEW%20REPOSITORY-ff3344?style=for-the-badge&logo=github&logoColor=white" alt="View xLFr4n-OSINT"></a>
+
+</td>
+<td width="50%" valign="top">
+
+## 🔎 xLFr4n-Desencryp — AegisPot
+
+**PRIVATE LAB 🔒 · Security / Honeypot**
+
+🇪🇸 Capa xLFr4n para un laboratorio T-Pot CE, manteniendo upstream y procedencia separados.
+
+🇬🇧 xLFr4n layer around a T-Pot CE lab, keeping upstream and provenance separate.
+
+🔒 Repositorio privado / Private repository.
+
+</td>
+</tr>
+
+<tr>
+<td width="50%" valign="top">
+
+## 🤖 xLFr4n-DevsAI
 
 **PRIVATE LAB 🔒 · Forensics**
 
