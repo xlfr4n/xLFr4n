@@ -253,7 +253,7 @@ And the philosophy connecting everything:
 <tr>
 <td width="50%" valign="top">
 
-## 💎 HabboPortfolioPro
+## 💎 xLFr4n-Habbo-Portfolio
 
 **PRIVATE LAB 🔒 · Web3 / Data**
 
