@@ -187,7 +187,7 @@ And the philosophy connecting everything:
 <tr>
 <td width="50%" valign="top">
 
-## 🐧 kali-bspwm-2026
+## 🐧 xLFr4n-Kali-BSPWM
 
 **PUBLIC · Linux / Desktop / Shell**
 
@@ -199,12 +199,12 @@ And the philosophy connecting everything:
 ⚙️ Automatización / Automation  
 🐧 Linux desktop
 
-<a href="https://github.com/xlfr4n/kali-bspwm-2026"><img src="https://img.shields.io/badge/VIEW%20REPOSITORY-ff3344?style=for-the-badge&logo=github&logoColor=white" alt="View kali-bspwm-2026"></a>
+<a href="https://github.com/xlfr4n/xLFr4n-Kali-BSPWM"><img src="https://img.shields.io/badge/VIEW%20REPOSITORY-ff3344?style=for-the-badge&logo=github&logoColor=white" alt="View xLFr4n-Kali-BSPWM"></a>
 
 </td>
 <td width="50%" valign="top">
 
-## 📡 habbo-furni-radar
+## 📡 xLFr4n-Habbo-Furni-Radar
 
 **PUBLIC · Data / Automation**
 
@@ -216,7 +216,7 @@ And the philosophy connecting everything:
 🤖 Automatización / Automation  
 🔎 Observación / Tracking
 
-<a href="https://github.com/xlfr4n/habbo-furni-radar"><img src="https://img.shields.io/badge/VIEW%20REPOSITORY-ff3344?style=for-the-badge&logo=github&logoColor=white" alt="View habbo-furni-radar"></a>
+<a href="https://github.com/xlfr4n/xLFr4n-Habbo-Furni-Radar"><img src="https://img.shields.io/badge/VIEW%20REPOSITORY-ff3344?style=for-the-badge&logo=github&logoColor=white" alt="View xLFr4n-Habbo-Furni-Radar"></a>
 
 </td>
 </tr>
