@@ -44,7 +44,7 @@
 
   const WEAPONS = {
     fist: { name: "FIST", ammo: null, damage: [20, 40], cooldown: 0.42, range: 0.95, pellets: 1, spread: 0, auto: false },
-    pistol: { name: "PISTOL", ammo: "bullets", damage: [15, 25], cooldown: 0.30, range: 18, pellets: 1, spread: 0.018, auto: true },
+    pistol: { name: "PISTOL", ammo: "bullets", damage: [15, 25], cooldown: 0.30, range: 18, pellets: 1, spread: 0.018, auto: false },
     shotgun: { name: "SHOTGUN", ammo: "shells", damage: [5, 15], cooldown: 0.92, range: 16, pellets: 7, spread: 0.085, auto: false },
     chaingun: { name: "CHAINGUN", ammo: "bullets", damage: [5, 15], cooldown: 0.10, range: 18, pellets: 1, spread: 0.035, auto: true }
   };
@@ -127,10 +127,19 @@
 
   function tryMove(body, dx, dy, radius) {
     const r = radius ?? 0.16;
+    const canOccupy = (x, y) => {
+      if (blocked(x, y, r)) return false;
+      if (body === player) {
+        for (const e of enemies) {
+          if (e.alive && Math.hypot(e.x - x, e.y - y) < r + ENEMIES[e.type].radius) return false;
+        }
+      }
+      return true;
+    };
     const nx = body.x + dx;
     const ny = body.y + dy;
-    if (!blocked(nx, body.y, r)) body.x = nx;
-    if (!blocked(body.x, ny, r)) body.y = ny;
+    if (canOccupy(nx, body.y)) body.x = nx;
+    if (canOccupy(body.x, ny)) body.y = ny;
   }
 
   function lineOfSight(ax, ay, bx, by) {
@@ -791,14 +800,17 @@
   addEventListener("mousedown",(e)=>{
     if(e.button!==0)return;
     keys.MouseLeft=true;initAudio();
-    if(state.mode==="playing"&&!state.paused)lockMouse();
+    if(state.mode==="playing"&&!state.paused){
+      shoot();
+      lockMouse();
+    }
   });
   addEventListener("mouseup",(e)=>{if(e.button===0)keys.MouseLeft=false;});
   addEventListener("blur",()=>{for(const k of Object.keys(keys))keys[k]=false;});
 
   addEventListener("keydown",(e)=>{
     keys[e.code]=true;
-    if(["Space","Tab","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.code))e.preventDefault();
+    if(["Space","Tab","ArrowUp","ArrowDown","ArrowLeft","ArrowRight","F2","F3"].includes(e.code))e.preventDefault();
     initAudio();
 
     if(e.code==="Enter"&&state.mode==="title"){newGame();lockMouse();}
