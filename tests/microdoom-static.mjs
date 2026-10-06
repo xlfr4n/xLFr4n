@@ -90,16 +90,13 @@ assert.ok(html.includes('id="game-ui"') && html.includes('data-action="start"') 
 assert.ok(html.includes('id="setting-sensitivity"') && html.includes('id="setting-volume"'), "Microdoom must expose persistent control/audio options");
 assert.ok(js.includes('SETTINGS_KEY') && js.includes('DEFAULT_SETTINGS') && js.includes('settings.mouseSensitivity'), "Microdoom must persist mouse sensitivity settings");
 assert.ok(js.includes('DEFAULT_SETTINGS') && js.includes('mouseSensitivity: 0.00075'), "responsive mouse sensitivity default must be conservative");
-assert.ok(/mouseLookDelta\*settings\.mouseSensitivity/.test(js), "mouse look must use configurable sensitivity");
+assert.ok(/movement\*settings\.mouseSensitivity/.test(js), "mouse look must use configurable sensitivity");
 assert.ok(js.includes('canvas.requestPointerLock?.()'), "pointer lock must use the browser-standard capture request");
 assert.ok(js.includes('document.addEventListener("mousemove"'), "mouse look must use a single stable pointer-lock input path");
 assert.ok(!js.includes('pointerrawupdate'), "pointerrawupdate must not be mixed with mousemove input");
 assert.ok(js.includes('player.a=wrapAngle(player.a+movement*settings.mouseSensitivity)'), "mouse look must apply directly from pointer-lock movement");
 assert.ok(js.includes('function lockMouse()'), "mouse recapture must have a dedicated function");
-assert.ok(js.includes('function applyMouseLook()'), "camera input should have a dedicated frame-level application step");
-assert.ok(js.includes('function pauseGame()') && js.includes('state.paused = true;') && js.includes('mouseLookDelta=0;'), "pausing must clear pending mouse movement");
-assert.ok(js.includes('lastRawPointerAt') && js.includes('performance.now()-lastRawPointerAt>120'), "mousemove fallback must remain available if raw pointer events stop");
-assert.ok(js.includes('applyMouseLook();') && js.includes('let steps=0;'), "camera input must be applied before fixed simulation steps");
+assert.ok(js.includes('function pauseGame()') && js.includes('state.paused = true;'), "pausing must stop gameplay safely");
 assert.ok(js.includes('SETTINGS_KEY = "xlfr4n-microdoom-settings-v2"'), "mouse calibration storage must use the current settings version");
 assert.ok(js.includes('function pauseGame()') && js.includes('function resumeGame()') && js.includes('function returnToTitle()'), "menu navigation actions must be explicit");
 assert.ok(js.includes('window.location.href = "../"'), "exit action must return to the lab");
