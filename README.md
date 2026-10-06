@@ -136,7 +136,6 @@ Scripts & workflows
 
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=11&duration=2500&pause=1200&color=7C5CFF&center=true&vCenter=true&width=700&height=28&lines=%5Bprecision%5D+say+exactly+what+exists;%5Bverification%5D+test+before+declaring;%5Bmaintenance%5D+prefer+simple%2C+reproducible+systems" alt="xLFr4n engineering principles">
 
 </div>
 
@@ -369,7 +368,6 @@ Experimento original en canvas con combate, armas, IA, pickups, guardado y labor
 
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=14&duration=2800&pause=700&color=FF3344&center=true&vCenter=true&width=720&height=32&lines=%5B01%5D+INVESTIGATE;%5B02%5D+BUILD;%5B03%5D+VERIFY;%5B04%5D+AUTOMATE;%5B05%5D+DOCUMENT" alt="xLFr4n process animation">
 
 <table>
 <tr>
@@ -458,7 +456,6 @@ Experimento original en canvas con combate, armas, IA, pickups, guardado y labor
 
 <br>
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=11&duration=2300&pause=1200&color=19C3B1&center=true&vCenter=true&width=790&height=28&lines=PUBLIC+INTERFACE+%2F%2F+STATIC+LAB;LAB+%2F%2F+STATUS+%2F%2F+TERMINAL+%2F%2F+PLAY;READ+%2F%2F+OPEN+%2F%2F+VERIFY" alt="xLFr4n public lab route animation">
 
 </div>
 
@@ -518,7 +515,6 @@ Experimento original en canvas con combate, armas, IA, pickups, guardado y labor
 
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=13&duration=3000&pause=1300&color=FF3344&center=true&vCenter=true&width=760&height=34&lines=%E2%9A%A1+xLFr4n+%2F%2F+BUILD.+VERIFY.+REPEAT.;%E2%9A%A1+xLFr4n+%2F%2F+ONE+SIGNATURE%2C+DIFFERENT+LABORATORIES." alt="xLFr4n closing animation">
 
 <br>
 
