@@ -406,8 +406,9 @@
 
   function syncMenu() {
     let next = "";
-    if (state.mode === "title") next = "title";
-    else if (state.mode === "playing" && state.paused) {
+    if (state.mode === "title") {
+      next = (visibleMenu === "options" || visibleMenu === "controls") ? visibleMenu : "title";
+    } else if (state.mode === "playing" && state.paused) {
       next = (visibleMenu === "options" || visibleMenu === "controls") ? visibleMenu : (state.menuReturn || "pause");
     } else if (state.mode === "dead") next = "dead";
     else if (state.mode === "won") next = "won";
