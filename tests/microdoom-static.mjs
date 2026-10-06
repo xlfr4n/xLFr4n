@@ -89,7 +89,7 @@ assert.doesNotMatch(js, /if \(p\.owner === player && Math\.hypot\(p\.x-player\.x
 assert.ok(html.includes('id="game-ui"') && html.includes('data-action="start"') && html.includes('data-action="exit"'), "Microdoom must expose a real in-game menu with start/exit actions");
 assert.ok(html.includes('id="setting-sensitivity"') && html.includes('id="setting-volume"'), "Microdoom must expose persistent control/audio options");
 assert.ok(js.includes('SETTINGS_KEY') && js.includes('DEFAULT_SETTINGS') && js.includes('settings.mouseSensitivity'), "Microdoom must persist mouse sensitivity settings");
-assert.ok(/movement=clamp\(e\.movementX,-90,90\)/.test(js), "mouse look must clamp extreme pointer deltas");
+assert.ok(js.includes('DEFAULT_SETTINGS') && js.includes('mouseSensitivity: 0.00075'), "responsive mouse sensitivity default must be conservative");
 assert.ok(/movement\*settings\.mouseSensitivity/.test(js), "mouse look must use configurable sensitivity");
 assert.ok(js.includes('unadjustedMovement:true'), "pointer lock must request raw mouse movement");
 assert.ok(js.includes('"onpointerrawupdate" in window') && js.includes('pointerrawupdate'), "raw pointer input should be preferred when supported");
