@@ -56,10 +56,12 @@
 
   const ENEMIES = {
     zombieman: { hp: 20, speed: 0.78, radius: 0.23, sight: 11, attackRange: 7, cooldown: 1.30, damage: 8, projectile: false },
+    shotguy: { hp: 30, speed: 0.74, radius: 0.24, sight: 11, attackRange: 7, cooldown: 1.45, damage: 6, pellets: 5, spread: 0.13, projectile: false },
     imp: { hp: 60, speed: 0.64, radius: 0.27, sight: 12, attackRange: 8, cooldown: 1.65, damage: 12, projectile: true },
     demon: { hp: 150, speed: 0.96, radius: 0.35, sight: 10, attackRange: 1.0, cooldown: 1.05, damage: 18, projectile: false },
-    cacodemon: { hp: 400, speed: 0.50, radius: 0.38, sight: 14, attackRange: 9, cooldown: 2.0, damage: 18, projectile: true }
-  };
+    cacodemon: { hp: 400, speed: 0.50, radius: 0.38, sight: 14, attackRange: 9, cooldown: 2.0, damage: 18, projectile: true },
+    baron: { hp: 350, speed: 0.42, radius: 0.38, sight: 16, attackRange: 9, cooldown: 1.75, damage: 25, projectile: true }
+  };;
 
   const state = {
     mode: "title",
@@ -275,6 +277,7 @@
     }
 
     spawnEnemy("zombieman", 6.5, 5.5);
+    spawnEnemy("shotguy", 10.5, 7.5);
     spawnEnemy("imp", 14.5, 3.5);
     spawnEnemy("zombieman", 24.5, 4.5);
     spawnEnemy("demon", 6.5, 9.5);
@@ -283,6 +286,7 @@
     spawnEnemy("demon", 7.5, 15.5);
     spawnEnemy("imp", 8.5, 18.5);
     spawnEnemy("cacodemon", 23.5, 7.5);
+    spawnEnemy("baron", 26.5, 8.5);
     spawnEnemy("zombieman", 27.5, 6.5);
 
     spawnPickup("clip", 4.5, 3.5, 10);
@@ -583,35 +587,42 @@
     beep(name);
   }
   function enemyAttack(e) {
-    const d = ENEMIES[e.type];
-    const t = targetPosition(e);
-    const a = Math.atan2(t.y - e.y, t.x - e.x);
-    if (d.projectile) {
+    const d=ENEMIES[e.type];
+    const t=targetPosition(e);
+    const a=Math.atan2(t.y-e.y,t.x-e.x);
+
+    if(d.projectile){
       projectiles.push({
-        x:e.x, y:e.y, a,
-        speed:e.type==="cacodemon" ? 2.6 : 4.1,
-        damage:d.damage, life:5,
-        owner:e
+        x:e.x,y:e.y,a,
+        speed:e.type==="cacodemon"?2.6:e.type==="baron"?3.2:4.1,
+        damage:d.damage,life:5,owner:e,
+        type:e.type==="baron"?"baronball":"fireball"
       });
-    } else {
-      const wall = rayCast(e.x,e.y,a);
-      const dist = Math.hypot(t.x-e.x,t.y-e.y);
-      if (wall.dist >= dist-.05 && Math.random() < .72) {
-        if (t === player) hurt(d.damage);
-        else {
-          t.hp -= d.damage;
-          t.pain = .12;
-          t.target = e;
-          t.state = "chase";
-          if (t.hp <= 0) killEnemy(t);
+    }else if(d.pellets){
+      for(let i=0;i<d.pellets;i++){
+        const sa=a+rand(-d.spread,d.spread);
+        const wall=rayCast(e.x,e.y,sa);
+        const dist=Math.hypot(t.x-e.x,t.y-e.y);
+        if(wall.dist>=dist-.05&&Math.random()<.72){
+          const amount=int(3,d.damage);
+          if(t===player)hurt(amount);else{
+            t.hp-=amount;t.pain=.10;t.target=e;t.state="chase";
+            if(t.hp<=0)killEnemy(t);
+          }
+        }
+      }
+    }else{
+      const wall=rayCast(e.x,e.y,a);
+      const dist=Math.hypot(t.x-e.x,t.y-e.y);
+      if(wall.dist>=dist-.05&&Math.random()<.72){
+        if(t===player)hurt(d.damage);else{
+          t.hp-=d.damage;t.pain=.12;t.target=e;t.state="chase";
+          if(t.hp<=0)killEnemy(t);
         }
       }
     }
-    e.cd = d.cooldown;
-    e.attackFlash = .1;
-    beep("monster");
+    e.cd=d.cooldown;e.attackFlash=.1;beep("monster");
   }
-
   function moveEnemy(e, dx, dy) {
     const r = ENEMIES[e.type].radius;
     let nx=e.x+dx, ny=e.y+dy;
@@ -931,16 +942,51 @@
   }
 
   function drawEnemy(e,sx,d){
-    const z=clamp(11/Math.max(.25,d),.25,3),w=Math.max(5,Math.floor((e.type==="cacodemon"?34:e.type==="demon"?28:23)*z)),h=Math.max(8,Math.floor((e.type==="cacodemon"?31:e.type==="demon"?38:34)*z));
+    const z=clamp(11/Math.max(.25,d),.25,3);
+    const w=Math.max(5,Math.floor((e.type==="cacodemon"?34:e.type==="baron"?32:e.type==="demon"?28:23)*z));
+    const h=Math.max(8,Math.floor((e.type==="cacodemon"?31:e.type==="baron"?42:e.type==="demon"?38:34)*z));
     const left=Math.floor(sx-w/2),top=Math.floor(80-h*.55+Math.sin(performance.now()/120+e.phase)*Math.min(2,z));
-    const base=e.type==="cacodemon"?"#73423e":e.type==="demon"?"#67251f":e.type==="imp"?"#883325":"#595b56";
-    spriteRect(left,top+h*.18,w,h*.64,base,d);
-    spriteRect(left+w*.18,top,w*.64,h*(e.type==="cacodemon"?.28:.48),e.type==="cacodemon"?"#98564c":e.type==="demon"?"#92382a":e.type==="imp"?"#a6482e":"#6a6d67",d);
-    if(e.type!=="demon"&&e.type!=="cacodemon"){spriteRect(left+w*.31,top+h*.22,w*.10,h*.09,"#ffe76a",d);spriteRect(left+w*.59,top+h*.22,w*.10,h*.09,"#ffe76a",d);spriteRect(left+w*.34,top+h*.24,w*.04,h*.06,"#111",d);spriteRect(left+w*.63,top+h*.24,w*.04,h*.06,"#111",d);}
-    else {spriteRect(left+w*.26,top+h*.23,w*.13,h*.10,"#f3c958",d);spriteRect(left+w*.61,top+h*.23,w*.13,h*.10,"#f3c958",d);spriteRect(left+w*.30,top+h*.25,w*.05,h*.06,"#111",d);spriteRect(left+w*.65,top+h*.25,w*.05,h*.06,"#111",d);}
+
+    if(e.type==="cacodemon"){
+      spriteRect(left,top+h*.18,w,h*.64,"#73423e",d);
+      spriteRect(left+w*.18,top,w*.64,h*.28,"#98564c",d);
+      spriteRect(left+w*.25,top+h*.3,w*.16,h*.12,"#ffe56b",d);
+      spriteRect(left+w*.59,top+h*.3,w*.16,h*.12,"#ffe56b",d);
+      spriteRect(left+w*.30,top+h*.32,w*.06,h*.07,"#111",d);
+      spriteRect(left+w*.64,top+h*.32,w*.06,h*.07,"#111",d);
+    }else if(e.type==="baron"){
+      spriteRect(left+w*.12,top+h*.16,w*.76,h*.72,"#48634a",d);
+      spriteRect(left+w*.19,top,w*.62,h*.42,"#5f815f",d);
+      spriteRect(left+w*.20,top+h*.08,w*.20,h*.12,"#354f37",d);
+      spriteRect(left+w*.60,top+h*.08,w*.20,h*.12,"#354f37",d);
+      spriteRect(left+w*.28,top+h*.25,w*.12,h*.08,"#ffe66b",d);
+      spriteRect(left+w*.60,top+h*.25,w*.12,h*.08,"#ffe66b",d);
+      spriteRect(left+w*.30,top+h*.27,w*.04,h*.05,"#111",d);
+      spriteRect(left+w*.64,top+h*.27,w*.04,h*.05,"#111",d);
+    }else if(e.type==="demon"){
+      spriteRect(left+w*.12,top+h*.18,w*.76,h*.70,"#67251f",d);
+      spriteRect(left+w*.18,top,w*.64,h*.48,"#92382a",d);
+      spriteRect(left+w*.26,top+h*.23,w*.13,h*.10,"#f3c958",d);
+      spriteRect(left+w*.61,top+h*.23,w*.13,h*.10,"#f3c958",d);
+      spriteRect(left+w*.30,top+h*.25,w*.05,h*.06,"#111",d);
+      spriteRect(left+w*.65,top+h*.25,w*.05,h*.06,"#111",d);
+    }else{
+      const base=e.type==="imp"?"#883325":"#595b56";
+      spriteRect(left+w*.2,top+h*.2,w*.6,h*.62,base,d);
+      spriteRect(left+w*.27,top+h*.06,w*.46,h*.30,e.type==="imp"?"#a6482e":e.type==="shotguy"?"#7a746b":"#6a6d67",d);
+      spriteRect(left+w*.31,top+h*.22,w*.1,h*.09,"#ffe76a",d);
+      spriteRect(left+w*.59,top+h*.22,w*.1,h*.09,"#ffe76a",d);
+      spriteRect(left+w*.34,top+h*.24,w*.04,h*.06,"#111",d);
+      spriteRect(left+w*.63,top+h*.24,w*.04,h*.06,"#111",d);
+    }
+
     if(e.pain>0)spriteRect(left,top,w,h,"rgba(255,255,255,.4)",d);
-    if(e.hp<e.maxHp){spriteRect(left,top-3,w,2,"#161616",d);spriteRect(left,top-3,Math.max(1,w*clamp(e.hp/e.maxHp,0,1)),2,"#d13b2c",d);}
+    if(e.hp<e.maxHp){
+      spriteRect(left,top-3,w,2,"#161616",d);
+      spriteRect(left,top-3,Math.max(1,w*clamp(e.hp/e.maxHp,0,1)),2,"#d13b2c",d);
+    }
   }
+
 
   function pickupColor(t){
     return {
@@ -959,22 +1005,14 @@
   }
 
 
-  function drawFireball(sx,d){
+  function drawFireball(sx,d,p){
     const z=clamp(4/Math.max(.25,d),.25,3),r=Math.max(2,Math.floor(4*z)),y=80+Math.sin(performance.now()/80+d)*2;
-    spriteRect(sx-r,y-r,r*2,r*2,"#e85224",d);
-    spriteRect(sx-r*.4,y-r*.4,r*.8,r*.8,"#ffe66a",d);
+    const color=p?.type==="baronball"?"#70e98b":p?.type==="plasma"?"#72e8ff":"#e85224";
+    const core=p?.type==="baronball"?"#d7ffe0":p?.type==="plasma"?"#d4ffff":"#ffe66a";
+    spriteRect(sx-r,y-r,r*2,r*2,color,d);
+    spriteRect(sx-r*.4,y-r*.4,r*.8,r*.8,core,d);
   }
 
-
-
-  function drawExit(sx,d){
-    const z=clamp(6/Math.max(.25,d),.25,2.5),w=Math.max(5,Math.floor(12*z)),h=Math.max(10,Math.floor(42*z));
-    const top=Math.floor(80-h*.5);
-    const active=state.kills>=state.totalKills&&hasKeycard();
-    spriteRect(sx-w/2,top,w,h,active?"#263f3f":"#3f2626",d);
-    spriteRect(sx-w*.18,top+h*.10,w*.36,h*.80,active?"#56c7b5":"#9b4b39",d);
-    spriteRect(sx-w*.05,top+h*.16,w*.10,h*.58,active?"#b9fff2":"#dd6d4e",d);
-  }
 
   function drawParticles(){
     for(const p of particles){
