@@ -14,14 +14,14 @@ El objetivo es reproducir el tipo de experiencia y sensaciones mecánicas del DO
 - carrera con Shift;
 - Fist, Pistol, Shotgun, Chaingun, Rocket Launcher, Plasma Rifle, BFG9000 y Chainsaw;
 - daño hitscan y dispersión de escopeta;
-- cuatro comportamientos enemigos diferenciados;
+- seis tipos de enemigo con perfiles de combate diferenciados;
 - proyectiles enemigos;
-- pickups de salud, armadura, munición, armas y keycard;
+- pickups de salud, armadura verde/azul, munición, armas y keycard;
 - puertas normales y puerta azul bloqueada;
 - automapa explorado;
 - estados de título, partida, muerte y victoria;
 - contador de kills/items;
-- save/load local con F2/F3;
+- save/load local con F2/F3, incluyendo estado de puertas, enemigos, armadura y automapa;
 - sonido procedural mediante Web Audio;
 - HUD retro, bob y recoil;
 - captura y liberación del mouse.
@@ -61,7 +61,7 @@ The goal is to reproduce the feel and class of mechanics associated with classic
 
 ### Current engine
 
-Movement physics, mouse look, strafing, sprinting, eight weapons, hitscan damage, shotgun spread, differentiated enemy behavior, enemy projectiles, pickups, doors, a blue keycard, automap, death/victory states, counters, local save/load, procedural Web Audio, retro HUD and weapon bob/recoil are implemented.
+Movement physics, mouse look, strafing, sprinting, eight weapons, hitscan and projectile damage, shotgun spread, six differentiated enemy types, enemy projectiles, health/armor pickups including mega-armor, weapon acquisition with weapon switching, doors, a blue keycard, a visible exit, automap, death/victory states, counters, versioned local save/load, procedural Web Audio, retro HUD and weapon bob/recoil are implemented.
 
 ### Verification
 
