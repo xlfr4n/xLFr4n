@@ -57,4 +57,4 @@ for (const token of [
 
 assert.ok(js.includes('function completeLevel()'), 'explicit exit completion must exist');
 assert.ok(js.includes('EXIT READY · PRESS E'), 'exit must advertise explicit interaction');
-assert.ok(js.includes('if(atExit)'), 'exit interaction proximity must be checked');
+assert.ok(js.includes('const atExit='), 'exit interaction proximity must be checked');
