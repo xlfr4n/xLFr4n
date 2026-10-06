@@ -407,10 +407,14 @@
     beep("door");
   }
 
+  function weaponHasAmmo(name) {
+    const w=WEAPONS[name];
+    if(!w.ammo)return true;
+    return player.ammo[w.ammo] >= (name==="bfg" ? 40 : 1);
+  }
+
   function selectWeapon(name) {
-    if (!player.owned[name]) return;
-    const w = WEAPONS[name];
-    if (w.ammo && player.ammo[w.ammo] <= 0) return;
+    if (!player.owned[name] || !weaponHasAmmo(name)) return;
     if (player.pending === name || player.ready === name) return;
     player.pending = name;
     player.weaponTimer = 0.18;
@@ -719,25 +723,70 @@
 
   function collect() {
     for (const p of pickups) {
-      if (p.taken || Math.hypot(player.x-p.x,player.y-p.y)>.42) continue;
+      if (p.taken || Math.hypot(player.x-p.x, player.y-p.y)>.42) continue;
       let take=true;
-      if (p.type==="clip"||p.type==="clipbox") {
-        if(player.ammo.bullets>=200) take=false; else player.ammo.bullets=Math.min(200,player.ammo.bullets+p.value);
-      } else if (p.type==="shells"||p.type==="shellbox") {
-        if(player.ammo.shells>=50) take=false; else player.ammo.shells=Math.min(50,player.ammo.shells+p.value);
-      } else if (p.type==="stim"||p.type==="medkit") {
-        if(player.hp>=100) take=false; else player.hp=Math.min(100,player.hp+p.value);
+
+      if (p.type==="clip" || p.type==="clipbox") {
+        if (player.ammo.bullets>=200) take=false;
+        else player.ammo.bullets=Math.min(200,player.ammo.bullets+p.value);
+      } else if (p.type==="shells" || p.type==="shellbox") {
+        if (player.ammo.shells>=50) take=false;
+        else player.ammo.shells=Math.min(50,player.ammo.shells+p.value);
+      } else if (p.type==="rockets" || p.type==="rocketbox") {
+        if (player.ammo.rockets>=50) take=false;
+        else player.ammo.rockets=Math.min(50,player.ammo.rockets+p.value);
+      } else if (p.type==="cells" || p.type==="cellpack") {
+        if (player.ammo.cells>=300) take=false;
+        else player.ammo.cells=Math.min(300,player.ammo.cells+p.value);
+      } else if (p.type==="stim" || p.type==="medkit") {
+        if (player.hp>=100) take=false;
+        else player.hp=Math.min(100,player.hp+p.value);
       } else if (p.type==="armor") {
-        if(player.armor>=100) take=false; else player.armor=Math.min(100,player.armor+p.value);
-      } else if (p.type==="soulsphere") player.hp=Math.min(200,player.hp+p.value);
-      else if (p.type==="shotgun") { player.owned.shotgun=true; player.ammo.shells=Math.min(50,player.ammo.shells+4); player.pending="shotgun"; }
-      else if (p.type==="chaingun") { player.owned.chaingun=true; player.ammo.bullets=Math.min(200,player.ammo.bullets+20); player.pending="chaingun"; }
-      else if (p.type==="keyblue") toast("BLUE KEYCARD ACQUIRED",2);
-      if(!take) continue;
-      p.taken=true; state.items++; state.pickupFlash=.16; beep(p.type==="keyblue" ? "key" : "pickup");
+        if (player.armor>=100) take=false;
+        else player.armor=Math.min(100,player.armor+p.value);
+      } else if (p.type==="soulsphere") {
+        if(player.hp>=200)take=false;
+        else player.hp=Math.min(200,player.hp+p.value);
+      } else if (p.type==="shotgun") {
+        player.owned.shotgun=true;
+        player.ammo.shells=Math.min(50,player.ammo.shells+4);
+        player.pending="shotgun";
+        player.weaponTimer=.18;
+      } else if (p.type==="chaingun") {
+        player.owned.chaingun=true;
+        player.ammo.bullets=Math.min(200,player.ammo.bullets+20);
+        player.pending="chaingun";
+        player.weaponTimer=.18;
+      } else if (p.type==="rocketlauncher") {
+        player.owned.rocket=true;
+        player.ammo.rockets=Math.min(50,player.ammo.rockets+2);
+        player.pending="rocket";
+        player.weaponTimer=.18;
+      } else if (p.type==="plasmagun") {
+        player.owned.plasma=true;
+        player.ammo.cells=Math.min(300,player.ammo.cells+20);
+        player.pending="plasma";
+        player.weaponTimer=.18;
+      } else if (p.type==="bfg") {
+        player.owned.bfg=true;
+        player.ammo.cells=Math.min(300,player.ammo.cells+40);
+        player.pending="bfg";
+        player.weaponTimer=.18;
+      } else if (p.type==="chainsaw") {
+        player.owned.chainsaw=true;
+        player.pending="chainsaw";
+        player.weaponTimer=.18;
+      } else if (p.type==="keyblue") {
+        toast("BLUE KEYCARD ACQUIRED",2);
+      }
+
+      if(!take)continue;
+      p.taken=true;
+      state.items++;
+      state.pickupFlash=.16;
+      beep(p.type==="keyblue"?"key":"pickup");
     }
   }
-
   function updateMovement(dt) {
     const forward=(keys.KeyW||keys.ArrowUp?1:0)-(keys.KeyS||keys.ArrowDown?1:0);
     const strafe=(keys.KeyD?1:0)-(keys.KeyA?1:0);
@@ -1028,23 +1077,53 @@
   }
 
   function saveGame(){
-    const payload={state:{time:state.time,kills:state.kills,items:state.items},player:{x:player.x,y:player.y,a:player.a,hp:player.hp,armor:player.armor,ammo:player.ammo,owned:player.owned,ready:player.ready},doors:[...doors],enemies:enemies.map(e=>({x:e.x,y:e.y,hp:e.hp,alive:e.alive,type:e.type,cd:e.cd})),pickups:pickups.map(p=>({type:p.type,x:p.x,y:p.y,value:p.value,taken:p.taken}))};
+    const payload={
+      version:2,
+      state:{time:state.time,kills:state.kills,items:state.items,totalItems:state.totalItems},
+      player:{x:player.x,y:player.y,a:player.a,hp:player.hp,armor:player.armor,ammo:{...player.ammo},owned:{...player.owned},ready:player.ready,pending:player.pending,weaponTimer:player.weaponTimer,attackTimer:player.attackTimer},
+      doors:[...doors.entries()].map(([k,v])=>[k,{...v}]),
+      enemies:enemies.map((e,i)=>({index:i,x:e.x,y:e.y,hp:e.hp,alive:e.alive,type:e.type,cd:e.cd,targetIndex:e.target===player?null:enemies.indexOf(e.target)})),
+      pickups:pickups.map(p=>({type:p.type,x:p.x,y:p.y,value:p.value,taken:p.taken,phase:p.phase}))
+    };
     localStorage.setItem(SAVE_KEY,JSON.stringify(payload));
     toast("GAME SAVED",1.2);
   }
 
   function loadGame(){
     try{
-      const raw=localStorage.getItem(SAVE_KEY); if(!raw){toast("NO SAVE FOUND",1.2);return;}
-      const s=JSON.parse(raw); setupLevel();
+      const raw=localStorage.getItem(SAVE_KEY);
+      if(!raw){toast("NO SAVE FOUND",1.2);return;}
+      const s=JSON.parse(raw);
+      if(s.version!==2)throw new Error("unsupported save");
+      setupLevel();
       Object.assign(player,s.player);
-      state.time=s.state.time;state.kills=s.state.kills;state.items=s.state.items;
-      for(const [k,v] of s.doors){doors.set(k,v);}
-      for(let i=0;i<s.enemies.length&&i<enemies.length;i++)Object.assign(enemies[i],s.enemies[i]);
-      for(let i=0;i<s.pickups.length&&i<pickups.length;i++)Object.assign(pickups[i],s.pickups[i]);
-      state.mode="playing";state.paused=false;toast("GAME LOADED",1.2);
-    }catch(e){toast("SAVE DATA INVALID",1.3);}
+      player.ammo={bullets:0,shells:0,rockets:0,cells:0,...s.player.ammo};
+      player.owned={fist:true,pistol:true,shotgun:false,chaingun:false,rocket:false,plasma:false,bfg:false,chainsaw:false,...s.player.owned};
+      for(const [k,v] of s.doors||[])doors.set(k,v);
+      for(const saved of s.enemies||[]){
+        if(enemies[saved.index])Object.assign(enemies[saved.index],saved);
+      }
+      for(const e of enemies){
+        e.target=(e.targetIndex==null)?player:enemies[e.targetIndex]||player;
+        delete e.index; delete e.targetIndex;
+      }
+      pickups.length=0;
+      for(const saved of s.pickups||[]){
+        pickups.push({...saved});
+      }
+      state.time=Number(s.state.time)||0;
+      state.kills=Number(s.state.kills)||0;
+      state.items=Number(s.state.items)||0;
+      state.totalItems=Math.max(state.items,Number(s.state.totalItems)||pickups.length);
+      state.mode="playing";
+      state.paused=false;
+      soundAlert=0;
+      toast("GAME LOADED",1.2);
+    }catch(e){
+      toast("SAVE DATA INVALID",1.3);
+    }
   }
+
 
   function lockMouse(){initAudio();canvas.requestPointerLock?.();}
 
