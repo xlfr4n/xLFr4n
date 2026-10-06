@@ -23,3 +23,25 @@ for (const token of [
 ]) assert.ok(js.includes(token), 'missing gameplay token: ' + token);
 
 console.log('MICRODOOM static smoke: PASS');
+const directions = [[1,0],[-1,0],[0,1],[0,-1]];
+const reachable = (openD, openB) => {
+  const queue = [[2,2]];
+  const seen = new Set(["2,2"]);
+  for (let i = 0; i < queue.length; i++) {
+    const [x,y] = queue[i];
+    for (const [dx,dy] of directions) {
+      const nx=x+dx, ny=y+dy;
+      if (ny<0 || ny>=rows.length || nx<0 || nx>=31) continue;
+      const cell=rows[ny][nx];
+      if (!(cell==="." || (cell==="D" && openD) || (cell==="B" && openB))) continue;
+      const k=nx+","+ny;
+      if (!seen.has(k)) { seen.add(k); queue.push([nx,ny]); }
+    }
+  }
+  return seen;
+};
+assert.ok(reachable(true,false).has("16,9"), "blue key must be reachable after the normal door");
+assert.equal(reachable(true,false).has("27,10"), false, "exit must remain locked before blue door");
+assert.ok(reachable(true,true).has("27,10"), "exit must be reachable after blue door");
+assert.ok(js.includes('pistol: { name: "PISTOL"') && js.includes('auto: false'), "pistol must be single-shot");
+assert.ok(js.includes('chaingun: { name: "CHAINGUN"') && js.includes('auto: true'), "chaingun must support auto-fire");
