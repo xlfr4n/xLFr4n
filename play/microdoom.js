@@ -128,8 +128,8 @@
   let last = performance.now();
   let accumulator = 0;
   let audio = null;
-  let mouseLookDelta = 0;
-  const supportsRawPointer = "onpointerrawupdate" in window;
+  let pointerLockRequested = false;
+  let pointerLockFailed = false;
   const gameUI = document.getElementById("game-ui");
   const menuPanels = [...document.querySelectorAll("[data-menu]")];
   let visibleMenu = "";
@@ -1392,13 +1392,6 @@
     label(armorName, W - 9, 7, 5, player.armorType ? "#7cd0ff" : "#777", "right");
   }
 
-  function applyMouseLook(){
-    if(state.mode==="playing"&&!state.paused&&document.pointerLockElement===canvas&&mouseLookDelta!==0){
-      player.a=wrapAngle(player.a+mouseLookDelta*settings.mouseSensitivity);
-      mouseLookDelta=0;
-    }
-  }
-
   function render(){
     drawWorld();
     drawTopStatus();
@@ -1487,18 +1480,23 @@
 
   function lockMouse(){
     initAudio();
-    mouseLookDelta=0;
+    pointerLockRequested=true;
+    pointerLockFailed=false;
     try {
-      const result=canvas.requestPointerLock?.({unadjustedMovement:true});
-      if(result?.catch) result.catch(()=>canvas.requestPointerLock?.());
+      const result=canvas.requestPointerLock?.();
+      if(result?.catch) result.catch(()=>{ pointerLockFailed=true; });
     } catch {
-      canvas.requestPointerLock?.();
+      pointerLockFailed=true;
     }
   }
 
   canvas.addEventListener("click",()=>{
     initAudio();
-    if(state.mode==="playing"&&!state.paused) lockMouse();
+    if(state.mode==="playing"&&state.paused){
+      resumeGame();
+      return;
+    }
+    if(state.mode==="playing") lockMouse();
   });
 
   gameUI?.addEventListener("click", (e)=>{
@@ -1530,23 +1528,27 @@
     persistSettings();
   });
 
-  let lastRawPointerAt=-Infinity;
-
-  function captureMouseDelta(e, raw=false){
-    if(state.mode==="playing"&&!state.paused&&document.pointerLockElement===canvas){
-      if(raw)lastRawPointerAt=performance.now();
-      mouseLookDelta=clamp(mouseLookDelta+e.movementX,-1200,1200);
-    }
-  }
-
-  if(supportsRawPointer) document.addEventListener("pointerrawupdate",(e)=>captureMouseDelta(e,true));
   document.addEventListener("mousemove",(e)=>{
-    if(!supportsRawPointer || performance.now()-lastRawPointerAt>120) captureMouseDelta(e,false);
+    if(state.mode==="playing"&&!state.paused&&document.pointerLockElement===canvas){
+      const movement=clamp(e.movementX,-250,250);
+      player.a=wrapAngle(player.a+movement*settings.mouseSensitivity);
+    }
   });
 
   document.addEventListener("pointerlockchange",()=>{
-    if(document.pointerLockElement!==canvas) mouseLookDelta=0;
-    if(state.mode==="playing"&&!state.paused&&document.pointerLockElement!==canvas) pauseGame();
+    const captured=document.pointerLockElement===canvas;
+    pointerLockRequested=false;
+    if(captured){
+      pointerLockFailed=false;
+      return;
+    }
+    if(state.mode==="playing"&&!state.paused) pauseGame();
+  });
+
+  document.addEventListener("pointerlockerror",()=>{
+    pointerLockRequested=false;
+    pointerLockFailed=true;
+    if(state.mode==="playing"&&!state.paused) toast("CLICK TO CAPTURE MOUSE",1.6);
   });
 
   addEventListener("mousedown",(e)=>{
@@ -1560,7 +1562,6 @@
   addEventListener("mouseup",(e)=>{if(e.button===0)keys.MouseLeft=false;});
   addEventListener("blur",()=>{
     for(const k of Object.keys(keys))keys[k]=false;
-    mouseLookDelta=0;
     if(state.mode==="playing"&&!state.paused)pauseGame();
   });
 
@@ -1610,7 +1611,6 @@
   function loop(now){
     const dt=Math.min(MAX_DT,Math.max(.001,(now-last)/1000));
     last=now;
-    applyMouseLook();
     accumulator=Math.min(accumulator+dt,.2);
     let steps=0;
     while(accumulator>=SIM_DT&&steps<5){
