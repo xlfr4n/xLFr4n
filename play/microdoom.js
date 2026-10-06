@@ -26,7 +26,7 @@
     "#.........#.........#.........#",
     "#.........#.........B.........#",
     "#.........#.........#.........#",
-    "######.################.#######",
+    "######.########################",
     "#.........#.............#.....#",
     "#.........#.............#.....#",
     "#.........#.............#.....#",
@@ -218,9 +218,9 @@
     spawnEnemy("imp", 25.5, 9.5);
     spawnEnemy("zombieman", 15.5, 9.5);
     spawnEnemy("demon", 7.5, 15.5);
-    spawnEnemy("imp", 17.5, 15.5);
-    spawnEnemy("cacodemon", 25.5, 16.5);
-    spawnEnemy("zombieman", 22.5, 20.5);
+    spawnEnemy("imp", 8.5, 18.5);
+    spawnEnemy("cacodemon", 23.5, 7.5);
+    spawnEnemy("zombieman", 27.5, 6.5);
 
     spawnPickup("clip", 4.5, 3.5, 10);
     spawnPickup("shells", 13.5, 3.5, 4);
@@ -228,11 +228,11 @@
     spawnPickup("armor", 25.5, 4.5, 50);
     spawnPickup("shotgun", 4.5, 9.5, 1);
     spawnPickup("clipbox", 14.5, 7.5, 20);
-    spawnPickup("medkit", 5.5, 15.5, 25);
-    spawnPickup("shellbox", 16.5, 14.5, 8);
+    spawnPickup("medkit", 5.5, 14.5, 25);
+    spawnPickup("shellbox", 8.5, 14.5, 8);
     spawnPickup("keyblue", 16.5, 9.5, 1);
-    spawnPickup("chaingun", 25.5, 14.5, 1);
-    spawnPickup("soulsphere", 26.5, 20.5, 100);
+    spawnPickup("chaingun", 18.5, 10.5, 1);
+    spawnPickup("soulsphere", 27.5, 8.5, 100);
 
     state.kills = 0;
     state.totalKills = enemies.length;
