@@ -390,28 +390,51 @@
     return pickups.some(p => p.type === "keyblue" && p.taken);
   }
 
+  function completeLevel() {
+    state.mode="won";
+    if(!state.bestTime || state.time<state.bestTime){
+      state.bestTime=state.time;
+      localStorage.setItem("xlfr4n-microdoom-best",String(state.time));
+    }
+    document.exitPointerLock?.();
+    beep("key");
+  }
+
   function useDoor() {
-    const fx = player.x + Math.cos(player.a) * 1.15;
-    const fy = player.y + Math.sin(player.a) * 1.15;
-    const tx = Math.floor(fx), ty = Math.floor(fy);
-    const t = tile(tx, ty);
-    if (t !== "D" && t !== "B") {
-      toast("NOTHING TO USE", 1.0); return;
+    const nearExit=Math.hypot(player.x-exit.x,player.y-exit.y)<.95;
+    if(nearExit){
+      if(!hasKeycard()){
+        toast("BLUE KEYCARD REQUIRED",1.4);
+        beep("door");
+        return;
+      }
+      if(state.kills<state.totalKills){
+        toast("SECTOR NOT CLEAR",1.4);
+        return;
+      }
+      toast("EXITING SECTOR",.8);
+      completeLevel();
+      return;
     }
-    const d = doors.get(key(tx, ty));
-    if (d.locked && !hasKeycard()) {
-      toast("BLUE KEYCARD REQUIRED", 1.5); beep("door"); return;
+
+    const fx=player.x+Math.cos(player.a)*1.15;
+    const fy=player.y+Math.sin(player.a)*1.15;
+    const tx=Math.floor(fx),ty=Math.floor(fy),t=tile(tx,ty);
+    if(t!=="D"&&t!=="B"){
+      toast("NOTHING TO USE",1.0);
+      return;
     }
-    d.open = !d.open;
-    toast(d.open ? "DOOR OPEN" : "DOOR CLOSED", 1.0);
+    const d=doors.get(key(tx,ty));
+    if(d.locked&&!hasKeycard()){
+      toast("BLUE KEYCARD REQUIRED",1.5);
+      beep("door");
+      return;
+    }
+    d.open=!d.open;
+    toast(d.open?"DOOR OPEN":"DOOR CLOSED",1.0);
     beep("door");
   }
 
-  function weaponHasAmmo(name) {
-    const w=WEAPONS[name];
-    if(!w.ammo)return true;
-    return player.ammo[w.ammo] >= (name==="bfg" ? 40 : 1);
-  }
 
   function selectWeapon(name) {
     if (!player.owned[name] || !weaponHasAmmo(name)) return;
@@ -825,19 +848,10 @@
     updateParticles(dt);
     explored.add(key(Math.floor(player.x),Math.floor(player.y)));
 
-    const atExit=Math.hypot(player.x-exit.x,player.y-exit.y)<.72;
-    if(atExit && state.kills>=state.totalKills){
-      state.mode="won";
-      if(!state.bestTime || state.time<state.bestTime){
-        state.bestTime=state.time;
-        localStorage.setItem("xlfr4n-microdoom-best",String(state.time));
-      }
-      document.exitPointerLock?.();
-      beep("key");
-    } else if(atExit) {
-      toast("EXIT LOCKED · CLEAR ALL DEMONS",1.5);
+    const atExit=Math.hypot(player.x-exit.x,player.y-exit.y)<.95;
+    if(atExit && state.kills>=state.totalKills && hasKeycard()) {
+      toast("EXIT READY · PRESS E",.9);
     }
-
     if(keys.MouseLeft){
       const w=WEAPONS[player.ready];
       if(w.auto)shoot();
