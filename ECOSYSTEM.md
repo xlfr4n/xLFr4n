@@ -1,82 +1,92 @@
 # ⚡ xLFr4n // Ecosystem Standard
 
-## Identity
+> **One signature. Different laboratories.**
 
-**Display identity:** ⚡ xLFr4n  
-**GitHub handle:** `xlfr4n`
+## 🇪🇸 Español
 
-The visual identity is intentionally written as **xLFr4n** even though GitHub repository URLs and account paths are normalized to lowercase where applicable.
+Este documento define el contrato compartido de los proyectos **xLFr4n**.
 
-## Repository family
+La marca visible es **xLFr4n**, con **L** y **F** mayúsculas.
 
-| Repository | Domain | Signature |
+El identificador técnico de la cuenta de GitHub es <code>xlfr4n</code>. Para identidad visual, nombres de proyecto y GitHub Pages se utiliza **xLFr4n**.
+
+### Familia de repositorios
+
+| Repository | Domain | Visibility |
 |---|---|---|
-| `xLFr4n-OSINT` | 🔎 OSINT / public-source research | ⚡ xLFr4n |
-| `xLFr4n-Kali-BSPWM` | 🐧 Linux / desktop / security lab | ⚡ xLFr4n |
-| `xLFr4n-Habbo-Furni-Radar` | 📡 Automation / Habbo data | ⚡ xLFr4n |
-| `xLFr4n-Desencryp` | 🛡️ Security / honeypot lab | ⚡ xLFr4n |
-| `xLFr4n-DevsAI` | 🤖 AI / Full-Stack / platform | ⚡ xLFr4n |
-| `xLFr4n-Habbo-Portfolio` | 💎 Collectibles / Web3 | ⚡ xLFr4n |
-| `xlfr4n` | 🧪 Profile / portfolio / experiments | ⚡ xLFr4n |
+| **xLFr4n** | 🧪 Profile / public lab | PUBLIC |
+| **xLFr4n-Kali-BSPWM** | 🐧 Linux / desktop / security lab | PUBLIC |
+| **xLFr4n-OSINT** | 🔎 OSINT / public-source research | PUBLIC |
+| **xLFr4n-Habbo-Furni-Radar** | 📡 Automation / Habbo data | PUBLIC |
+| **xLFr4n-Desencryp** | 🛡️ Honeypot / security lab | PRIVATE |
+| **xLFr4n-DevsAI** | 🤖 Full-Stack / AI / platform | PRIVATE |
+| **xLFr4n-Habbo-Portfolio** | 💎 Web3 / Collectibles | PRIVATE |
 
-## Shared documentation contract
+### Contrato documental
 
-Where relevant, repositories should expose:
+Cuando tenga sentido, cada proyecto debe exponer:
 
-- `README.md` — project entry point, ES + EN where practical.
-- `BRAND.md` — project-specific identity and writing.
-- `CONTRIBUTING.md` — contribution and verification workflow.
-- `SECURITY.md` — security boundaries and reporting.
-- `CODE_OF_CONDUCT.md` — collaboration baseline.
-- `CHANGELOG.md` — meaningful project history.
+- <code>README.md</code> — entrada técnica, ES + EN;
+- <code>BRAND.md</code> — identidad específica del proyecto;
+- <code>CONTRIBUTING.md</code> — contribución y verificación;
+- <code>SECURITY.md</code> — límites y reporte;
+- <code>CHANGELOG.md</code> — evolución relevante;
+- <code>docs/</code> — detalle operativo.
 
-A repository may add more documentation when the project needs it. The standard is additive, not destructive.
+El estándar es **aditivo**: documentar lo necesario sin borrar contexto útil.
 
-## Writing contract
+### Orden recomendado
+
+**WHAT → WHY → HOW → VERIFY → LIMITATIONS**
+
+No describir como implementada una capacidad que solo existe en el roadmap.
+
+### Regla de precisión
+
+No inventar métricas, benchmarks, uptime, integraciones, capacidades, datos ni resultados de pruebas.
+
+### Contrato visual
+
+**dark surfaces · white information · red accents · semantic icons · quiet hierarchy · intentional motion**
+
+El rojo es señal y foco. No es un borde por defecto.
+
+---
+
+## 🇺🇸 English
+
+This document defines the shared contract for the **xLFr4n** project family.
+
+The visible brand is **xLFr4n**, with capital **L** and **F**.
+
+The technical GitHub account identifier is <code>xlfr4n</code>. For visual identity, project names and GitHub Pages project paths, use **xLFr4n**.
+
+### Documentation contract
+
+Where useful, repositories expose <code>README.md</code>, <code>BRAND.md</code>, <code>CONTRIBUTING.md</code>, <code>SECURITY.md</code>, <code>CHANGELOG.md</code> and deeper <code>docs/</code>.
 
 Documentation should follow:
 
-```text
-WHAT
-  ↓
-WHY
-  ↓
-HOW
-  ↓
-VERIFY
-  ↓
-LIMITATIONS
-```
+**WHAT → WHY → HOW → VERIFY → LIMITATIONS**
 
-Do not present planned functionality as implemented functionality.
+Planned work must not be presented as implemented work.
 
-Do not invent metrics, benchmarks, integrations, data or test results.
+### Accuracy contract
 
-## Visual contract
+Do not invent metrics, benchmarks, uptime, integrations, capabilities, data or test results.
 
-```text
-dark surfaces
-white information
-red accents
-semantic icons
-quiet layout
-intentional motion
-```
+### Visual contract
 
-Red is an accent, not a default border.
+**dark surfaces · white information · red accents · semantic icons · quiet hierarchy · intentional motion**
 
-## Engineering contract
+Red is a signal accent, not a default border.
 
-Projects should prefer:
+---
 
-- reproducible setup;
-- explicit dependencies;
-- tests for important behavior;
-- CI where practical;
-- safe secret handling;
-- documentation that matches implementation;
-- small, reviewable changes.
+## 🔗 Canonical links
 
-## Signature
+**GitHub account:** https://github.com/xlfr4n  
+**Profile repository:** https://github.com/xlfr4n/xLFr4n  
+**Public lab:** https://xlfr4n.github.io/xLFr4n/
 
 > **⚡ xLFr4n — One signature. Different laboratories.**
