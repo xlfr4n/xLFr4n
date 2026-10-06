@@ -55,13 +55,13 @@
   };;;
 
   const ENEMIES = {
-    zombieman: { hp: 20, speed: 0.78, radius: 0.23, sight: 11, attackRange: 7, cooldown: 1.30, damage: 8, projectile: false },
-    shotguy: { hp: 30, speed: 0.74, radius: 0.24, sight: 11, attackRange: 7, cooldown: 1.45, damage: 6, pellets: 5, spread: 0.13, projectile: false },
-    imp: { hp: 60, speed: 0.64, radius: 0.27, sight: 12, attackRange: 8, cooldown: 1.65, damage: 12, projectile: true },
-    demon: { hp: 150, speed: 0.96, radius: 0.35, sight: 10, attackRange: 1.0, cooldown: 1.05, damage: 18, projectile: false },
-    cacodemon: { hp: 400, speed: 0.50, radius: 0.38, sight: 14, attackRange: 9, cooldown: 2.0, damage: 18, projectile: true },
-    baron: { hp: 1000, speed: 0.42, radius: 0.38, sight: 16, attackRange: 9, cooldown: 1.75, damage: 25, projectile: true }
-  };;;
+    zombieman: { hp: 20, speed: 0.78, radius: 0.23, sight: 11, attackRange: 7, cooldown: 1.30, damage: 8, painChance: 0.22, projectile: false },
+    shotguy: { hp: 30, speed: 0.74, radius: 0.24, sight: 11, attackRange: 7, cooldown: 1.45, damage: 6, painChance: 0.22, pellets: 5, spread: 0.13, projectile: false },
+    imp: { hp: 60, speed: 0.64, radius: 0.27, sight: 12, attackRange: 8, cooldown: 1.65, damage: 12, painChance: 0.18, projectile: true },
+    demon: { hp: 150, speed: 0.96, radius: 0.35, sight: 10, attackRange: 1.0, cooldown: 1.05, damage: 18, painChance: 0.28, projectile: false },
+    cacodemon: { hp: 400, speed: 0.50, radius: 0.38, sight: 14, attackRange: 9, cooldown: 2.0, damage: 18, painChance: 0.12, projectile: true },
+    baron: { hp: 1000, speed: 0.42, radius: 0.38, sight: 16, attackRange: 9, cooldown: 1.75, damage: 25, painChance: 0.08, projectile: true }
+  };;;;
 
   const state = {
     mode: "title",
@@ -81,7 +81,7 @@
 
   const player = {
     x: playerSpawn.x, y: playerSpawn.y, a: playerSpawn.a,
-    hp: 100, armor: 0,
+    hp: 100, armor: 0, armorType: 0,
     ammo: { bullets: 70, shells: 8, rockets: 0, cells: 0 },
     owned: { fist: true, pistol: true, shotgun: false, chaingun: false, rocket: false, plasma: false, bfg: false, chainsaw: false },
     ready: "pistol", pending: null,
@@ -292,7 +292,7 @@
     spawnPickup("clip", 4.5, 3.5, 10);
     spawnPickup("shells", 13.5, 3.5, 4);
     spawnPickup("stim", 8.5, 7.5, 10);
-    spawnPickup("armor", 25.5, 4.5, 50);
+    spawnPickup("armor", 25.5, 4.5, 100);
     spawnPickup("shotgun", 4.5, 9.5, 1);
     spawnPickup("clipbox", 14.5, 7.5, 20);
     spawnPickup("medkit", 5.5, 14.5, 25);
@@ -304,6 +304,7 @@
     spawnPickup("chainsaw", 4.5, 17.5, 1);
     spawnPickup("plasmagun", 24.5, 14.5, 1);
     spawnPickup("cellpack", 25.5, 18.5, 10);
+    spawnPickup("megaarmor", 27.5, 17.5, 200);
     spawnPickup("soulsphere", 27.5, 8.5, 100);
     spawnPickup("bfg", 22.5, 20.5, 1);
 
@@ -317,7 +318,7 @@
   function resetPlayer() {
     Object.assign(player, {
       x: playerSpawn.x, y: playerSpawn.y, a: playerSpawn.a,
-      hp: 100, armor: 0,
+      hp: 100, armor: 0, armorType: 0,
       ammo: { bullets: 70, shells: 8, rockets: 0, cells: 0 },
       owned: { fist: true, pistol: true, shotgun: false, chaingun: false, rocket: false, plasma: false, bfg: false, chainsaw: false },
       ready: "pistol", pending: null, weaponTimer: 0, attackTimer: 0,
@@ -378,17 +379,25 @@
   }
 
   function hurt(amount) {
-    if (state.mode !== "playing") return;
-    const absorb = Math.min(player.armor, amount * 0.5);
-    player.armor -= absorb;
-    player.hp -= amount - absorb;
-    state.damageFlash = 0.18;
+    if(state.mode!=="playing")return;
+    let saved=0;
+    if(player.armorType===1)saved=Math.floor(amount/3);
+    else if(player.armorType===2)saved=Math.floor(amount/2);
+    if(saved>player.armor)saved=player.armor;
+    player.armor-=saved;
+    if(player.armor<=0)player.armorType=0;
+    const dealt=amount-saved;
+    player.hp-=dealt;
+    state.damageFlash=.18;
     beep("hurt");
-    if (player.hp <= 0) {
-      player.hp = 0; state.mode = "dead"; document.exitPointerLock?.();
+    if(player.hp<=0){
+      player.hp=0;
+      state.mode="dead";
+      document.exitPointerLock?.();
       beep("death");
     }
   }
+
 
   function hasKeycard() {
     return pickups.some(p => p.type === "keyblue" && p.taken);
@@ -489,6 +498,15 @@
     }
   }
 
+  function hitEnemy(e,damage,source=player) {
+    if(!e?.alive)return;
+    e.hp-=damage;
+    if(Math.random()<ENEMIES[e.type].painChance)e.pain=.12;
+    if(source&&source!==e)e.target=source;
+    e.state="chase";
+    if(e.hp<=0)killEnemy(e);
+  }
+
   function killEnemy(e) {
     if (!e.alive) return;
     e.alive=false;
@@ -523,11 +541,7 @@
     if (name === "fist" || name === "chainsaw") {
       const e = visibleTarget(player.a, w.range, name === "chainsaw" ? .24 : .16);
       if (e) {
-        e.hp -= int(w.damage[0], w.damage[1]);
-        e.pain = name === "chainsaw" ? .06 : .16;
-        e.target = player;
-        e.state = "chase";
-        if (e.hp <= 0) killEnemy(e);
+        hitEnemy(e,int(w.damage[0],w.damage[1]),player);
         impact(e.x, e.y, "255,210,170", name === "chainsaw" ? 1 : 3);
       }
       beep(name === "chainsaw" ? "chainsaw" : "punch");
@@ -571,11 +585,7 @@
       if (e) {
         const d = Math.hypot(e.x-player.x, e.y-player.y);
         if (d < wall.dist + .05) {
-          e.hp -= int(w.damage[0], w.damage[1]);
-          e.pain = .13;
-          e.target = player;
-          e.state = "chase";
-          if (e.hp <= 0) killEnemy(e);
+          hitEnemy(e,int(w.damage[0],w.damage[1]),player);
           impact(e.x, e.y, "255,210,170", 1);
         }
       } else {
@@ -747,9 +757,8 @@
         if (Math.hypot(p.x-other.x,p.y-other.y) >= ENEMIES[other.type].radius*.75) continue;
         if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
         else {
-          other.hp -= p.damage; other.pain=.12; other.state="chase"; other.target=p.owner;
+          hitEnemy(other,p.damage,p.owner);
           impact(other.x,other.y,"255,150,90",5);
-          if(other.hp<=0)killEnemy(other);
         }
         p.life=0;
         break;
@@ -974,7 +983,7 @@
     return {
       clip:"#c9bd7b",clipbox:"#a58e55",shells:"#dbc58c",shellbox:"#b08d5a",
       rockets:"#a64b34",rocketbox:"#734333",cells:"#64b6cf",cellpack:"#3d7f91",
-      stim:"#52a86a",medkit:"#e7e7e7",armor:"#3f8d94",shotgun:"#89633d",
+      stim:"#52a86a",medkit:"#e7e7e7",armor:"#3f8d94",megaarmor:"#6da8b0",shotgun:"#89633d",
       chaingun:"#707678",rocketlauncher:"#4d4b48",plasmagun:"#477d83",bfg:"#617a68",
       chainsaw:"#7f402d",keyblue:"#4a87ea",soulsphere:"#59aaa3"
     }[t]||"#ddd";
