@@ -422,6 +422,7 @@
     state.paused = false;
     state.mode = "title";
     state.menuReturn = "pause";
+    mouseLookDelta=0;
     document.exitPointerLock?.();
     for (const k of Object.keys(keys)) keys[k] = false;
     showMenu("title");
@@ -431,6 +432,7 @@
     if (state.mode !== "playing" || state.paused) return;
     state.paused = true;
     state.menuReturn = "pause";
+    mouseLookDelta=0;
     document.exitPointerLock?.();
     for (const k of Object.keys(keys)) keys[k] = false;
     showMenu("pause");
@@ -1476,6 +1478,7 @@
 
   function lockMouse(){
     initAudio();
+    mouseLookDelta=0;
     try {
       const result=canvas.requestPointerLock?.({unadjustedMovement:true});
       if(result?.catch) result.catch(()=>canvas.requestPointerLock?.());
@@ -1530,6 +1533,7 @@
   });
 
   document.addEventListener("pointerlockchange",()=>{
+    if(document.pointerLockElement!==canvas) mouseLookDelta=0;
     if(state.mode==="playing"&&!state.paused&&document.pointerLockElement!==canvas) pauseGame();
   });
 
