@@ -67,3 +67,10 @@ assert.ok(js.includes('!e.repeat&&state.mode==="playing"'), 'discrete actions mu
 for (const token of ['armorType', 'function hitEnemy', 'painChance', 'megaarmor', 'Math.floor(amount/3)', 'Math.floor(amount/2)']) {
   assert.ok(js.includes(token), 'missing combat-state token: ' + token);
 }
+
+assert.ok(js.includes('weaponState: "ready"'), "player must have an explicit weapon state");
+assert.ok(js.includes('player.weaponState = "lowering"'), "weapon switch must lower");
+assert.ok(js.includes('player.weaponState = "raising"'), "weapon switch must raise");
+assert.ok(js.includes('player.weaponState !== "ready"'), "shooting must be blocked during weapon animation");
+assert.ok(js.includes('switchOffset=24*(1-player.weaponTimer/0.09)'), "weapon must visually lower");
+assert.ok(js.includes('switchOffset=24*(player.weaponTimer/0.11)'), "weapon must visually raise");
