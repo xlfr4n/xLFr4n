@@ -929,7 +929,7 @@
       if(s.type==="enemy")drawEnemy(s.o,sx,s.d);
       else if(s.type==="pickup")drawPickup(s.o,sx,s.d);
       else if(s.type==="exit")drawExit(sx,s.d);
-      else drawFireball(sx,s.d);
+      else drawFireball(sx,s.d,s.o);
     }
     drawParticles();
     drawWeapon();
