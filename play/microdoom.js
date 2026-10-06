@@ -769,13 +769,6 @@
 
         p.x=nx; p.y=ny;
 
-        if (p.owner === player && Math.hypot(p.x-player.x,p.y-player.y) < .20) {
-          if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
-          p.life=0;
-          consumed=true;
-          break;
-        }
-
         if (p.owner !== player && Math.hypot(p.x-player.x,p.y-player.y) < .22) {
           p.life=0;
           hurt(p.damage);
