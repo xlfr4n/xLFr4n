@@ -3,6 +3,7 @@
   "use strict";
 
   const canvas = document.getElementById("game");
+  const frame = document.getElementById("frame");
   const ctx = canvas.getContext("2d", { alpha: false });
   const W = canvas.width;
   const H = canvas.height;
@@ -1478,23 +1479,36 @@
 
   function lockMouse(){
     initAudio();
+    if(state.mode!=="playing"||state.paused) return false;
+    if(document.pointerLockElement===canvas||pointerLockRequested) return true;
     pointerLockRequested=true;
     pointerLockFailed=false;
+    canvas.focus({preventScroll:true});
     try {
       const result=canvas.requestPointerLock?.();
-      if(result?.catch) result.catch(()=>{ pointerLockFailed=true; });
+      if(result?.catch) result.catch(()=>{
+        pointerLockRequested=false;
+        pointerLockFailed=true;
+        canvas.classList.remove("mouse-locked");
+      });
+      return true;
     } catch {
+      pointerLockRequested=false;
       pointerLockFailed=true;
+      canvas.classList.remove("mouse-locked");
+      return false;
     }
   }
 
-  canvas.addEventListener("click",()=>{
+  canvas.addEventListener("pointerdown",(e)=>{
+    if(e.button!==0||e.target!==canvas)return;
+    e.preventDefault();
     initAudio();
     if(state.mode==="playing"&&state.paused){
       resumeGame();
       return;
     }
-    if(state.mode==="playing") lockMouse();
+    if(state.mode==="playing"&&document.pointerLockElement!==canvas) lockMouse();
   });
 
   for(const button of gameUI?.querySelectorAll("[data-action]")||[]){
@@ -1527,14 +1541,16 @@
 
   document.addEventListener("mousemove",(e)=>{
     if(state.mode==="playing"&&!state.paused&&document.pointerLockElement===canvas){
-      const movement=clamp(e.movementX,-250,250);
-      player.a=wrapAngle(player.a+movement*settings.mouseSensitivity);
+      const movement=Number(e.movementX)||0;
+      if(movement!==0) player.a=wrapAngle(player.a+movement*settings.mouseSensitivity);
     }
   });
 
   document.addEventListener("pointerlockchange",()=>{
     const captured=document.pointerLockElement===canvas;
     pointerLockRequested=false;
+    canvas.classList.toggle("mouse-locked",captured);
+    canvas.classList.toggle("mouse-unlocked",!captured);
     if(captured){
       pointerLockFailed=false;
       return;
@@ -1551,10 +1567,7 @@
   addEventListener("mousedown",(e)=>{
     if(e.button!==0)return;
     keys.MouseLeft=true;initAudio();
-    if(state.mode==="playing"&&!state.paused){
-      shoot();
-      lockMouse();
-    }
+    if(state.mode==="playing"&&!state.paused) shoot();
   });
   addEventListener("mouseup",(e)=>{if(e.button===0)keys.MouseLeft=false;});
   addEventListener("blur",()=>{
