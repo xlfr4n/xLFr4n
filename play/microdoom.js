@@ -321,7 +321,7 @@
       hp: 100, armor: 0, armorType: 0,
       ammo: { bullets: 70, shells: 8, rockets: 0, cells: 0 },
       owned: { fist: true, pistol: true, shotgun: false, chaingun: false, rocket: false, plasma: false, bfg: false, chainsaw: false },
-      ready: "pistol", pending: null, weaponTimer: 0, attackTimer: 0,
+      ready: "pistol", pending: null, weaponState: "ready", weaponTimer: 0, attackTimer: 0,
       muzzle: 0, recoil: 0, bob: 0, vx: 0, vy: 0
     });
   }
@@ -467,9 +467,14 @@
 
   function selectWeapon(name) {
     if (!player.owned[name] || !weaponHasAmmo(name)) return;
-    if (player.pending === name || player.ready === name) return;
+    if (player.weaponState !== "ready") {
+      player.pending = name;
+      return;
+    }
+    if (player.ready === name) return;
     player.pending = name;
-    player.weaponTimer = 0.18;
+    player.weaponState = "lowering";
+    player.weaponTimer = 0.09;
   }
 
   function nextWeapon() {
@@ -529,7 +534,7 @@
 
 
   function shoot() {
-    if (state.mode !== "playing" || state.paused || player.weaponTimer > 0 || player.attackTimer > 0) return;
+    if (state.mode !== "playing" || state.paused || player.weaponState !== "ready" || player.attackTimer > 0) return;
     const name = player.ready;
     const w = WEAPONS[name];
     const cost = name === "bfg" ? 40 : (w.ammo ? 1 : 0);
@@ -873,10 +878,24 @@
     state.damageFlash=Math.max(0,state.damageFlash-dt);
     state.pickupFlash=Math.max(0,state.pickupFlash-dt);
     player.attackTimer=Math.max(0,player.attackTimer-dt);
-    player.weaponTimer=Math.max(0,player.weaponTimer-dt);
     player.muzzle=Math.max(0,player.muzzle-dt);
     player.recoil=Math.max(0,player.recoil-dt*22);
-    if(player.weaponTimer===0&&player.pending){player.ready=player.pending;player.pending=null;}
+
+    if(player.weaponState!=="ready"){
+      player.weaponTimer=Math.max(0,player.weaponTimer-dt);
+      if(player.weaponTimer===0&&player.weaponState==="lowering"){
+        if(player.pending){
+          player.ready=player.pending;
+          player.pending=null;
+          player.weaponState="raising";
+          player.weaponTimer=0.11;
+        }else{
+          player.weaponState="ready";
+        }
+      }else if(player.weaponTimer===0&&player.weaponState==="raising"){
+        player.weaponState="ready";
+      }
+    }
 
     updateMovement(dt);
     collect();
@@ -1029,7 +1048,10 @@
   function drawWeapon() {
     const speed=Math.hypot(player.vx,player.vy);
     const bob=Math.sin(player.bob)*Math.min(2.5,speed*.9);
-    const y=137+bob+player.recoil,cx=160;
+    let switchOffset=0;
+    if(player.weaponState==="lowering") switchOffset=24*(1-player.weaponTimer/0.09);
+    else if(player.weaponState==="raising") switchOffset=24*(player.weaponTimer/0.11);
+    const y=137+bob+player.recoil+switchOffset,cx=160;
     const ready=player.ready;
     if(ready==="shotgun"){
       rect(cx-13,y,26,24,"#49392d"); rect(cx-6,y-15,4,23,"#8d8b83"); rect(cx+2,y-15,4,23,"#8d8b83"); rect(cx-10,y+9,20,9,"#73553b");
