@@ -443,6 +443,16 @@
       beep("door");
       return;
     }
+    if(d.open){
+      const cx=tx+.5,cy=ty+.5;
+      const blockedByPlayer=Math.hypot(player.x-cx,player.y-cy)<.68;
+      const blockedByEnemy=enemies.some(e=>e.alive&&Math.hypot(e.x-cx,e.y-cy)<ENEMIES[e.type].radius+.20);
+      if(blockedByPlayer||blockedByEnemy){
+        toast("DOOR BLOCKED",1.0);
+        beep("door");
+        return;
+      }
+    }
     d.open=!d.open;
     toast(d.open?"DOOR OPEN":"DOOR CLOSED",1.0);
     beep("door");
