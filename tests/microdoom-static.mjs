@@ -59,10 +59,10 @@ assert.ok(js.includes('function completeLevel()'), 'explicit exit completion mus
 assert.ok(js.includes('EXIT READY · PRESS E'), 'exit must advertise explicit interaction');
 assert.ok(js.includes('const atExit='), 'exit interaction proximity must be checked');
 
-for (const token of ['shotguy:', 'baron:', 'type:e.type==="baron"?"baronball":"fireball"', 'keys.Space']) {
+for (const token of ['shotguy:', 'baron:', 'type:e.type==="baron"?"baronball":"fireball"', 'e.code==="Space"']) {
   assert.ok(js.includes(token), 'missing combat/AI token: ' + token);
 }
-assert.ok(js.includes('!e.repeat && state.mode === "playing"'), 'discrete actions must ignore key auto-repeat');
+assert.ok(js.includes('!e.repeat&&state.mode==="playing"'), 'discrete actions must ignore key auto-repeat');
 
 for (const token of ['armorType', 'function hitEnemy', 'painChance', 'megaarmor', 'Math.floor(amount/3)', 'Math.floor(amount/2)']) {
   assert.ok(js.includes(token), 'missing combat-state token: ' + token);
