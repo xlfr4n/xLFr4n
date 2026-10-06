@@ -17,6 +17,7 @@ try {
   await canvas.waitFor();
   await page.locator('#game-ui').waitFor();
   if (!(await startButton.isVisible())) throw new Error('Title menu is not visible');
+  const initial = await page.evaluate(() => document.getElementById('game').getContext('2d').getImageData(0, 0, 320, 200).data.join(','));
   await optionsButton.click();
   const sensitivity = page.locator('#setting-sensitivity');
   if (!(await sensitivity.isVisible())) throw new Error('Options menu did not open');
