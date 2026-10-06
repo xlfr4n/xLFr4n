@@ -1511,6 +1511,10 @@
     }
   });
 
+  document.addEventListener("pointerlockchange",()=>{
+    if(state.mode==="playing"&&!state.paused&&document.pointerLockElement!==canvas) pauseGame();
+  });
+
   addEventListener("mousedown",(e)=>{
     if(e.button!==0)return;
     keys.MouseLeft=true;initAudio();
