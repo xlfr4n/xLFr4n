@@ -10,6 +10,7 @@
   const FOV = Math.PI / 3;
   const TAU = Math.PI * 2;
   const MAX_DT = 0.05;
+  const SIM_DT = 1 / 35;
   const SAVE_KEY = "xlfr4n-microdoom-save-v2";
 
   ctx.imageSmoothingEnabled = false;
@@ -91,6 +92,7 @@
   const keys = Object.create(null);
   const zBuffer = new Float32Array(W);
   let last = performance.now();
+  let accumulator = 0;
   let audio = null;
 
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
@@ -619,6 +621,10 @@
       const dx=p.x-player.x,dy=p.y-player.y,d=Math.hypot(dx,dy),da=angleDiff(Math.atan2(dy,dx),player.a);
       if(Math.abs(da)<FOV*.8)vis.push({type:"fireball",d,da,o:p});
     }
+    if(Math.hypot(player.x-exit.x,player.y-exit.y)<12){
+      const dx=exit.x-player.x,dy=exit.y-player.y,d=Math.hypot(dx,dy),da=angleDiff(Math.atan2(dy,dx),player.a);
+      if(Math.abs(da)<FOV*.8&&lineOfSight(player.x,player.y,exit.x,exit.y))vis.push({type:"exit",d,da,o:exit});
+    }
     vis.sort((a,b)=>b.d-a.d);
     for(const s of vis){
       const sx=Math.round(W/2+(s.da/FOV)*W);
@@ -626,6 +632,7 @@
       if(zBuffer[col]<s.d*Math.cos(s.da)-.08)continue;
       if(s.type==="enemy")drawEnemy(s.o,sx,s.d);
       else if(s.type==="pickup")drawPickup(s.o,sx,s.d);
+      else if(s.type==="exit")drawExit(sx,s.d);
       else drawFireball(sx,s.d);
     }
     drawParticles();
@@ -666,6 +673,16 @@
     spriteRect(sx-r*.4,y-r*.4,r*.8,r*.8,"#ffe66a",d);
   }
 
+
+
+  function drawExit(sx,d){
+    const z=clamp(6/Math.max(.25,d),.25,2.5),w=Math.max(5,Math.floor(12*z)),h=Math.max(10,Math.floor(42*z));
+    const top=Math.floor(80-h*.5);
+    const active=state.kills>=state.totalKills&&hasKeycard();
+    spriteRect(sx-w/2,top,w,h,active?"#263f3f":"#3f2626",d);
+    spriteRect(sx-w*.18,top+h*.10,w*.36,h*.80,active?"#56c7b5":"#9b4b39",d);
+    spriteRect(sx-w*.05,top+h*.16,w*.10,h*.58,active?"#b9fff2":"#dd6d4e",d);
+  }
 
   function drawParticles(){
     for(const p of particles){
@@ -835,8 +852,17 @@
   addEventListener("keyup",(e)=>{keys[e.code]=false;});
 
   function loop(now){
-    const dt=Math.min(MAX_DT,Math.max(.001,(now-last)/1000));last=now;
-    update(dt);render();requestAnimationFrame(loop);
+    const dt=Math.min(MAX_DT,Math.max(.001,(now-last)/1000));
+    last=now;
+    accumulator=Math.min(accumulator+dt,.2);
+    let steps=0;
+    while(accumulator>=SIM_DT&&steps<5){
+      update(SIM_DT);
+      accumulator-=SIM_DT;
+      steps++;
+    }
+    render();
+    requestAnimationFrame(loop);
   }
 
   newGame();
