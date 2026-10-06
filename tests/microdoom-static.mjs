@@ -96,6 +96,9 @@ assert.ok(js.includes('document.addEventListener("mousemove"'), "mouse look must
 assert.ok(!js.includes('pointerrawupdate'), "pointerrawupdate must not be mixed with mousemove input");
 assert.ok(js.includes('player.a=wrapAngle(player.a+movement*settings.mouseSensitivity)'), "mouse look must apply directly from pointer-lock movement");
 assert.ok(js.includes('function lockMouse()'), "mouse recapture must have a dedicated function");
+assert.ok(!js.includes('mouseLookDelta'), "obsolete accumulated mouse state must not remain after input redesign");
+assert.ok(js.includes('button.addEventListener("click",()=>buttonAction(button.dataset.action))'), "menu actions must be bound directly to their buttons");
+assert.ok(html.includes('#game-ui') || html.includes('pointer-events:none'), "pause overlay must allow click-through recapture outside menu panels");
 assert.ok(js.includes('function pauseGame()') && js.includes('state.paused = true;'), "pausing must stop gameplay safely");
 assert.ok(js.includes('SETTINGS_KEY = "xlfr4n-microdoom-settings-v2"'), "mouse calibration storage must use the current settings version");
 assert.ok(js.includes('function pauseGame()') && js.includes('function resumeGame()') && js.includes('function returnToTitle()'), "menu navigation actions must be explicit");
