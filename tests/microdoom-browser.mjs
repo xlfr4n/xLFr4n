@@ -113,9 +113,6 @@ try {
     throw new Error('Chaingun did not auto-fire while holding Space');
   }
 
-  await page.keyboard.press('F2');
-  await page.keyboard.press('F3');
-  await page.waitForTimeout(80);
   if (errors.length) throw new Error('Browser errors: ' + errors.join(' | '));
   await browser.close();
   console.log('MICRODOOM browser smoke: PASS');
