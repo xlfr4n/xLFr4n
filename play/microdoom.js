@@ -44,11 +44,15 @@
   const exit = { x: 27.5, y: 10.5 };
 
   const WEAPONS = {
-    fist: { name: "FIST", ammo: null, damage: [20, 40], cooldown: 0.42, range: 0.95, pellets: 1, spread: 0, auto: false },
-    pistol: { name: "PISTOL", ammo: "bullets", damage: [15, 25], cooldown: 0.30, range: 18, pellets: 1, spread: 0.018, auto: false },
-    shotgun: { name: "SHOTGUN", ammo: "shells", damage: [5, 15], cooldown: 0.92, range: 16, pellets: 7, spread: 0.085, auto: false },
-    chaingun: { name: "CHAINGUN", ammo: "bullets", damage: [5, 15], cooldown: 0.10, range: 18, pellets: 1, spread: 0.035, auto: true }
-  };
+    fist: { name: "FIST", ammo: null, damage: [20, 40], cooldown: 0.42, range: 1.0, pellets: 1, spread: 0, auto: false },
+    pistol: { name: "PISTOL", ammo: "bullets", damage: [3, 12], cooldown: 0.30, range: 18, pellets: 1, spread: 0.018, auto: false },
+    shotgun: { name: "SHOTGUN", ammo: "shells", damage: [3, 12], cooldown: 0.92, range: 16, pellets: 7, spread: 0.085, auto: false },
+    chaingun: { name: "CHAINGUN", ammo: "bullets", damage: [3, 12], cooldown: 0.10, range: 18, pellets: 1, spread: 0.035, auto: true },
+    rocket: { name: "ROCKET LAUNCHER", ammo: "rockets", damage: [20, 160], cooldown: 0.82, range: 24, pellets: 1, spread: 0, auto: false },
+    plasma: { name: "PLASMA RIFLE", ammo: "cells", damage: [5, 40], cooldown: 0.10, range: 24, pellets: 1, spread: 0.012, auto: true },
+    bfg: { name: "BFG9000", ammo: "cells", damage: [50, 200], cooldown: 1.10, range: 24, pellets: 1, spread: 0, auto: false },
+    chainsaw: { name: "CHAINSAW", ammo: null, damage: [2, 20], cooldown: 0.09, range: 1.10, pellets: 1, spread: 0, auto: true }
+  };;
 
   const ENEMIES = {
     zombieman: { hp: 20, speed: 0.78, radius: 0.23, sight: 11, attackRange: 7, cooldown: 1.30, damage: 8, projectile: false },
@@ -77,7 +81,7 @@
     x: playerSpawn.x, y: playerSpawn.y, a: playerSpawn.a,
     hp: 100, armor: 0,
     ammo: { bullets: 70, shells: 8, rockets: 0, cells: 0 },
-    owned: { fist: true, pistol: true, shotgun: false, chaingun: false },
+    owned: { fist: true, pistol: true, shotgun: false, chaingun: false, rocket: false, plasma: false, bfg: false, chainsaw: false },
     ready: "pistol", pending: null,
     weaponTimer: 0, attackTimer: 0, muzzle: 0, recoil: 0,
     bob: 0, vx: 0, vy: 0
@@ -310,7 +314,7 @@
     Object.assign(player, {
       x: playerSpawn.x, y: playerSpawn.y, a: playerSpawn.a,
       hp: 100, armor: 0, ammo: { bullets: 70, shells: 8 },
-      owned: { fist: true, pistol: true, shotgun: false, chaingun: false },
+      owned: { fist: true, pistol: true, shotgun: false, chaingun: false, rocket: false, plasma: false, bfg: false, chainsaw: false },
       ready: "pistol", pending: null, weaponTimer: 0, attackTimer: 0,
       muzzle: 0, recoil: 0, bob: 0, vx: 0, vy: 0
     });
