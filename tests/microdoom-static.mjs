@@ -48,3 +48,9 @@ assert.ok(js.includes('chaingun: { name: "CHAINGUN"') && js.includes('auto: true
 
 assert.ok(js.includes("const SIM_DT = 1 / 35;"), "simulation should run at a fixed 35Hz tick");
 assert.ok(js.includes("while(accumulator>=SIM_DT"), "render loop must decouple rendering from simulation tick");
+
+for (const token of [
+  'rocket:', 'plasma:', 'bfg:', 'chainsaw:',
+  'rocketlauncher', 'rockets', 'plasmagun', 'cellpack', 'chainsaw', 'bfg',
+  'function weaponHasAmmo', 'version:2'
+]) assert.ok(js.includes(token), 'missing expanded gameplay token: ' + token);
