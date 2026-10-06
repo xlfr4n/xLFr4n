@@ -70,7 +70,7 @@ for (const token of ['armorType', 'function hitEnemy', 'painChance', 'megaarmor'
 
 assert.ok(js.includes('weaponState: "ready"'), "player must have an explicit weapon state");
 assert.ok(js.includes('player.weaponState = "lowering"'), "weapon switch must lower");
-assert.ok(js.includes('player.weaponState = "raising"'), "weapon switch must raise");
+assert.ok(/weaponState\s*=\s*"raising"/.test(js), "weapon switch must raise");
 assert.ok(js.includes('player.weaponState !== "ready"'), "shooting must be blocked during weapon animation");
-assert.ok(js.includes('switchOffset=24*(1-player.weaponTimer/0.09)'), "weapon must visually lower");
-assert.ok(js.includes('switchOffset=24*(player.weaponTimer/0.11)'), "weapon must visually raise");
+assert.ok(/switchOffset\s*=\s*24\s*\*\s*\(1-player\.weaponTimer\/0\.09\)/.test(js), "weapon must visually lower");
+assert.ok(/switchOffset\s*=\s*24\s*\*\s*\(player\.weaponTimer\/0\.11\)/.test(js), "weapon must visually raise");
