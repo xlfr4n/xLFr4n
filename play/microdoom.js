@@ -247,6 +247,15 @@
     });
   }
 
+  function targetAlive(target) {
+    return target === player ? state.mode === "playing" : !!target?.alive;
+  }
+
+  function targetPosition(enemy) {
+    const target = targetAlive(enemy.target) ? enemy.target : player;
+    return { target, x: target.x, y: target.y };
+  }
+
   function spawnPickup(type, x, y, value) {
     const p = findFloorNear(x, y);
     pickups.push({ type, x: p.x, y: p.y, value: value ?? 1, taken: false, phase: rand(0, TAU) });
@@ -477,18 +486,28 @@
 
   function enemyAttack(e) {
     const d = ENEMIES[e.type];
+    const t = targetPosition(e);
+    const a = Math.atan2(t.y - e.y, t.x - e.x);
     if (d.projectile) {
       projectiles.push({
-        x:e.x, y:e.y,
-        a:Math.atan2(player.y-e.y,player.x-e.x),
+        x:e.x, y:e.y, a,
         speed:e.type==="cacodemon" ? 2.6 : 4.1,
-        damage:d.damage, life:5
+        damage:d.damage, life:5,
+        owner:e
       });
     } else {
-      const a = Math.atan2(player.y-e.y,player.x-e.x);
       const wall = rayCast(e.x,e.y,a);
-      const dist = Math.hypot(player.x-e.x,player.y-e.y);
-      if (wall.dist >= dist-.05 && Math.random() < .72) hurt(d.damage);
+      const dist = Math.hypot(t.x-e.x,t.y-e.y);
+      if (wall.dist >= dist-.05 && Math.random() < .72) {
+        if (t === player) hurt(d.damage);
+        else {
+          t.hp -= d.damage;
+          t.pain = .12;
+          t.target = e;
+          t.state = "chase";
+          if (t.hp <= 0) killEnemy(t);
+        }
+      }
     }
     e.cd = d.cooldown;
     e.attackFlash = .1;
@@ -510,41 +529,47 @@
     for (const e of enemies) {
       if (!e.alive) continue;
       const d=ENEMIES[e.type];
-      e.cd-=dt; e.pain=Math.max(0,e.pain-dt); e.attackFlash=Math.max(0,(e.attackFlash||0)-dt);
+      e.cd-=dt;
+      e.pain=Math.max(0,e.pain-dt);
+      e.attackFlash=Math.max(0,(e.attackFlash||0)-dt);
       if (e.pain > 0) continue;
       e.pathTimer -= dt;
-      const dx=player.x-e.x, dy=player.y-e.y, dist=Math.hypot(dx,dy);
-      const sees=lineOfSight(e.x,e.y,player.x,player.y);
+
+      if (!targetAlive(e.target)) e.target = player;
+      const t = targetPosition(e);
+      const dx=t.x-e.x, dy=t.y-e.y, dist=Math.hypot(dx,dy);
+      const sees=lineOfSight(e.x,e.y,t.x,t.y);
       e.angle=Math.atan2(dy,dx);
 
-      if (soundAlert > 0 && dist < d.sight * 1.4) {
-        e.target = player;
-        e.state = "chase";
+      if (e.target === player && soundAlert > 0 && dist < d.sight * 1.4 && sees) {
+        e.state="chase";
+      } else if (e.target === player && sees && dist < d.sight) {
+        e.state="chase";
+      } else if (e.target !== player && !targetAlive(e.target)) {
+        e.target=player;
       }
-
-      if (e.target && e.target !== player && e.target.alive === false) e.target = player;
 
       if (dist <= d.attackRange && sees) {
         if (e.cd <= 0) enemyAttack(e);
         continue;
       }
+
       if ((sees && dist < d.sight) || e.state === "chase") {
         e.state="chase";
-        let dir = null;
-        if (e.pathTimer <= 0 || !e.path) {
-          e.path = nextPathCell(e.x, e.y, player.x, player.y);
-          e.pathTimer = 0.28 + Math.random() * 0.12;
+        let dir=null;
+        if(e.pathTimer<=0||!e.path){
+          e.path=nextPathCell(e.x,e.y,t.x,t.y);
+          e.pathTimer=.28+Math.random()*.12;
         }
-        if (e.path) {
-          const px = e.path.x - e.x, py = e.path.y - e.y;
-          const pd = Math.hypot(px,py);
-          if (pd > 0.08) dir = { x:px/pd, y:py/pd };
+        if(e.path){
+          const px=e.path.x-e.x,py=e.path.y-e.y,pd=Math.hypot(px,py);
+          if(pd>.08)dir={x:px/pd,y:py/pd};
         }
-        if (!dir) {
-          const dd = Math.max(dist,.001);
-          dir = { x:dx/dd, y:dy/dd };
+        if(!dir){
+          const dd=Math.max(dist,.001);
+          dir={x:dx/dd,y:dy/dd};
         }
-        const orbit=(e.type==="demon" ? .04 : .12)*e.strafe;
+        const orbit=(e.type==="demon"?.04:.12)*e.strafe;
         const sp=d.speed*dt;
         moveEnemy(e,(dir.x-dir.y*orbit)*sp,(dir.y+dir.x*orbit)*sp);
       } else {
