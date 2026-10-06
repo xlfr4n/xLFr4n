@@ -390,22 +390,29 @@
     if (reducedFlash) reducedFlash.checked = !!settings.reducedFlash;
     if (crosshair) crosshair.checked = !!settings.crosshair;
 
-    const kills = document.getElementById("menu-kills");
-    const items = document.getElementById("menu-items");
-    const time = document.getElementById("menu-time");
-    if (kills) kills.textContent = String(state.kills).padStart(2, "0") + " / " + String(state.totalKills).padStart(2, "0");
-    if (items) items.textContent = String(state.items).padStart(2, "0") + " / " + String(state.totalItems).padStart(2, "0");
-    if (time) time.textContent = state.time.toFixed(1) + "s";
+    if (gameUI) {
+      const menu = gameUI.querySelector("[data-menu=\"" + (visibleMenu || "title") + "\"]");
+      if (menu) {
+        menu.querySelector(".menu-kills")?.replaceChildren(document.createTextNode(
+          String(state.kills).padStart(2, "0") + " / " + String(state.totalKills).padStart(2, "0")
+        ));
+        menu.querySelector(".menu-items")?.replaceChildren(document.createTextNode(
+          String(state.items).padStart(2, "0") + " / " + String(state.totalItems).padStart(2, "0")
+        ));
+        menu.querySelector(".menu-time")?.replaceChildren(document.createTextNode(state.time.toFixed(1) + "s"));
+      }
+    }
   }
 
   function syncMenu() {
     let next = "";
     if (state.mode === "title") next = "title";
-    else if (state.mode === "playing" && state.paused) next = state.menuReturn || "pause";
-    else if (state.mode === "dead") next = "dead";
+    else if (state.mode === "playing" && state.paused) {
+      next = (visibleMenu === "options" || visibleMenu === "controls") ? visibleMenu : (state.menuReturn || "pause");
+    } else if (state.mode === "dead") next = "dead";
     else if (state.mode === "won") next = "won";
+
     if (next !== visibleMenu) showMenu(next);
-    else if (next) showMenu(next);
   }
 
   function returnToTitle() {
