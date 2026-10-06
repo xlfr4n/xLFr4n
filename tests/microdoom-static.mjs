@@ -77,6 +77,8 @@ assert.ok(/switchOffset\s*=\s*24\s*\*\s*\(player\.weaponTimer\/0\.11\)/.test(js)
 assert.ok(js.includes('player.pending = name;') && js.includes('player.weaponState = "lowering";'), "weapon requests must enter the lowering state");
 assert.ok(js.includes('selectWeapon("shotgun")') && js.includes('selectWeapon("chaingun")') && js.includes('selectWeapon("rocket")'), "weapon pickups must use the weapon switch state machine");
 assert.ok(js.includes('p.type==="megaarmor"') && js.includes('player.armorType=2'), "blue armor must grant mega-armor state");
+assert.match(js,/p\.type==="armor"[\s\S]{0,220}player\.armorType=1/, "green armor must enable its damage-absorption type");
+assert.ok(js.includes("player.owned[w] && weaponHasAmmo(w)"), "weapon cycling must skip weapons without enough ammo");
 assert.ok(js.includes('if (!other.alive || other === p.owner) continue;'), "projectiles must collide with valid enemy targets");
 assert.doesNotMatch(js, /other === p\.owner \|\| p\.owner === player/, "player projectiles must not be globally excluded from enemy collision");
 assert.ok(js.includes('vis.push({type:"pickup"') && js.includes('vis.push({type:"projectile"') && js.includes('vis.push({type:"exit"'), "world render must include pickups, projectiles and exit");

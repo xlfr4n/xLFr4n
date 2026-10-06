@@ -482,7 +482,7 @@
     const i = order.indexOf(player.ready);
     for (let n = 1; n <= order.length; n++) {
       const w = order[(i + n) % order.length];
-      if (player.owned[w] && (!WEAPONS[w].ammo || player.ammo[WEAPONS[w].ammo] > 0)) { selectWeapon(w); return; }
+      if (player.owned[w] && weaponHasAmmo(w)) { selectWeapon(w); return; }
     }
   }
 
@@ -820,7 +820,10 @@
         else player.hp=Math.min(100,player.hp+p.value);
       } else if (p.type==="armor") {
         if (player.armor>=100) take=false;
-        else player.armor=Math.min(100,player.armor+p.value);
+        else {
+          player.armor=Math.min(100,player.armor+p.value);
+          player.armorType=1;
+        }
       } else if (p.type==="megaarmor") {
         if (player.armor>=200) take=false;
         else {
