@@ -81,6 +81,8 @@ assert.ok(js.includes('if (!other.alive || other === p.owner) continue;'), "proj
 assert.doesNotMatch(js, /other === p\.owner \|\| p\.owner === player/, "player projectiles must not be globally excluded from enemy collision");
 assert.ok(js.includes('vis.push({type:"pickup"') && js.includes('vis.push({type:"projectile"') && js.includes('vis.push({type:"exit"'), "world render must include pickups, projectiles and exit");
 assert.ok(js.includes('function drawExit'), "exit must have a visible world representation");
+assert.ok(js.includes('return Math.hypot(player.x-x,player.y-y) >= r + .16;'), "enemy movement must respect player collision radius");
+
 assert.ok(js.includes('version:3'), "save format must use the current version");
 assert.ok(js.includes('armorType:player.armorType') && js.includes('explored:[...explored]') && js.includes('automap:state.automap'), "save data must preserve gameplay state");
 
