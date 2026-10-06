@@ -3,11 +3,13 @@ name: MICRODOOM
 on:
   push:
     branches:
+      - main
       - feat/microdoom-complete-core
   pull_request:
     paths:
       - play/**
       - tests/microdoom-static.mjs
+      - tests/microdoom-browser.mjs
       - .github/workflows/microdoom.yml
   workflow_dispatch:
 
