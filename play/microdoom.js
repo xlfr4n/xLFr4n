@@ -467,14 +467,14 @@
 
   function selectWeapon(name) {
     if (!player.owned[name] || !weaponHasAmmo(name)) return;
-    if (player.weaponState !== "ready") {
-      player.pending = name;
-      return;
-    }
-    if (player.ready === name) return;
+    if (player.ready === name && player.weaponState === "ready") return;
+
+    // Queue the latest request so fast weapon presses remain deterministic.
     player.pending = name;
-    player.weaponState = "lowering";
-    player.weaponTimer = 0.09;
+    if (player.weaponState === "ready") {
+      player.weaponState = "lowering";
+      player.weaponTimer = 0.09;
+    }
   }
 
   function nextWeapon() {
@@ -768,7 +768,7 @@
       }
 
       for (const other of enemies) {
-        if (!other.alive || other === p.owner || p.owner === player) continue;
+        if (!other.alive || other === p.owner) continue;
         if (Math.hypot(p.x-other.x,p.y-other.y) >= ENEMIES[other.type].radius*.75) continue;
         if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
         else {
@@ -809,38 +809,38 @@
       } else if (p.type==="armor") {
         if (player.armor>=100) take=false;
         else player.armor=Math.min(100,player.armor+p.value);
+      } else if (p.type==="megaarmor") {
+        if (player.armor>=200) take=false;
+        else {
+          player.armor=Math.min(200,player.armor+p.value);
+          player.armorType=2;
+        }
       } else if (p.type==="soulsphere") {
         if(player.hp>=200)take=false;
         else player.hp=Math.min(200,player.hp+p.value);
       } else if (p.type==="shotgun") {
         player.owned.shotgun=true;
         player.ammo.shells=Math.min(50,player.ammo.shells+4);
-        player.pending="shotgun";
-        player.weaponTimer=.18;
+        selectWeapon("shotgun");
       } else if (p.type==="chaingun") {
         player.owned.chaingun=true;
         player.ammo.bullets=Math.min(200,player.ammo.bullets+20);
-        player.pending="chaingun";
-        player.weaponTimer=.18;
+        selectWeapon("chaingun");
       } else if (p.type==="rocketlauncher") {
         player.owned.rocket=true;
         player.ammo.rockets=Math.min(50,player.ammo.rockets+2);
-        player.pending="rocket";
-        player.weaponTimer=.18;
+        selectWeapon("rocket");
       } else if (p.type==="plasmagun") {
         player.owned.plasma=true;
         player.ammo.cells=Math.min(300,player.ammo.cells+20);
-        player.pending="plasma";
-        player.weaponTimer=.18;
+        selectWeapon("plasma");
       } else if (p.type==="bfg") {
         player.owned.bfg=true;
         player.ammo.cells=Math.min(300,player.ammo.cells+40);
-        player.pending="bfg";
-        player.weaponTimer=.18;
+        selectWeapon("bfg");
       } else if (p.type==="chainsaw") {
         player.owned.chainsaw=true;
-        player.pending="chainsaw";
-        player.weaponTimer=.18;
+        selectWeapon("chainsaw");
       } else if (p.type==="keyblue") {
         toast("BLUE KEYCARD ACQUIRED",2);
       }
@@ -893,7 +893,13 @@
           player.weaponState="ready";
         }
       }else if(player.weaponTimer===0&&player.weaponState==="raising"){
-        player.weaponState="ready";
+        if(player.pending && player.pending !== player.ready && player.owned[player.pending] && weaponHasAmmo(player.pending)){
+          player.weaponState="lowering";
+          player.weaponTimer=0.09;
+        }else{
+          player.pending=null;
+          player.weaponState="ready";
+        }
       }
     }
 
@@ -947,7 +953,20 @@
     for(const e of enemies){
       if(!(e.alive || (e.dead && e.deathTimer < 1)))continue;
       const dx=e.x-player.x,dy=e.y-player.y,d=Math.hypot(dx,dy),da=angleDiff(Math.atan2(dy,dx),player.a);
-      if(Math.abs(da)<FOV*.76&&lineOfSight(player.x,player.y,e.x,e.y))vis.push({type:"enemy",d,da,o:e});
+      if(Math.abs(da)<FOV*.80&&lineOfSight(player.x,player.y,e.x,e.y))vis.push({type:"enemy",d,da,o:e});
+    }
+    for(const p of pickups){
+      if(p.taken)continue;
+      const dx=p.x-player.x,dy=p.y-player.y,d=Math.hypot(dx,dy),da=angleDiff(Math.atan2(dy,dx),player.a);
+      if(Math.abs(da)<FOV*.80&&lineOfSight(player.x,player.y,p.x,p.y))vis.push({type:"pickup",d,da,o:p});
+    }
+    for(const p of projectiles){
+      const dx=p.x-player.x,dy=p.y-player.y,d=Math.hypot(dx,dy),da=angleDiff(Math.atan2(dy,dx),player.a);
+      if(Math.abs(da)<FOV*.80&&lineOfSight(player.x,player.y,p.x,p.y))vis.push({type:"projectile",d,da,o:p});
+    }
+    {
+      const dx=exit.x-player.x,dy=exit.y-player.y,d=Math.hypot(dx,dy),da=angleDiff(Math.atan2(dy,dx),player.a);
+      if(Math.abs(da)<FOV*.80&&lineOfSight(player.x,player.y,exit.x,exit.y))vis.push({type:"exit",d,da,o:exit});
     }
     vis.sort((a,b)=>b.d-a.d);
     for(const s of vis){
@@ -1017,6 +1036,19 @@
       chainsaw:"#7f402d",keyblue:"#4a87ea",soulsphere:"#59aaa3"
     }[t]||"#ddd";
   }
+  function drawExit(sx,d){
+    const z=clamp(9/Math.max(.25,d),.25,3);
+    const w=Math.max(6,Math.floor(10*z));
+    const h=Math.max(10,Math.floor(20*z));
+    const y=80-h*.5;
+    const ready=hasKeycard()&&state.kills>=state.totalKills;
+    const c=ready?"#4cc6a0":"#36566a";
+    spriteRect(sx-w/2,y,w,h,c,d);
+    spriteRect(sx-w*.30,y+h*.18,w*.60,h*.58,ready?"#8fffd2":"#5a7690",d);
+    spriteRect(sx-w*.12,y+h*.30,w*.24,h*.38,ready?"#d9fff0":"#91a8b8",d);
+    if(ready) spriteRect(sx-w*.42,y-h*.10,w*.84,2,"#d9fff0",d);
+  }
+
   function drawPickup(p,sx,d){
     const z=clamp(7/Math.max(.25,d),.25,3),s=Math.max(4,Math.floor(8*z)),y=Math.floor(80-s+Math.sin(performance.now()/260+p.phase)*2*z),left=sx-s/2;
     spriteRect(left,y,s,s,pickupColor(p.type),d);
@@ -1131,7 +1163,7 @@
       label("MICRODOOM",160,42,16,"#eee","center");
       label("xLFr4n // SECTOR 01",160,64,7,"#ff5564","center");
       label("CLICK TO START · MOUSE LOOK",160,88,7,"#fff","center");
-      label("WASD MOVE · SHIFT RUN · 1-4 WEAPONS · E USE",160,102,5,"#aaa","center");
+      label("WASD MOVE · SHIFT RUN · 1-8 WEAPONS · E USE",160,102,5,"#aaa","center");
       label("TAB/M MAP · P PAUSE · R RESTART · F2 SAVE · F3 LOAD",160,113,5,"#aaa","center");
     } else if(state.mode==="dead"){
       label("YOU DIED",160,52,16,"#e04444","center");
@@ -1159,11 +1191,27 @@
 
   function saveGame(){
     const payload={
-      version:2,
-      state:{time:state.time,kills:state.kills,items:state.items,totalItems:state.totalItems},
-      player:{x:player.x,y:player.y,a:player.a,hp:player.hp,armor:player.armor,ammo:{...player.ammo},owned:{...player.owned},ready:player.ready,pending:null,weaponState:"ready",weaponTimer:0,attackTimer:player.attackTimer},
+      version:3,
+      state:{
+        time:state.time,
+        kills:state.kills,
+        items:state.items,
+        totalKills:state.totalKills,
+        totalItems:state.totalItems,
+        automap:state.automap
+      },
+      player:{
+        x:player.x,y:player.y,a:player.a,hp:player.hp,armor:player.armor,armorType:player.armorType,
+        ammo:{...player.ammo},owned:{...player.owned},
+        ready:player.ready,pending:player.pending,weaponState:player.weaponState,
+        weaponTimer:player.weaponTimer,attackTimer:player.attackTimer
+      },
       doors:[...doors.entries()].map(([k,v])=>[k,{...v}]),
-      enemies:enemies.map((e,i)=>({index:i,x:e.x,y:e.y,hp:e.hp,alive:e.alive,type:e.type,cd:e.cd,targetIndex:e.target===player?null:enemies.indexOf(e.target)})),
+      explored:[...explored],
+      enemies:enemies.map((e,i)=>({
+        index:i,x:e.x,y:e.y,hp:e.hp,maxHp:e.maxHp,alive:e.alive,type:e.type,cd:e.cd,
+        targetIndex:e.target===player?null:enemies.indexOf(e.target)
+      })),
       pickups:pickups.map(p=>({type:p.type,x:p.x,y:p.y,value:p.value,taken:p.taken,phase:p.phase}))
     };
     localStorage.setItem(SAVE_KEY,JSON.stringify(payload));
@@ -1175,11 +1223,13 @@
       const raw=localStorage.getItem(SAVE_KEY);
       if(!raw){toast("NO SAVE FOUND",1.2);return;}
       const s=JSON.parse(raw);
-      if(s.version!==2)throw new Error("unsupported save");
+      if(s.version!==2&&s.version!==3)throw new Error("unsupported save");
       setupLevel();
-      Object.assign(player,s.player); player.weaponState="ready"; player.pending=null; player.weaponTimer=0;
+      Object.assign(player,s.player);
+      player.weaponState="ready"; player.pending=null; player.weaponTimer=0;
       player.ammo={bullets:0,shells:0,rockets:0,cells:0,...s.player.ammo};
       player.owned={fist:true,pistol:true,shotgun:false,chaingun:false,rocket:false,plasma:false,bfg:false,chainsaw:false,...s.player.owned};
+      player.armorType=Number(s.player.armorType)||0;
       for(const [k,v] of s.doors||[])doors.set(k,v);
       for(const saved of s.enemies||[]){
         if(enemies[saved.index])Object.assign(enemies[saved.index],saved);
@@ -1189,13 +1239,16 @@
         delete e.index; delete e.targetIndex;
       }
       pickups.length=0;
-      for(const saved of s.pickups||[]){
-        pickups.push({...saved});
-      }
+      for(const saved of s.pickups||[])pickups.push({...saved});
       state.time=Number(s.state.time)||0;
       state.kills=Number(s.state.kills)||0;
+      state.totalKills=Math.max(state.kills,Number(s.state.totalKills)||enemies.length);
       state.items=Number(s.state.items)||0;
       state.totalItems=Math.max(state.items,Number(s.state.totalItems)||pickups.length);
+      state.automap=!!s.state.automap;
+      explored.clear();
+      for(const cell of s.explored||[])explored.add(cell);
+      explored.add(key(Math.floor(player.x),Math.floor(player.y)));
       state.mode="playing";
       state.paused=false;
       soundAlert=0;
