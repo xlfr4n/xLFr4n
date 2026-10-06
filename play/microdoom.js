@@ -14,7 +14,7 @@
   const SAVE_KEY = "xlfr4n-microdoom-save-v2";
   const SETTINGS_KEY = "xlfr4n-microdoom-settings-v1";
   const DEFAULT_SETTINGS = {
-    mouseSensitivity: 0.0009,
+    mouseSensitivity: 0.00075,
     masterVolume: 0.72,
     reducedFlash: false,
     crosshair: true
@@ -122,6 +122,8 @@
   let last = performance.now();
   let accumulator = 0;
   let audio = null;
+  let mouseLookDelta = 0;
+  const supportsRawPointer = "onpointerrawupdate" in window;
   const gameUI = document.getElementById("game-ui");
   const menuPanels = [...document.querySelectorAll("[data-menu]")];
   let visibleMenu = "";
@@ -1383,6 +1385,10 @@
   }
 
   function render(){
+    if(state.mode==="playing"&&!state.paused&&document.pointerLockElement===canvas&&mouseLookDelta!==0){
+      player.a=wrapAngle(player.a+mouseLookDelta*settings.mouseSensitivity);
+      mouseLookDelta=0;
+    }
     drawWorld();
     drawTopStatus();
     drawCrosshair();
@@ -1468,7 +1474,15 @@
   }
 
 
-  function lockMouse(){initAudio();canvas.requestPointerLock?.();}
+  function lockMouse(){
+    initAudio();
+    try {
+      const result=canvas.requestPointerLock?.({unadjustedMovement:true});
+      if(result?.catch) result.catch(()=>canvas.requestPointerLock?.());
+    } catch {
+      canvas.requestPointerLock?.();
+    }
+  }
 
   canvas.addEventListener("click",()=>{
     initAudio();
@@ -1504,11 +1518,15 @@
     persistSettings();
   });
 
-  document.addEventListener("mousemove",(e)=>{
+  function captureMouseDelta(e){
     if(state.mode==="playing"&&!state.paused&&document.pointerLockElement===canvas){
-      const movement=clamp(e.movementX,-90,90);
-      player.a=wrapAngle(player.a+movement*settings.mouseSensitivity);
+      mouseLookDelta=clamp(mouseLookDelta+e.movementX,-1200,1200);
     }
+  }
+
+  if(supportsRawPointer) document.addEventListener("pointerrawupdate",captureMouseDelta);
+  document.addEventListener("mousemove",(e)=>{
+    if(!supportsRawPointer) captureMouseDelta(e);
   });
 
   document.addEventListener("pointerlockchange",()=>{
@@ -1526,6 +1544,7 @@
   addEventListener("mouseup",(e)=>{if(e.button===0)keys.MouseLeft=false;});
   addEventListener("blur",()=>{
     for(const k of Object.keys(keys))keys[k]=false;
+    mouseLookDelta=0;
     if(state.mode==="playing"&&!state.paused)pauseGame();
   });
 
