@@ -1202,23 +1202,27 @@
     if(["Space","Tab","ArrowUp","ArrowDown","ArrowLeft","ArrowRight","F2","F3"].includes(e.code))e.preventDefault();
     initAudio();
 
-    if(e.code==="Enter"&&state.mode==="title"){newGame();lockMouse();}
-    if(e.code==="KeyR"&&(state.mode==="dead"||state.mode==="won")){newGame();lockMouse();}
-    if(e.code==="KeyP"&&state.mode==="playing")state.paused=!state.paused;
-    if(e.code==="Escape"&&state.mode==="playing"){
+    if(e.code==="Enter"&&!e.repeat&&state.mode==="title"){newGame();lockMouse();}
+    if(e.code==="KeyR"&&!e.repeat&&(state.mode==="dead"||state.mode==="won")){newGame();lockMouse();}
+    if(e.code==="KeyP"&&!e.repeat&&state.mode==="playing")state.paused=!state.paused;
+    if(e.code==="Escape"&&!e.repeat&&state.mode==="playing"){
       state.paused=!state.paused;
       if(state.paused)document.exitPointerLock?.();
     }
-    if(e.code==="Tab"||e.code==="KeyM")state.automap=!state.automap;
-    if(e.code==="KeyE"&&state.mode==="playing"&&!state.paused)useDoor();
-    if(e.code==="Digit1")selectWeapon("fist");
-    if(e.code==="Digit2")selectWeapon("pistol");
-    if(e.code==="Digit3")selectWeapon("shotgun");
-    if(e.code==="Digit4")selectWeapon("chaingun");
-    if(e.code==="KeyQ")nextWeapon();
-    if(e.code==="F2"&&state.mode==="playing")saveGame();
-    if(e.code==="F3"&&state.mode==="playing")loadGame();
-    if(e.code==="Space"&&state.mode==="playing"&&!state.paused)shoot();
+    if((e.code==="Tab"||e.code==="KeyM")&&!e.repeat)state.automap=!state.automap;
+    if(e.code==="KeyE"&&!e.repeat&&state.mode==="playing"&&!state.paused)useDoor();
+    if(e.code==="Digit1"&&!e.repeat)selectWeapon("fist");
+    if(e.code==="Digit2"&&!e.repeat)selectWeapon("pistol");
+    if(e.code==="Digit3"&&!e.repeat)selectWeapon("shotgun");
+    if(e.code==="Digit4"&&!e.repeat)selectWeapon("chaingun");
+    if(e.code==="Digit5"&&!e.repeat)selectWeapon("rocket");
+    if(e.code==="Digit6"&&!e.repeat)selectWeapon("plasma");
+    if(e.code==="Digit7"&&!e.repeat)selectWeapon("bfg");
+    if(e.code==="Digit8"&&!e.repeat)selectWeapon("chainsaw");
+    if(e.code==="KeyQ"&&!e.repeat)nextWeapon();
+    if(e.code==="F2"&&!e.repeat&&state.mode==="playing")saveGame();
+    if(e.code==="F3"&&!e.repeat&&state.mode==="playing")loadGame();
+    if(e.code==="Space"&&!e.repeat&&state.mode==="playing"&&!state.paused)shoot();
   });
 
   addEventListener("keyup",(e)=>{keys[e.code]=false;});
