@@ -42,7 +42,7 @@ try {
   await page.keyboard.press('Escape');
   await page.waitForTimeout(80);
   if (!(await page.getByRole('button', { name: /RESUME/ }).isVisible())) throw new Error('ESC did not open the pause menu');
-  await page.getByRole('button', { name: /OPTIONS/ }).last().click();
+  await page.locator('[data-menu="pause"]').getByRole('button', { name: /OPTIONS/ }).click();
   if (!(await page.locator('#setting-sensitivity').isVisible())) throw new Error('Pause options did not open');
   await page.keyboard.press('Escape');
   if (!(await page.getByRole('button', { name: /RESUME/ }).isVisible())) throw new Error('ESC did not return from options to pause');
