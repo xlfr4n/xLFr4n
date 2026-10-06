@@ -22,9 +22,15 @@
   function loadSettings() {
     try {
       const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "null");
+      const raw = saved && typeof saved === "object" ? saved : {};
+      const mouseSensitivity = Number(raw.mouseSensitivity);
+      const masterVolume = Number(raw.masterVolume);
       return {
         ...DEFAULT_SETTINGS,
-        ...(saved && typeof saved === "object" ? saved : {})
+        mouseSensitivity: Number.isFinite(mouseSensitivity) ? Math.min(0.0022, Math.max(0.00035, mouseSensitivity)) : DEFAULT_SETTINGS.mouseSensitivity,
+        masterVolume: Number.isFinite(masterVolume) ? Math.min(1, Math.max(0, masterVolume)) : DEFAULT_SETTINGS.masterVolume,
+        reducedFlash: raw.reducedFlash === true,
+        crosshair: raw.crosshair !== false
       };
     } catch {
       return { ...DEFAULT_SETTINGS };
