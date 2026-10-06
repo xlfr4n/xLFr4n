@@ -480,7 +480,7 @@
       return;
     }
     if (action === "save") {
-      if (state.mode === "playing" && state.paused && player.weaponState === "ready") saveGame();
+      if (state.mode === "playing" && state.paused) saveGame();
       return;
     }
     if (action === "exit") {
@@ -1284,7 +1284,7 @@
   function label(t,x,y,size,color,align){ctx.font="700 "+size+"px monospace";ctx.textAlign=align||"left";ctx.textBaseline="top";ctx.fillStyle=color;ctx.fillText(t,Math.floor(x),Math.floor(y));}
 
   function drawFace(){
-    const cx=286,cy=177;
+    const cx=228,cy=177;
     rect(cx-11,cy-10,22,22,player.hp<35?"#713527":"#a16d4c");
     rect(cx-7,cy-5,4,3,"#eee4bd");rect(cx+3,cy-5,4,3,"#eee4bd");
     rect(cx-6,cy-5,2,3,"#111");rect(cx+4,cy-5,2,3,"#111");rect(cx-5,cy+6,10,3,"#39130e");
@@ -1519,7 +1519,10 @@
     }
   });
   addEventListener("mouseup",(e)=>{if(e.button===0)keys.MouseLeft=false;});
-  addEventListener("blur",()=>{for(const k of Object.keys(keys))keys[k]=false;});
+  addEventListener("blur",()=>{
+    for(const k of Object.keys(keys))keys[k]=false;
+    if(state.mode==="playing"&&!state.paused)pauseGame();
+  });
 
   addEventListener("keydown",(e)=>{
     keys[e.code]=true;
