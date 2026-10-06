@@ -52,7 +52,7 @@ assert.ok(js.includes("while(accumulator>=SIM_DT"), "render loop must decouple r
 for (const token of [
   'rocket:', 'plasma:', 'bfg:', 'chainsaw:',
   'rocketlauncher', 'rockets', 'plasmagun', 'cellpack', 'chainsaw', 'bfg',
-  'function weaponHasAmmo', 'version:2'
+  'function weaponHasAmmo', 'version:3'
 ]) assert.ok(js.includes(token), 'missing expanded gameplay token: ' + token);
 
 assert.ok(js.includes('function completeLevel()'), 'explicit exit completion must exist');
