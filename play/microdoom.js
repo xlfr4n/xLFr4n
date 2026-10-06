@@ -428,7 +428,6 @@
     state.paused = false;
     state.mode = "title";
     state.menuReturn = "pause";
-    mouseLookDelta=0;
     document.exitPointerLock?.();
     for (const k of Object.keys(keys)) keys[k] = false;
     showMenu("title");
@@ -438,7 +437,6 @@
     if (state.mode !== "playing" || state.paused) return;
     state.paused = true;
     state.menuReturn = "pause";
-    mouseLookDelta=0;
     document.exitPointerLock?.();
     for (const k of Object.keys(keys)) keys[k] = false;
     showMenu("pause");
