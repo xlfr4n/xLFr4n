@@ -52,7 +52,7 @@
     plasma: { name: "PLASMA RIFLE", ammo: "cells", damage: [5, 40], cooldown: 0.08, range: 24, pellets: 1, spread: 0.012, auto: true },
     bfg: { name: "BFG9000", ammo: "cells", damage: [50, 200], cooldown: 1.10, range: 24, pellets: 1, spread: 0, auto: false },
     chainsaw: { name: "CHAINSAW", ammo: null, damage: [2, 20], cooldown: 0.09, range: 1.10, pellets: 1, spread: 0, auto: true }
-  };;;
+  };
 
   const ENEMIES = {
     zombieman: { hp: 20, speed: 0.78, radius: 0.23, sight: 11, attackRange: 7, cooldown: 1.30, damage: 8, painChance: 0.22, projectile: false },
@@ -648,9 +648,13 @@
   }
   function moveEnemy(e, dx, dy) {
     const r = ENEMIES[e.type].radius;
-    let nx=e.x+dx, ny=e.y+dy;
-    if (!blocked(nx,e.y,r) && !enemyOverlap(e,nx,e.y)) e.x=nx;
-    if (!blocked(e.x,ny,r) && !enemyOverlap(e,e.x,ny)) e.y=ny;
+    const canOccupy = (x,y) => {
+      if (blocked(x,y,r) || enemyOverlap(e,x,y)) return false;
+      return Math.hypot(player.x-x,player.y-y) >= r + .16;
+    };
+    const nx=e.x+dx, ny=e.y+dy;
+    if (canOccupy(nx,e.y)) e.x=nx;
+    if (canOccupy(e.x,ny)) e.y=ny;
   }
 
   function enemyOverlap(me,x,y) {
