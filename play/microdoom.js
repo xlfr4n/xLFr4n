@@ -436,6 +436,12 @@
   }
 
 
+  function weaponHasAmmo(name) {
+    const w=WEAPONS[name];
+    if(!w?.ammo)return true;
+    return player.ammo[w.ammo] >= (name==="bfg" ? 40 : 1);
+  }
+
   function selectWeapon(name) {
     if (!player.owned[name] || !weaponHasAmmo(name)) return;
     if (player.pending === name || player.ready === name) return;
