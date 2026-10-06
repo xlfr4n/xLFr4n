@@ -44,15 +44,15 @@
   const exit = { x: 27.5, y: 10.5 };
 
   const WEAPONS = {
-    fist: { name: "FIST", ammo: null, damage: [20, 40], cooldown: 0.42, range: 1.0, pellets: 1, spread: 0, auto: false },
-    pistol: { name: "PISTOL", ammo: "bullets", damage: [3, 12], cooldown: 0.30, range: 18, pellets: 1, spread: 0.018, auto: false },
-    shotgun: { name: "SHOTGUN", ammo: "shells", damage: [3, 12], cooldown: 0.92, range: 16, pellets: 7, spread: 0.085, auto: false },
+    fist: { name: "FIST", ammo: null, damage: [2, 20], cooldown: 0.42, range: 1.0, pellets: 1, spread: 0, auto: false },
+    pistol: { name: "PISTOL", ammo: "bullets", damage: [3, 12], cooldown: 0.18, range: 18, pellets: 1, spread: 0.018, auto: false },
+    shotgun: { name: "SHOTGUN", ammo: "shells", damage: [3, 12], cooldown: 0.82, range: 16, pellets: 7, spread: 0.085, auto: false },
     chaingun: { name: "CHAINGUN", ammo: "bullets", damage: [3, 12], cooldown: 0.10, range: 18, pellets: 1, spread: 0.035, auto: true },
     rocket: { name: "ROCKET LAUNCHER", ammo: "rockets", damage: [20, 160], cooldown: 0.82, range: 24, pellets: 1, spread: 0, auto: false },
-    plasma: { name: "PLASMA RIFLE", ammo: "cells", damage: [5, 40], cooldown: 0.10, range: 24, pellets: 1, spread: 0.012, auto: true },
+    plasma: { name: "PLASMA RIFLE", ammo: "cells", damage: [5, 40], cooldown: 0.08, range: 24, pellets: 1, spread: 0.012, auto: true },
     bfg: { name: "BFG9000", ammo: "cells", damage: [50, 200], cooldown: 1.10, range: 24, pellets: 1, spread: 0, auto: false },
     chainsaw: { name: "CHAINSAW", ammo: null, damage: [2, 20], cooldown: 0.09, range: 1.10, pellets: 1, spread: 0, auto: true }
-  };;
+  };;;
 
   const ENEMIES = {
     zombieman: { hp: 20, speed: 0.78, radius: 0.23, sight: 11, attackRange: 7, cooldown: 1.30, damage: 8, projectile: false },
@@ -60,8 +60,8 @@
     imp: { hp: 60, speed: 0.64, radius: 0.27, sight: 12, attackRange: 8, cooldown: 1.65, damage: 12, projectile: true },
     demon: { hp: 150, speed: 0.96, radius: 0.35, sight: 10, attackRange: 1.0, cooldown: 1.05, damage: 18, projectile: false },
     cacodemon: { hp: 400, speed: 0.50, radius: 0.38, sight: 14, attackRange: 9, cooldown: 2.0, damage: 18, projectile: true },
-    baron: { hp: 350, speed: 0.42, radius: 0.38, sight: 16, attackRange: 9, cooldown: 1.75, damage: 25, projectile: true }
-  };;
+    baron: { hp: 1000, speed: 0.42, radius: 0.38, sight: 16, attackRange: 9, cooldown: 1.75, damage: 25, projectile: true }
+  };;;
 
   const state = {
     mode: "title",
@@ -491,16 +491,14 @@
 
   function killEnemy(e) {
     if (!e.alive) return;
-    e.alive = false; e.state = "dead"; e.dead = true; e.deathTimer = 0;
+    e.alive=false;
+    e.state="dead";
+    e.dead=true;
+    e.deathTimer=0;
     state.kills++;
-    impact(e.x, e.y, e.type === "cacodemon" ? "230,75,55" : "205,65,40", 10);
-    if (Math.random() < 0.28) {
-      const roll = Math.random();
-      const type = roll < 0.45 ? "clip" : roll < 0.75 ? "shells" : "rockets";
-      spawnPickup(type, e.x, e.y, type === "clip" ? 10 : type === "shells" ? 4 : 1);
-      state.totalItems++;
-    }
+    impact(e.x,e.y,e.type==="cacodemon"?"230,75,55":"205,65,40",10);
   }
+
 
   function shoot() {
     if (state.mode !== "playing" || state.paused || player.weaponTimer > 0 || player.attackTimer > 0) return;
