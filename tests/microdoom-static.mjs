@@ -82,6 +82,10 @@ assert.doesNotMatch(js, /other === p\.owner \|\| p\.owner === player/, "player p
 assert.ok(js.includes('vis.push({type:"pickup"') && js.includes('vis.push({type:"projectile"') && js.includes('vis.push({type:"exit"'), "world render must include pickups, projectiles and exit");
 assert.ok(js.includes('function drawExit'), "exit must have a visible world representation");
 assert.ok(js.includes('return Math.hypot(player.x-x,player.y-y) >= r + .16;'), "enemy movement must respect player collision radius");
+assert.ok(js.includes('Math.ceil(travel / 0.09)'), "fast projectiles must use collision substeps");
+assert.ok(js.includes('if(keys.MouseLeft||keys.Space)'), "automatic weapons must fire while held through mouse or space");
+assert.ok(js.includes('if(e.code==="KeyP"&&!e.repeat&&state.mode==="playing")'), "pause toggle must remain discrete");
+
 
 assert.ok(js.includes('version:3'), "save format must use the current version");
 assert.ok(js.includes('armorType:player.armorType') && js.includes('explored:[...explored]') && js.includes('automap:state.automap'), "save data must preserve gameplay state");
