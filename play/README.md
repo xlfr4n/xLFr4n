@@ -12,7 +12,7 @@ El objetivo es reproducir el tipo de experiencia y sensaciones mecánicas del DO
 - giro por mouse mediante Pointer Lock y por flechas;
 - strafe con A/D;
 - carrera con Shift;
-- Fist, Pistol, Shotgun y Chaingun;
+- Fist, Pistol, Shotgun, Chaingun, Rocket Launcher, Plasma Rifle, BFG9000 y Chainsaw;
 - daño hitscan y dispersión de escopeta;
 - cuatro comportamientos enemigos diferenciados;
 - proyectiles enemigos;
@@ -34,7 +34,7 @@ El objetivo es reproducir el tipo de experiencia y sensaciones mecánicas del DO
 | Mouse | girar |
 | ← / → | girar |
 | Shift | correr |
-| 1–4 | cambiar arma |
+| 1–8 | cambiar arma |
 | Q | siguiente arma disponible |
 | Click izquierdo | disparar |
 | Espacio | disparar |
@@ -61,7 +61,7 @@ The goal is to reproduce the feel and class of mechanics associated with classic
 
 ### Current engine
 
-Movement physics, mouse look, strafing, sprinting, four weapons, hitscan damage, shotgun spread, differentiated enemy behavior, enemy projectiles, pickups, doors, a blue keycard, automap, death/victory states, counters, local save/load, procedural Web Audio, retro HUD and weapon bob/recoil are implemented.
+Movement physics, mouse look, strafing, sprinting, eight weapons, hitscan damage, shotgun spread, differentiated enemy behavior, enemy projectiles, pickups, doors, a blue keycard, automap, death/victory states, counters, local save/load, procedural Web Audio, retro HUD and weapon bob/recoil are implemented.
 
 ### Verification
 
