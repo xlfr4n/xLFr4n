@@ -31,25 +31,86 @@ try {
   await page.evaluate(() => {
     const save = {
       version: 3,
-      state: { time: 12, kills: 0, items: 0, totalItems: 0 },
+      state: { time: 12, kills: 0, items: 0, totalKills: 12, totalItems: 1, automap: false },
       player: {
         x: 2.5, y: 2.5, a: 0, hp: 100, armor: 100, armorType: 2,
         ammo: { bullets: 200, shells: 50, rockets: 50, cells: 300 },
-        owned: { fist: true, pistol: true, shotgun: true, chaingun: true, rocket: true, plasma: true, bfg: true, chainsaw: true },
+        owned: { fist: true, pistol: true, shotgun: false, chaingun: false, rocket: false, plasma: false, bfg: false, chainsaw: false },
         ready: 'pistol', pending: null, weaponState: 'ready', weaponTimer: 0, attackTimer: 0
+      },
+      doors: [], explored: ['2,2'], enemies: [],
+      pickups: [{ type: 'shotgun', x: 2.5, y: 2.5, value: 1, taken: false, phase: 0 }]
+    };
+    localStorage.setItem('xlfr4n-microdoom-save-v2', JSON.stringify(save));
+  });
+  await page.keyboard.press('F3');
+  await page.waitForTimeout(300);
+  await page.keyboard.press('F2');
+  const weaponPickupState = await page.evaluate(() => JSON.parse(localStorage.getItem('xlfr4n-microdoom-save-v2')));
+  if (weaponPickupState.player.ready !== 'shotgun' || weaponPickupState.player.weaponState !== 'ready' || !weaponPickupState.pickups[0]?.taken) {
+    throw new Error('Weapon pickup did not complete the switch state machine');
+  }
+
+  await page.evaluate(() => {
+    const types = ['zombieman','shotguy','imp','zombieman','demon','imp','zombieman','demon','imp','cacodemon','baron','zombieman'];
+    const enemies = types.map((type, index) => ({
+      index,
+      x: index === 0 ? 9.5 : 2.5,
+      y: index === 0 ? 2.5 : 1.5,
+      hp: index === 0 ? 20 : 0,
+      maxHp: index === 0 ? 20 : 30,
+      alive: index === 0,
+      type,
+      cd: 999,
+      targetIndex: null
+    }));
+    const save = {
+      version: 3,
+      state: { time: 0, kills: 11, items: 0, totalKills: 12, totalItems: 0, automap: false },
+      player: {
+        x: 2.5, y: 2.5, a: 0, hp: 100, armor: 0, armorType: 0,
+        ammo: { bullets: 50, shells: 20, rockets: 2, cells: 100 },
+        owned: { fist: true, pistol: true, shotgun: true, chaingun: true, rocket: true, plasma: true, bfg: true, chainsaw: true },
+        ready: 'rocket', pending: null, weaponState: 'ready', weaponTimer: 0, attackTimer: 0
+      },
+      doors: [], explored: ['2,2'], enemies,
+      pickups: []
+    };
+    localStorage.setItem('xlfr4n-microdoom-save-v2', JSON.stringify(save));
+  });
+  await page.keyboard.press('F3');
+  await page.waitForTimeout(120);
+  await page.keyboard.press('Space');
+  await page.waitForTimeout(1400);
+  await page.keyboard.press('F2');
+  const projectileState = await page.evaluate(() => JSON.parse(localStorage.getItem('xlfr4n-microdoom-save-v2')));
+  if (projectileState.state.kills !== 12 || projectileState.player.ammo.rockets !== 1) {
+    throw new Error('Rocket projectile did not register a deterministic enemy kill');
+  }
+
+  await page.evaluate(() => {
+    const save = {
+      version: 3,
+      state: { time: 0, kills: 12, items: 0, totalKills: 12, totalItems: 0, automap: false },
+      player: {
+        x: 2.5, y: 2.5, a: 0, hp: 100, armor: 0, armorType: 0,
+        ammo: { bullets: 80, shells: 20, rockets: 2, cells: 100 },
+        owned: { fist: true, pistol: true, shotgun: true, chaingun: true, rocket: true, plasma: true, bfg: true, chainsaw: true },
+        ready: 'chaingun', pending: null, weaponState: 'ready', weaponTimer: 0, attackTimer: 0
       },
       doors: [], explored: ['2,2'], enemies: [], pickups: []
     };
     localStorage.setItem('xlfr4n-microdoom-save-v2', JSON.stringify(save));
   });
   await page.keyboard.press('F3');
-  await page.waitForTimeout(80);
-
-  for (const key of ['1','2','3','4','5','6','7','8']) {
-    await page.keyboard.press(key);
-    await page.waitForTimeout(220);
-    await page.keyboard.press('Space');
-    await page.waitForTimeout(80);
+  await page.waitForTimeout(240);
+  await page.keyboard.down('Space');
+  await page.waitForTimeout(500);
+  await page.keyboard.up('Space');
+  await page.keyboard.press('F2');
+  const autoFireState = await page.evaluate(() => JSON.parse(localStorage.getItem('xlfr4n-microdoom-save-v2')));
+  if (autoFireState.player.ammo.bullets >= 80) {
+    throw new Error('Chaingun did not auto-fire while holding Space');
   }
 
   await page.keyboard.press('F2');
