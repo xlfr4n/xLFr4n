@@ -32,3 +32,5 @@ jobs:
         run: |
           grep -Fq '<script src="./microdoom.js"></script>' play/index.html
           ! grep -Fq '<script src="./microdoom.js"></script><script>' play/index.html
+      - name: Browser smoke
+        run: npx --yes -p playwright node tests/microdoom-browser.mjs
