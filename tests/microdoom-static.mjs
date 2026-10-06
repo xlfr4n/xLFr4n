@@ -91,6 +91,11 @@ assert.ok(html.includes('id="setting-sensitivity"') && html.includes('id="settin
 assert.ok(js.includes('SETTINGS_KEY') && js.includes('DEFAULT_SETTINGS') && js.includes('settings.mouseSensitivity'), "Microdoom must persist mouse sensitivity settings");
 assert.ok(/movement=clamp\(e\.movementX,-90,90\)/.test(js), "mouse look must clamp extreme pointer deltas");
 assert.ok(/movement\*settings\.mouseSensitivity/.test(js), "mouse look must use configurable sensitivity");
+assert.ok(js.includes('unadjustedMovement:true'), "pointer lock must request raw mouse movement");
+assert.ok(js.includes('"onpointerrawupdate" in window') && js.includes('pointerrawupdate'), "raw pointer input should be preferred when supported");
+assert.ok(js.includes('mouseLookDelta=clamp(mouseLookDelta+e.movementX,-1200,1200)'), "mouse deltas must be accumulated safely");
+assert.ok(js.includes('player.a=wrapAngle(player.a+mouseLookDelta*settings.mouseSensitivity)'), "mouse look must be applied on the visual frame");
+assert.ok(js.includes('mouseLookDelta=0'), "consumed mouse input must be cleared each frame");
 assert.ok(js.includes('function pauseGame()') && js.includes('function resumeGame()') && js.includes('function returnToTitle()'), "menu navigation actions must be explicit");
 assert.ok(js.includes('window.location.href = "../"'), "exit action must return to the lab");
 
