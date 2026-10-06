@@ -32,5 +32,9 @@ jobs:
         run: |
           grep -Fq '<script src="./microdoom.js"></script>' play/index.html
           ! grep -Fq '<script src="./microdoom.js"></script><script>' play/index.html
+      - name: Install Playwright
+        run: npm install --no-save playwright
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
       - name: Browser smoke
-        run: npx --yes -p playwright node tests/microdoom-browser.mjs
+        run: node tests/microdoom-browser.mjs
