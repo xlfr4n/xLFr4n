@@ -58,3 +58,8 @@ for (const token of [
 assert.ok(js.includes('function completeLevel()'), 'explicit exit completion must exist');
 assert.ok(js.includes('EXIT READY · PRESS E'), 'exit must advertise explicit interaction');
 assert.ok(js.includes('const atExit='), 'exit interaction proximity must be checked');
+
+for (const token of ['shotguy:', 'baron:', 'type:e.type==="baron"?"baronball":"fireball"', 'keys.Space)']) {
+  assert.ok(js.includes(token), 'missing combat/AI token: ' + token);
+}
+assert.ok(js.includes('!e.repeat && state.mode === "playing"'), 'discrete actions must ignore key auto-repeat');
