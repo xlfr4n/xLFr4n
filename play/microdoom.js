@@ -1499,10 +1499,9 @@
     if(state.mode==="playing") lockMouse();
   });
 
-  gameUI?.addEventListener("click", (e)=>{
-    const button=e.target.closest("[data-action]");
-    if(button)buttonAction(button.dataset.action);
-  });
+  for(const button of gameUI?.querySelectorAll("[data-action]")||[]){
+    button.addEventListener("click",()=>buttonAction(button.dataset.action));
+  }
 
   document.getElementById("setting-sensitivity")?.addEventListener("input",(e)=>{
     settings.mouseSensitivity = clamp(Number(e.target.value) / 100000, 0.00035, 0.0022);
