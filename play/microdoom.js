@@ -538,6 +538,7 @@
     beep("hurt");
     if(player.hp<=0){
       player.hp=0;
+      state.mode="dead";
       state.paused=false;
       document.exitPointerLock?.();
       beep("death");
