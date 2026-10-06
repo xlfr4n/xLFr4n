@@ -1161,7 +1161,7 @@
     const payload={
       version:2,
       state:{time:state.time,kills:state.kills,items:state.items,totalItems:state.totalItems},
-      player:{x:player.x,y:player.y,a:player.a,hp:player.hp,armor:player.armor,ammo:{...player.ammo},owned:{...player.owned},ready:player.ready,pending:player.pending,weaponTimer:player.weaponTimer,attackTimer:player.attackTimer},
+      player:{x:player.x,y:player.y,a:player.a,hp:player.hp,armor:player.armor,ammo:{...player.ammo},owned:{...player.owned},ready:player.ready,pending:null,weaponState:"ready",weaponTimer:0,attackTimer:player.attackTimer},
       doors:[...doors.entries()].map(([k,v])=>[k,{...v}]),
       enemies:enemies.map((e,i)=>({index:i,x:e.x,y:e.y,hp:e.hp,alive:e.alive,type:e.type,cd:e.cd,targetIndex:e.target===player?null:enemies.indexOf(e.target)})),
       pickups:pickups.map(p=>({type:p.type,x:p.x,y:p.y,value:p.value,taken:p.taken,phase:p.phase}))
@@ -1177,7 +1177,7 @@
       const s=JSON.parse(raw);
       if(s.version!==2)throw new Error("unsupported save");
       setupLevel();
-      Object.assign(player,s.player);
+      Object.assign(player,s.player); player.weaponState="ready"; player.pending=null; player.weaponTimer=0;
       player.ammo={bullets:0,shells:0,rockets:0,cells:0,...s.player.ammo};
       player.owned={fist:true,pistol:true,shotgun:false,chaingun:false,rocket:false,plasma:false,bfg:false,chainsaw:false,...s.player.owned};
       for(const [k,v] of s.doors||[])doors.set(k,v);
@@ -1252,7 +1252,7 @@
     if(e.code==="Digit7"&&!e.repeat)selectWeapon("bfg");
     if(e.code==="Digit8"&&!e.repeat)selectWeapon("chainsaw");
     if(e.code==="KeyQ"&&!e.repeat)nextWeapon();
-    if(e.code==="F2"&&!e.repeat&&state.mode==="playing")saveGame();
+    if(e.code==="F2"&&!e.repeat&&state.mode==="playing"&&!state.paused&&player.weaponState==="ready")saveGame();
     if(e.code==="F3"&&!e.repeat&&state.mode==="playing")loadGame();
     if(e.code==="Space"&&!e.repeat&&state.mode==="playing"&&!state.paused)shoot();
   });
