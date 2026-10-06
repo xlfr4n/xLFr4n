@@ -97,6 +97,7 @@ assert.ok(js.includes('mouseLookDelta=clamp(mouseLookDelta+e.movementX,-1200,120
 assert.ok(js.includes('player.a=wrapAngle(player.a+mouseLookDelta*settings.mouseSensitivity)'), "mouse look must be applied on the visual frame");
 assert.ok(js.includes('mouseLookDelta=0'), "consumed mouse input must be cleared each frame");
 assert.ok(js.includes('function applyMouseLook()'), "camera input should have a dedicated frame-level application step");
+assert.ok(js.includes('function pauseGame()') && js.includes('state.paused = true;') && js.includes('mouseLookDelta=0;'), "pausing must clear pending mouse movement");
 assert.ok(js.includes('lastRawPointerAt') && js.includes('performance.now()-lastRawPointerAt>120'), "mousemove fallback must remain available if raw pointer events stop");
 assert.ok(js.includes('applyMouseLook();') && js.includes('let steps=0;'), "camera input must be applied before fixed simulation steps");
 assert.ok(js.includes('SETTINGS_KEY = "xlfr4n-microdoom-settings-v2"'), "mouse calibration storage must use the current settings version");
