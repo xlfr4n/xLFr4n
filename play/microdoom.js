@@ -313,7 +313,8 @@
   function resetPlayer() {
     Object.assign(player, {
       x: playerSpawn.x, y: playerSpawn.y, a: playerSpawn.a,
-      hp: 100, armor: 0, ammo: { bullets: 70, shells: 8 },
+      hp: 100, armor: 0,
+      ammo: { bullets: 70, shells: 8, rockets: 0, cells: 0 },
       owned: { fist: true, pistol: true, shotgun: false, chaingun: false, rocket: false, plasma: false, bfg: false, chainsaw: false },
       ready: "pistol", pending: null, weaponTimer: 0, attackTimer: 0,
       muzzle: 0, recoil: 0, bob: 0, vx: 0, vy: 0
@@ -466,43 +467,64 @@
 
   function shoot() {
     if (state.mode !== "playing" || state.paused || player.weaponTimer > 0 || player.attackTimer > 0) return;
-    const name = player.ready, w = WEAPONS[name];
-    if (w.ammo && player.ammo[w.ammo] <= 0) {
-      selectWeapon(chooseFallback()); toast("NO AMMO", 1.0); return;
-    }
-    if (w.ammo) player.ammo[w.ammo]--;
-    player.attackTimer = w.cooldown;
-    player.muzzle = .07;
-    soundAlert = 1.0;
-    player.recoil = name === "shotgun" ? 5 : 2;
+    const name = player.ready;
+    const w = WEAPONS[name];
+    const cost = name === "bfg" ? 40 : (w.ammo ? 1 : 0);
 
-    if (name === "fist") {
-      const e = visibleTarget(player.a, w.range, name === "chainsaw" ? .22 : .16);
+    if (w.ammo && player.ammo[w.ammo] < cost) {
+      const fallback = chooseFallback();
+      if (fallback !== name) selectWeapon(fallback);
+      toast("NO AMMO", 1.0);
+      return;
+    }
+
+    if (w.ammo) player.ammo[w.ammo] -= cost;
+    player.attackTimer = w.cooldown;
+    player.muzzle = name === "chainsaw" ? .04 : .07;
+    player.recoil = name === "shotgun" ? 5 : name === "rocket" ? 3 : name === "bfg" ? 7 : 2;
+    soundAlert = 1.0;
+    wakeNearbyEnemies();
+
+    if (name === "fist" || name === "chainsaw") {
+      const e = visibleTarget(player.a, w.range, name === "chainsaw" ? .24 : .16);
       if (e) {
         e.hp -= int(w.damage[0], w.damage[1]);
         e.pain = name === "chainsaw" ? .06 : .16;
         e.target = player;
+        e.state = "chase";
         if (e.hp <= 0) killEnemy(e);
-        impact(e.x,e.y,"255,210,170", name === "chainsaw" ? 1 : 3);
+        impact(e.x, e.y, "255,210,170", name === "chainsaw" ? 1 : 3);
       }
       beep(name === "chainsaw" ? "chainsaw" : "punch");
       return;
     }
 
     if (name === "rocket") {
-      projectiles.push({ x:player.x, y:player.y, a:player.a, speed:7.0, damage:int(20,160), life:4, owner:player, type:"rocket" });
+      projectiles.push({
+        x: player.x, y: player.y, a: player.a,
+        speed: 7.0, damage: int(w.damage[0], w.damage[1]), life: 4,
+        owner: player, type: "rocket"
+      });
       beep("rocket");
       return;
     }
 
     if (name === "plasma") {
-      projectiles.push({ x:player.x, y:player.y, a:player.a + rand(-w.spread,w.spread), speed:15, damage:int(5,40), life:2.0, owner:player, type:"plasma" });
+      projectiles.push({
+        x: player.x, y: player.y, a: player.a + rand(-w.spread, w.spread),
+        speed: 15, damage: int(w.damage[0], w.damage[1]), life: 2,
+        owner: player, type: "plasma"
+      });
       beep("plasma");
       return;
     }
 
     if (name === "bfg") {
-      projectiles.push({ x:player.x, y:player.y, a:player.a, speed:5.2, damage:int(50,200), life:5, owner:player, type:"bfg" });
+      projectiles.push({
+        x: player.x, y: player.y, a: player.a,
+        speed: 5.2, damage: int(w.damage[0], w.damage[1]), life: 5,
+        owner: player, type: "bfg"
+      });
       beep("bfg");
       return;
     }
@@ -512,12 +534,14 @@
       const wall = rayCast(player.x, player.y, a);
       const e = visibleTarget(a, w.range, .10 + w.spread);
       if (e) {
-        const d = Math.hypot(e.x-player.x,e.y-player.y);
+        const d = Math.hypot(e.x-player.x, e.y-player.y);
         if (d < wall.dist + .05) {
-          e.hp -= int(w.damage[0],w.damage[1]);
+          e.hp -= int(w.damage[0], w.damage[1]);
           e.pain = .13;
+          e.target = player;
+          e.state = "chase";
           if (e.hp <= 0) killEnemy(e);
-          impact(e.x,e.y,"255,210,170",1);
+          impact(e.x, e.y, "255,210,170", 1);
         }
       } else {
         impact(player.x+Math.cos(a)*wall.dist, player.y+Math.sin(a)*wall.dist, "180,180,180", 1);
@@ -525,7 +549,6 @@
     }
     beep(name);
   }
-
   function enemyAttack(e) {
     const d = ENEMIES[e.type];
     const t = targetPosition(e);
@@ -850,8 +873,15 @@
     if(e.hp<e.maxHp){spriteRect(left,top-3,w,2,"#161616",d);spriteRect(left,top-3,Math.max(1,w*clamp(e.hp/e.maxHp,0,1)),2,"#d13b2c",d);}
   }
 
-  function pickupColor(t){return {clip:"#c9bd7b",clipbox:"#a58e55",shells:"#dbc58c",shellbox:"#b08d5a",stim:"#52a86a",medkit:"#e7e7e7",armor:"#3f8d94",shotgun:"#89633d",chaingun:"#707678",keyblue:"#4a87ea",soulsphere:"#59aaa3"}[t]||"#ddd";}
-
+  function pickupColor(t){
+    return {
+      clip:"#c9bd7b",clipbox:"#a58e55",shells:"#dbc58c",shellbox:"#b08d5a",
+      rockets:"#a64b34",rocketbox:"#734333",cells:"#64b6cf",cellpack:"#3d7f91",
+      stim:"#52a86a",medkit:"#e7e7e7",armor:"#3f8d94",shotgun:"#89633d",
+      chaingun:"#707678",rocketlauncher:"#4d4b48",plasmagun:"#477d83",bfg:"#617a68",
+      chainsaw:"#7f402d",keyblue:"#4a87ea",soulsphere:"#59aaa3"
+    }[t]||"#ddd";
+  }
   function drawPickup(p,sx,d){
     const z=clamp(7/Math.max(.25,d),.25,3),s=Math.max(4,Math.floor(8*z)),y=Math.floor(80-s+Math.sin(performance.now()/260+p.phase)*2*z),left=sx-s/2;
     spriteRect(left,y,s,s,pickupColor(p.type),d);
@@ -888,15 +918,36 @@
     }
   }
 
-  function drawWeapon(){
-    const bob=Math.sin(player.bob)*Math.min(2.5,Math.hypot(player.vx,player.vy)*.9),y=137+bob+player.recoil,cx=160;
-    if(player.ready==="shotgun"){rect(cx-13,y,26,24,"#49392d");rect(cx-6,y-15,4,23,"#8d8b83");rect(cx+2,y-15,4,23,"#8d8b83");rect(cx-10,y+9,20,9,"#73553b");}
-    else if(player.ready==="chaingun"){rect(cx-17,y,34,21,"#4e5150");rect(cx-9,y-18,5,24,"#878a88");rect(cx+4,y-18,5,24,"#878a88");rect(cx-13,y+10,26,9,"#313333");}
-    else if(player.ready==="fist"){rect(cx-15,y+5,12,20,"#8b5f43");rect(cx+3,y+3,12,22,"#8b5f43");rect(cx-11,y+10,8,4,"#d8a57a");rect(cx+3,y+8,8,4,"#d8a57a");}
-    else{rect(cx-10,y+9,20,11,"#4b3a2f");rect(cx-3,y-9,6,18,"#797979");rect(cx-7,y+17,14,7,"#262626");}
-    if(player.muzzle>0){rect(cx-4,y-23,8,5,"#ff672b");rect(cx-2,y-31,4,10,"#ffe76a");}
+  function drawWeapon() {
+    const speed=Math.hypot(player.vx,player.vy);
+    const bob=Math.sin(player.bob)*Math.min(2.5,speed*.9);
+    const y=137+bob+player.recoil,cx=160;
+    const ready=player.ready;
+    if(ready==="shotgun"){
+      rect(cx-13,y,26,24,"#49392d"); rect(cx-6,y-15,4,23,"#8d8b83"); rect(cx+2,y-15,4,23,"#8d8b83"); rect(cx-10,y+9,20,9,"#73553b");
+    } else if(ready==="chaingun"){
+      rect(cx-17,y,34,21,"#4e5150"); rect(cx-9,y-18,5,24,"#878a88"); rect(cx+4,y-18,5,24,"#878a88"); rect(cx-13,y+10,26,9,"#313333");
+    } else if(ready==="rocket"){
+      rect(cx-15,y+1,30,23,"#47433f"); rect(cx-4,y-18,8,22,"#8a8b84"); rect(cx-10,y+10,20,9,"#65574a"); rect(cx-3,y-10,6,8,"#222");
+    } else if(ready==="plasma"){
+      rect(cx-12,y+3,24,21,"#283c42"); rect(cx-8,y-13,16,18,"#467f86"); rect(cx-4,y-18,8,10,"#9cd8d3"); rect(cx-9,y+10,18,8,"#15272b");
+    } else if(ready==="bfg"){
+      rect(cx-17,y,34,25,"#41564a"); rect(cx-8,y-16,16,18,"#6e967e"); rect(cx-5,y-23,10,10,"#aad9b4"); rect(cx-12,y+10,24,9,"#26382d");
+    } else if(ready==="chainsaw"){
+      rect(cx-18,y+2,36,21,"#6a3325"); rect(cx-9,y-10,18,12,"#8b3f2a");
+      for(let i=-12;i<=12;i+=6)rect(cx+i,y-2,3,4,"#c2c2b8");
+      rect(cx-21,y+18,42,4,"#313131");
+    } else if(ready==="fist"){
+      rect(cx-15,y+5,12,20,"#8b5f43"); rect(cx+3,y+3,12,22,"#8b5f43"); rect(cx-11,y+10,8,4,"#d8a57a"); rect(cx+3,y+8,8,4,"#d8a57a");
+    } else {
+      rect(cx-10,y+9,20,11,"#4b3a2f"); rect(cx-3,y-9,6,18,"#797979"); rect(cx-7,y+17,14,7,"#262626");
+    }
+    if(player.muzzle>0){
+      const glow=ready==="rocket"||ready==="bfg"?10:ready==="chainsaw"?3:6;
+      rect(cx-glow/2,y-23,glow,5,ready==="plasma"?"#72e8ff":"#ff672b");
+      rect(cx-2,y-31,4,10,ready==="plasma"?"#d4ffff":"#ffe76a");
+    }
   }
-
   function rect(a,b,c,d,color){ctx.fillStyle=color;ctx.fillRect(Math.floor(a),Math.floor(b),Math.ceil(c),Math.ceil(d));}
   function label(t,x,y,size,color,align){ctx.font="700 "+size+"px monospace";ctx.textAlign=align||"left";ctx.textBaseline="top";ctx.fillStyle=color;ctx.fillText(t,Math.floor(x),Math.floor(y));}
 
