@@ -76,7 +76,7 @@
   const player = {
     x: playerSpawn.x, y: playerSpawn.y, a: playerSpawn.a,
     hp: 100, armor: 0,
-    ammo: { bullets: 70, shells: 8 },
+    ammo: { bullets: 70, shells: 8, rockets: 0, cells: 0 },
     owned: { fist: true, pistol: true, shotgun: false, chaingun: false },
     ready: "pistol", pending: null,
     weaponTimer: 0, attackTimer: 0, muzzle: 0, recoil: 0,
@@ -291,7 +291,13 @@
     spawnPickup("shellbox", 8.5, 14.5, 8);
     spawnPickup("keyblue", 16.5, 9.5, 1);
     spawnPickup("chaingun", 18.5, 10.5, 1);
+    spawnPickup("rocketlauncher", 14.5, 14.5, 1);
+    spawnPickup("rockets", 18.5, 14.5, 2);
+    spawnPickup("chainsaw", 4.5, 17.5, 1);
+    spawnPickup("plasmagun", 24.5, 14.5, 1);
+    spawnPickup("cellpack", 25.5, 18.5, 10);
     spawnPickup("soulsphere", 27.5, 8.5, 100);
+    spawnPickup("bfg", 22.5, 20.5, 1);
 
     state.kills = 0;
     state.totalKills = enemies.length;
@@ -342,7 +348,11 @@
       pistol:[180,65,.07,"square",.04],
       shotgun:[92,28,.17,"sawtooth",.065],
       chaingun:[220,100,.045,"square",.03],
+      rocket:[90,25,.22,"sawtooth",.06],
+      plasma:[340,90,.07,"square",.035],
+      bfg:[180,35,.40,"sawtooth",.08],
       punch:[125,45,.09,"triangle",.045],
+      chainsaw:[140,75,.10,"sawtooth",.045],
       pickup:[480,920,.11,"square",.025],
       key:[280,760,.26,"triangle",.03],
       hurt:[65,30,.14,"sawtooth",.05],
@@ -402,7 +412,7 @@
   }
 
   function nextWeapon() {
-    const order = ["fist", "pistol", "shotgun", "chaingun"];
+    const order = ["fist", "pistol", "shotgun", "chaingun", "rocket", "plasma", "bfg", "chainsaw"];
     const i = order.indexOf(player.ready);
     for (let n = 1; n <= order.length; n++) {
       const w = order[(i + n) % order.length];
@@ -411,10 +421,12 @@
   }
 
   function chooseFallback() {
+    if (player.owned.plasma && player.ammo.cells >= 1) return "plasma";
     if (player.owned.chaingun && player.ammo.bullets) return "chaingun";
+    if (player.owned.rocket && player.ammo.rockets) return "rocket";
     if (player.owned.shotgun && player.ammo.shells) return "shotgun";
     if (player.ammo.bullets) return "pistol";
-    return "fist";
+    return player.owned.chainsaw ? "chainsaw" : "fist";
   }
 
   function visibleTarget(angle, range, cone) {
@@ -441,8 +453,9 @@
     state.kills++;
     impact(e.x, e.y, e.type === "cacodemon" ? "230,75,55" : "205,65,40", 10);
     if (Math.random() < 0.28) {
-      const type = Math.random() < 0.65 ? "clip" : "shells";
-      spawnPickup(type, e.x, e.y, type === "clip" ? 10 : 4);
+      const roll = Math.random();
+      const type = roll < 0.45 ? "clip" : roll < 0.75 ? "shells" : "rockets";
+      spawnPickup(type, e.x, e.y, type === "clip" ? 10 : type === "shells" ? 4 : 1);
       state.totalItems++;
     }
   }
@@ -460,9 +473,34 @@
     player.recoil = name === "shotgun" ? 5 : 2;
 
     if (name === "fist") {
-      const e = visibleTarget(player.a, w.range, .16);
-      if (e) { e.hp -= int(w.damage[0], w.damage[1]); e.pain = .16; if (e.hp <= 0) killEnemy(e); impact(e.x,e.y,"255,210,170",3); }
-      beep("punch"); return;
+      const e = visibleTarget(player.a, w.range, name === "chainsaw" ? .22 : .16);
+      if (e) {
+        e.hp -= int(w.damage[0], w.damage[1]);
+        e.pain = name === "chainsaw" ? .06 : .16;
+        e.target = player;
+        if (e.hp <= 0) killEnemy(e);
+        impact(e.x,e.y,"255,210,170", name === "chainsaw" ? 1 : 3);
+      }
+      beep(name === "chainsaw" ? "chainsaw" : "punch");
+      return;
+    }
+
+    if (name === "rocket") {
+      projectiles.push({ x:player.x, y:player.y, a:player.a, speed:7.0, damage:int(20,160), life:4, owner:player, type:"rocket" });
+      beep("rocket");
+      return;
+    }
+
+    if (name === "plasma") {
+      projectiles.push({ x:player.x, y:player.y, a:player.a + rand(-w.spread,w.spread), speed:15, damage:int(5,40), life:2.0, owner:player, type:"plasma" });
+      beep("plasma");
+      return;
+    }
+
+    if (name === "bfg") {
+      projectiles.push({ x:player.x, y:player.y, a:player.a, speed:5.2, damage:int(50,200), life:5, owner:player, type:"bfg" });
+      beep("bfg");
+      return;
     }
 
     for (let i = 0; i < w.pellets; i++) {
@@ -581,6 +619,30 @@
     }
   }
 
+  function explode(x, y, damage, radius, source) {
+    impact(x, y, "255,130,60", 14);
+    const entities = [
+      { obj: player, d: Math.hypot(player.x-x, player.y-y), isPlayer: true },
+      ...enemies.filter(e => e.alive).map(e => ({ obj:e, d:Math.hypot(e.x-x,e.y-y), isPlayer:false }))
+    ];
+    for (const item of entities) {
+      if (item.d > radius) continue;
+      if (!lineOfSight(x,y,item.obj.x,item.obj.y)) continue;
+      const scale = 1 - item.d / radius;
+      const amount = Math.max(1, Math.round(damage * scale));
+      if (item.isPlayer) {
+        if (source !== player) hurt(amount);
+        else hurt(Math.round(amount * 0.65));
+      } else {
+        item.obj.hp -= amount;
+        item.obj.pain = .12;
+        if (source && source !== item.obj) item.obj.target = source;
+        item.obj.state = "chase";
+        if (item.obj.hp <= 0) killEnemy(item.obj);
+      }
+    }
+  }
+
   function updateProjectiles(dt) {
     for (const p of projectiles) {
       p.life -= dt;
@@ -589,45 +651,39 @@
       const step = p.speed * dt;
       const nx = p.x + Math.cos(p.a) * step;
       const ny = p.y + Math.sin(p.a) * step;
-
-      if (blocked(nx, ny, 0.07)) {
-        p.life = 0;
-        impact(p.x, p.y, "255,120,50", 5);
+      if (blocked(nx, ny, .07)) {
+        if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
+        else impact(p.x,p.y,"120,190,255",4);
+        p.life=0;
         continue;
       }
 
-      p.x = nx;
-      p.y = ny;
+      p.x=nx; p.y=ny;
 
-      if (p.owner && Math.hypot(p.x - player.x, p.y - player.y) < 0.22) {
-        p.life = 0;
-        hurt(p.damage);
-        impact(p.x, p.y, "255,120,50", 7);
+      if (p.owner === player && Math.hypot(p.x-player.x,p.y-player.y) < .20) {
+        if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
+        p.life=0;
         continue;
       }
 
-      if (p.owner) {
-        for (const other of enemies) {
-          if (!other.alive || other === p.owner) continue;
-          if (Math.hypot(p.x - other.x, p.y - other.y) < ENEMIES[other.type].radius * 0.75) {
-            other.hp -= p.damage;
-            other.pain = 0.12;
-            other.state = "pain";
-            p.life = 0;
-            impact(other.x, other.y, "255,150,90", 5);
-            if (other.hp <= 0) killEnemy(other);
-            else {
-              other.target = p.owner;
-              other.state = "chase";
-            }
-            break;
-          }
+      if (p.owner !== player && Math.hypot(p.x-player.x,p.y-player.y) < .22) {
+        p.life=0; hurt(p.damage); impact(p.x,p.y,"255,120,50",7); continue;
+      }
+
+      for (const other of enemies) {
+        if (!other.alive || other === p.owner || p.owner === player) continue;
+        if (Math.hypot(p.x-other.x,p.y-other.y) >= ENEMIES[other.type].radius*.75) continue;
+        if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
+        else {
+          other.hp -= p.damage; other.pain=.12; other.state="chase"; other.target=p.owner;
+          impact(other.x,other.y,"255,150,90",5);
+          if(other.hp<=0)killEnemy(other);
         }
+        p.life=0;
+        break;
       }
     }
-    for (let i = projectiles.length - 1; i >= 0; i--) {
-      if (projectiles[i].life <= 0) projectiles.splice(i, 1);
-    }
+    for(let i=projectiles.length-1;i>=0;i--)if(projectiles[i].life<=0)projectiles.splice(i,1);
   }
   function updateParticles(dt) {
     for (const p of particles) { p.life-=dt; p.x+=p.vx*dt; p.y+=p.vy*dt; p.vx*=.92; p.vy*=.92; }
