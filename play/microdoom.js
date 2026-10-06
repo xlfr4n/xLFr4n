@@ -1392,11 +1392,14 @@
     label(armorName, W - 9, 7, 5, player.armorType ? "#7cd0ff" : "#777", "right");
   }
 
-  function render(){
+  function applyMouseLook(){
     if(state.mode==="playing"&&!state.paused&&document.pointerLockElement===canvas&&mouseLookDelta!==0){
       player.a=wrapAngle(player.a+mouseLookDelta*settings.mouseSensitivity);
       mouseLookDelta=0;
     }
+  }
+
+  function render(){
     drawWorld();
     drawTopStatus();
     drawCrosshair();
@@ -1527,15 +1530,18 @@
     persistSettings();
   });
 
-  function captureMouseDelta(e){
+  let lastRawPointerAt=-Infinity;
+
+  function captureMouseDelta(e, raw=false){
     if(state.mode==="playing"&&!state.paused&&document.pointerLockElement===canvas){
+      if(raw)lastRawPointerAt=performance.now();
       mouseLookDelta=clamp(mouseLookDelta+e.movementX,-1200,1200);
     }
   }
 
-  if(supportsRawPointer) document.addEventListener("pointerrawupdate",captureMouseDelta);
+  if(supportsRawPointer) document.addEventListener("pointerrawupdate",(e)=>captureMouseDelta(e,true));
   document.addEventListener("mousemove",(e)=>{
-    if(!supportsRawPointer) captureMouseDelta(e);
+    if(!supportsRawPointer || performance.now()-lastRawPointerAt>120) captureMouseDelta(e,false);
   });
 
   document.addEventListener("pointerlockchange",()=>{
@@ -1604,6 +1610,7 @@
   function loop(now){
     const dt=Math.min(MAX_DT,Math.max(.001,(now-last)/1000));
     last=now;
+    applyMouseLook();
     accumulator=Math.min(accumulator+dt,.2);
     let steps=0;
     while(accumulator>=SIM_DT&&steps<5){
