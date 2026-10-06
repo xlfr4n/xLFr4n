@@ -30,15 +30,15 @@ try {
 
   await page.evaluate(() => {
     const save = {
-      version: 2,
+      version: 3,
       state: { time: 12, kills: 0, items: 0, totalItems: 0 },
       player: {
-        x: 2.5, y: 2.5, a: 0, hp: 100, armor: 100,
+        x: 2.5, y: 2.5, a: 0, hp: 100, armor: 100, armorType: 2,
         ammo: { bullets: 200, shells: 50, rockets: 50, cells: 300 },
         owned: { fist: true, pistol: true, shotgun: true, chaingun: true, rocket: true, plasma: true, bfg: true, chainsaw: true },
-        ready: 'pistol', pending: null, weaponTimer: 0, attackTimer: 0
+        ready: 'pistol', pending: null, weaponState: 'ready', weaponTimer: 0, attackTimer: 0
       },
-      doors: [], enemies: [], pickups: []
+      doors: [], explored: ['2,2'], enemies: [], pickups: []
     };
     localStorage.setItem('xlfr4n-microdoom-save-v2', JSON.stringify(save));
   });
