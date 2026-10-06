@@ -259,6 +259,10 @@ Experimento original en canvas con combate, armas, IA, pickups, guardado y labor
 <img src="https://img.shields.io/badge/OSINT-0C1118?style=for-the-badge&labelColor=19C3B1&color=0C1118" alt="OSINT">
 <img src="https://img.shields.io/badge/WEB3-0C1118?style=for-the-badge&labelColor=FF8A3D&color=0C1118" alt="Web3">
 
+<br>
+
+<sub>Skill Icons use documented IDs only; BSPWM and Zsh are represented as semantic badges to avoid missing assets.</sub>
+
 </div>
 
 <table>
@@ -324,6 +328,14 @@ Experimento original en canvas con combate, armas, IA, pickups, guardado y labor
 </td>
 </tr>
 </table>
+
+<div align="center">
+
+<div align="center">
+
+<sub>Four data cards use four distinct animation presets: load · draw · sequence · rgb-soft.</sub>
+
+</div>
 
 <div align="center">
 
