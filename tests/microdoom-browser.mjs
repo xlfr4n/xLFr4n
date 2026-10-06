@@ -22,7 +22,7 @@ try {
   const sensitivity = page.locator('#setting-sensitivity');
   if (!(await sensitivity.isVisible())) throw new Error('Options menu did not open');
   await sensitivity.fill('45');
-  const savedSensitivity = await page.evaluate(() => JSON.parse(localStorage.getItem('xlfr4n-microdoom-settings-v1')));
+  const savedSensitivity = await page.evaluate(() => JSON.parse(localStorage.getItem('xlfr4n-microdoom-settings-v2')));
   if (Math.abs(savedSensitivity.mouseSensitivity - 0.00045) > 0.000001) throw new Error('Mouse sensitivity did not persist');
   await page.getByRole('button', { name: /DONE/ }).click();
   await startButton.click();
