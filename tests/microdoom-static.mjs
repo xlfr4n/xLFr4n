@@ -96,6 +96,7 @@ assert.ok(js.includes('"onpointerrawupdate" in window') && js.includes('pointerr
 assert.ok(js.includes('mouseLookDelta=clamp(mouseLookDelta+e.movementX,-1200,1200)'), "mouse deltas must be accumulated safely");
 assert.ok(js.includes('player.a=wrapAngle(player.a+mouseLookDelta*settings.mouseSensitivity)'), "mouse look must be applied on the visual frame");
 assert.ok(js.includes('mouseLookDelta=0'), "consumed mouse input must be cleared each frame");
+assert.ok(js.includes('SETTINGS_KEY = "xlfr4n-microdoom-settings-v2"'), "mouse calibration storage must use the current settings version");
 assert.ok(js.includes('function pauseGame()') && js.includes('function resumeGame()') && js.includes('function returnToTitle()'), "menu navigation actions must be explicit");
 assert.ok(js.includes('window.location.href = "../"'), "exit action must return to the lab");
 
