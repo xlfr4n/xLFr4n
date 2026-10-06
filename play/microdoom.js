@@ -249,7 +249,7 @@
       type, x: p.x, y: p.y, hp: d.hp, maxHp: d.hp, alive: true,
       cd: rand(0.4, d.cooldown), pain: 0, state: "idle",
       angle: 0, phase: rand(0, TAU), strafe: Math.random() < 0.5 ? -1 : 1,
-      target: player, pathTimer: 0, path: []
+      target: player, pathTimer: 0, path: [], dead:false, deathTimer:0
     });
   }
 
@@ -491,7 +491,7 @@
 
   function killEnemy(e) {
     if (!e.alive) return;
-    e.alive = false; e.state = "dead";
+    e.alive = false; e.state = "dead"; e.dead = true; e.deathTimer = 0;
     state.kills++;
     impact(e.x, e.y, e.type === "cacodemon" ? "230,75,55" : "205,65,40", 10);
     if (Math.random() < 0.28) {
@@ -636,7 +636,10 @@
 
   function updateEnemies(dt) {
     for (const e of enemies) {
-      if (!e.alive) continue;
+      if (!e.alive) {
+        if (e.dead) e.deathTimer = Math.min(1, e.deathTimer + dt);
+        continue;
+      }
       const d=ENEMIES[e.type];
       e.cd-=dt;
       e.pain=Math.max(0,e.pain-dt);
@@ -905,21 +908,10 @@
     }
 
     const vis=[];
-    for(const e of enemies)if(e.alive){
+    for(const e of enemies){
+      if(!(e.alive || (e.dead && e.deathTimer < 1)))continue;
       const dx=e.x-player.x,dy=e.y-player.y,d=Math.hypot(dx,dy),da=angleDiff(Math.atan2(dy,dx),player.a);
       if(Math.abs(da)<FOV*.76&&lineOfSight(player.x,player.y,e.x,e.y))vis.push({type:"enemy",d,da,o:e});
-    }
-    for(const p of pickups)if(!p.taken){
-      const dx=p.x-player.x,dy=p.y-player.y,d=Math.hypot(dx,dy),da=angleDiff(Math.atan2(dy,dx),player.a);
-      if(Math.abs(da)<FOV*.8)vis.push({type:"pickup",d,da,o:p});
-    }
-    for(const p of projectiles){
-      const dx=p.x-player.x,dy=p.y-player.y,d=Math.hypot(dx,dy),da=angleDiff(Math.atan2(dy,dx),player.a);
-      if(Math.abs(da)<FOV*.8)vis.push({type:"fireball",d,da,o:p});
-    }
-    if(Math.hypot(player.x-exit.x,player.y-exit.y)<12){
-      const dx=exit.x-player.x,dy=exit.y-player.y,d=Math.hypot(dx,dy),da=angleDiff(Math.atan2(dy,dx),player.a);
-      if(Math.abs(da)<FOV*.8&&lineOfSight(player.x,player.y,exit.x,exit.y))vis.push({type:"exit",d,da,o:exit});
     }
     vis.sort((a,b)=>b.d-a.d);
     for(const s of vis){
@@ -942,46 +934,38 @@
   }
 
   function drawEnemy(e,sx,d){
+    const dead=e.dead&&!e.alive;
+    const fall=dead?Math.min(1,e.deathTimer):0;
     const z=clamp(11/Math.max(.25,d),.25,3);
-    const w=Math.max(5,Math.floor((e.type==="cacodemon"?34:e.type==="baron"?32:e.type==="demon"?28:23)*z));
-    const h=Math.max(8,Math.floor((e.type==="cacodemon"?31:e.type==="baron"?42:e.type==="demon"?38:34)*z));
-    const left=Math.floor(sx-w/2),top=Math.floor(80-h*.55+Math.sin(performance.now()/120+e.phase)*Math.min(2,z));
+    const baseW=e.type==="cacodemon"?34:e.type==="baron"?32:e.type==="demon"?28:23;
+    const baseH=e.type==="cacodemon"?31:e.type==="baron"?42:e.type==="demon"?38:34;
+    const w=Math.max(5,Math.floor(baseW*z));
+    const h=Math.max(4,Math.floor(baseH*z*(dead?Math.max(.30,1-fall*.70):1)));
+    const left=Math.floor(sx-w/2);
+    const top=Math.floor(80-h*.55+fall*h*.25+(dead?0:Math.sin(performance.now()/120+e.phase)*Math.min(2,z)));
+    const tint=dead?"#5a3028":"";
 
     if(e.type==="cacodemon"){
-      spriteRect(left,top+h*.18,w,h*.64,"#73423e",d);
-      spriteRect(left+w*.18,top,w*.64,h*.28,"#98564c",d);
-      spriteRect(left+w*.25,top+h*.3,w*.16,h*.12,"#ffe56b",d);
-      spriteRect(left+w*.59,top+h*.3,w*.16,h*.12,"#ffe56b",d);
-      spriteRect(left+w*.30,top+h*.32,w*.06,h*.07,"#111",d);
-      spriteRect(left+w*.64,top+h*.32,w*.06,h*.07,"#111",d);
+      spriteRect(left,top+h*.18,w,h*.64,dead?"#4e3836":"#73423e",d);
+      spriteRect(left+w*.18,top,w*.64,h*.28,dead?"#5f403d":"#98564c",d);
+      if(!dead){spriteRect(left+w*.25,top+h*.3,w*.16,h*.12,"#ffe56b",d);spriteRect(left+w*.59,top+h*.3,w*.16,h*.12,"#ffe56b",d);}
     }else if(e.type==="baron"){
-      spriteRect(left+w*.12,top+h*.16,w*.76,h*.72,"#48634a",d);
-      spriteRect(left+w*.19,top,w*.62,h*.42,"#5f815f",d);
-      spriteRect(left+w*.20,top+h*.08,w*.20,h*.12,"#354f37",d);
-      spriteRect(left+w*.60,top+h*.08,w*.20,h*.12,"#354f37",d);
-      spriteRect(left+w*.28,top+h*.25,w*.12,h*.08,"#ffe66b",d);
-      spriteRect(left+w*.60,top+h*.25,w*.12,h*.08,"#ffe66b",d);
-      spriteRect(left+w*.30,top+h*.27,w*.04,h*.05,"#111",d);
-      spriteRect(left+w*.64,top+h*.27,w*.04,h*.05,"#111",d);
+      spriteRect(left+w*.12,top+h*.16,w*.76,h*.72,dead?"#394638":"#48634a",d);
+      spriteRect(left+w*.19,top,w*.62,h*.42,dead?"#475846":"#5f815f",d);
+      if(!dead){spriteRect(left+w*.28,top+h*.25,w*.12,h*.08,"#ffe66b",d);spriteRect(left+w*.60,top+h*.25,w*.12,h*.08,"#ffe66b",d);}
     }else if(e.type==="demon"){
-      spriteRect(left+w*.12,top+h*.18,w*.76,h*.70,"#67251f",d);
-      spriteRect(left+w*.18,top,w*.64,h*.48,"#92382a",d);
-      spriteRect(left+w*.26,top+h*.23,w*.13,h*.10,"#f3c958",d);
-      spriteRect(left+w*.61,top+h*.23,w*.13,h*.10,"#f3c958",d);
-      spriteRect(left+w*.30,top+h*.25,w*.05,h*.06,"#111",d);
-      spriteRect(left+w*.65,top+h*.25,w*.05,h*.06,"#111",d);
+      spriteRect(left+w*.12,top+h*.18,w*.76,h*.70,dead?"#4b201c":"#67251f",d);
+      spriteRect(left+w*.18,top,w*.64,h*.48,dead?"#603027":"#92382a",d);
+      if(!dead){spriteRect(left+w*.26,top+h*.23,w*.13,h*.10,"#f3c958",d);spriteRect(left+w*.61,top+h*.23,w*.13,h*.10,"#f3c958",d);}
     }else{
       const base=e.type==="imp"?"#883325":"#595b56";
-      spriteRect(left+w*.2,top+h*.2,w*.6,h*.62,base,d);
-      spriteRect(left+w*.27,top+h*.06,w*.46,h*.30,e.type==="imp"?"#a6482e":e.type==="shotguy"?"#7a746b":"#6a6d67",d);
-      spriteRect(left+w*.31,top+h*.22,w*.1,h*.09,"#ffe76a",d);
-      spriteRect(left+w*.59,top+h*.22,w*.1,h*.09,"#ffe76a",d);
-      spriteRect(left+w*.34,top+h*.24,w*.04,h*.06,"#111",d);
-      spriteRect(left+w*.63,top+h*.24,w*.04,h*.06,"#111",d);
+      spriteRect(left+w*.2,top+h*.2,w*.6,h*.62,dead?"#4b4844":base,d);
+      spriteRect(left+w*.27,top+h*.06,w*.46,h*.30,dead?"#55514b":e.type==="imp"?"#a6482e":e.type==="shotguy"?"#7a746b":"#6a6d67",d);
+      if(!dead){spriteRect(left+w*.31,top+h*.22,w*.1,h*.09,"#ffe76a",d);spriteRect(left+w*.59,top+h*.22,w*.1,h*.09,"#ffe76a",d);}
     }
 
-    if(e.pain>0)spriteRect(left,top,w,h,"rgba(255,255,255,.4)",d);
-    if(e.hp<e.maxHp){
+    if(!dead&&e.pain>0)spriteRect(left,top,w,h,"rgba(255,255,255,.4)",d);
+    if(!dead&&e.hp<e.maxHp){
       spriteRect(left,top-3,w,2,"#161616",d);
       spriteRect(left,top-3,Math.max(1,w*clamp(e.hp/e.maxHp,0,1)),2,"#d13b2c",d);
     }
