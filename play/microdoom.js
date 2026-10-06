@@ -12,7 +12,7 @@
   const MAX_DT = 0.05;
   const SIM_DT = 1 / 35;
   const SAVE_KEY = "xlfr4n-microdoom-save-v2";
-  const SETTINGS_KEY = "xlfr4n-microdoom-settings-v2";
+  const SETTINGS_KEY = "xlfr4n-microdoom-settings-v3";
   const DEFAULT_SETTINGS = {
     mouseSensitivity: 0.00075,
     masterVolume: 0.72,
