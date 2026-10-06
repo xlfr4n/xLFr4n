@@ -91,11 +91,11 @@ assert.ok(html.includes('id="setting-sensitivity"') && html.includes('id="settin
 assert.ok(js.includes('SETTINGS_KEY') && js.includes('DEFAULT_SETTINGS') && js.includes('settings.mouseSensitivity'), "Microdoom must persist mouse sensitivity settings");
 assert.ok(js.includes('DEFAULT_SETTINGS') && js.includes('mouseSensitivity: 0.00075'), "responsive mouse sensitivity default must be conservative");
 assert.ok(/mouseLookDelta\*settings\.mouseSensitivity/.test(js), "mouse look must use configurable sensitivity");
-assert.ok(js.includes('unadjustedMovement:true'), "pointer lock must request raw mouse movement");
-assert.ok(js.includes('"onpointerrawupdate" in window') && js.includes('pointerrawupdate'), "raw pointer input should be preferred when supported");
-assert.ok(js.includes('mouseLookDelta=clamp(mouseLookDelta+e.movementX,-1200,1200)'), "mouse deltas must be accumulated safely");
-assert.ok(js.includes('player.a=wrapAngle(player.a+mouseLookDelta*settings.mouseSensitivity)'), "mouse look must be applied on the visual frame");
-assert.ok(js.includes('mouseLookDelta=0'), "consumed mouse input must be cleared each frame");
+assert.ok(js.includes('canvas.requestPointerLock?.()'), "pointer lock must use the browser-standard capture request");
+assert.ok(js.includes('document.addEventListener("mousemove"'), "mouse look must use a single stable pointer-lock input path");
+assert.ok(!js.includes('pointerrawupdate'), "pointerrawupdate must not be mixed with mousemove input");
+assert.ok(js.includes('player.a=wrapAngle(player.a+movement*settings.mouseSensitivity)'), "mouse look must apply directly from pointer-lock movement");
+assert.ok(js.includes('function lockMouse()'), "mouse recapture must have a dedicated function");
 assert.ok(js.includes('function applyMouseLook()'), "camera input should have a dedicated frame-level application step");
 assert.ok(js.includes('function pauseGame()') && js.includes('state.paused = true;') && js.includes('mouseLookDelta=0;'), "pausing must clear pending mouse movement");
 assert.ok(js.includes('lastRawPointerAt') && js.includes('performance.now()-lastRawPointerAt>120'), "mousemove fallback must remain available if raw pointer events stop");
