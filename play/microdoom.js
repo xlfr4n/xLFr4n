@@ -87,6 +87,8 @@
   const pickups = [];
   const projectiles = [];
   const particles = [];
+  const navCache = new Map();
+  let soundAlert = 0;
   const doors = new Map();
   const explored = new Set();
   const keys = Object.create(null);
@@ -189,13 +191,59 @@
     return { x: 2.5, y: 1.5 };
   }
 
+  function navKey(x, y) { return x + "," + y; }
+
+  function nextPathCell(sx, sy, tx, ty) {
+    const start = Math.floor(sx) + "," + Math.floor(sy);
+    const goal = Math.floor(tx) + "," + Math.floor(ty);
+    if (start === goal) return null;
+    const queue = [[Math.floor(sx), Math.floor(sy)]];
+    const prev = new Map([[start, null]]);
+    const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+    while (queue.length) {
+      const [x,y] = queue.shift();
+      const here = navKey(x,y);
+      if (here === goal) break;
+      for (const [dx,dy] of dirs) {
+        const nx = x + dx, ny = y + dy;
+        if (nx < 0 || ny < 0 || ny >= MAP.length || nx >= MAP[0].length) continue;
+        const t = tile(nx,ny);
+        if (!(t === "." || ((t === "D" || t === "B") && doorOpen(nx,ny)))) continue;
+        const k = navKey(nx,ny);
+        if (prev.has(k)) continue;
+        prev.set(k, here);
+        queue.push([nx,ny]);
+      }
+    }
+    if (!prev.has(goal)) return null;
+    let cur = goal;
+    let parent = prev.get(cur);
+    while (parent && parent !== start) {
+      cur = parent;
+      parent = prev.get(cur);
+    }
+    const [px,py] = cur.split(",").map(Number);
+    return { x: px + 0.5, y: py + 0.5 };
+  }
+
+  function wakeNearbyEnemies(radius = 12) {
+    for (const e of enemies) {
+      if (!e.alive) continue;
+      if (Math.hypot(e.x - player.x, e.y - player.y) <= radius) {
+        e.target = player;
+        e.state = "chase";
+      }
+    }
+  }
+
   function spawnEnemy(type, x, y) {
     const p = findFloorNear(x, y);
     const d = ENEMIES[type];
     enemies.push({
       type, x: p.x, y: p.y, hp: d.hp, maxHp: d.hp, alive: true,
       cd: rand(0.4, d.cooldown), pain: 0, state: "idle",
-      angle: 0, phase: rand(0, TAU), strafe: Math.random() < 0.5 ? -1 : 1
+      angle: 0, phase: rand(0, TAU), strafe: Math.random() < 0.5 ? -1 : 1,
+      target: player, pathTimer: 0, path: []
     });
   }
 
@@ -399,6 +447,7 @@
     if (w.ammo) player.ammo[w.ammo]--;
     player.attackTimer = w.cooldown;
     player.muzzle = .07;
+    soundAlert = 1.0;
     player.recoil = name === "shotgun" ? 5 : 2;
 
     if (name === "fist") {
@@ -463,24 +512,45 @@
       const d=ENEMIES[e.type];
       e.cd-=dt; e.pain=Math.max(0,e.pain-dt); e.attackFlash=Math.max(0,(e.attackFlash||0)-dt);
       if (e.pain > 0) continue;
+      e.pathTimer -= dt;
       const dx=player.x-e.x, dy=player.y-e.y, dist=Math.hypot(dx,dy);
       const sees=lineOfSight(e.x,e.y,player.x,player.y);
       e.angle=Math.atan2(dy,dx);
+
+      if (soundAlert > 0 && dist < d.sight * 1.4) {
+        e.target = player;
+        e.state = "chase";
+      }
+
+      if (e.target && e.target !== player && e.target.alive === false) e.target = player;
 
       if (dist <= d.attackRange && sees) {
         if (e.cd <= 0) enemyAttack(e);
         continue;
       }
-      if (sees && dist < d.sight) {
+      if ((sees && dist < d.sight) || e.state === "chase") {
         e.state="chase";
-        const nx=dx/Math.max(dist,.001), ny=dy/Math.max(dist,.001);
-        const orbit=(e.type==="demon" ? .06 : .18)*e.strafe;
+        let dir = null;
+        if (e.pathTimer <= 0 || !e.path) {
+          e.path = nextPathCell(e.x, e.y, player.x, player.y);
+          e.pathTimer = 0.28 + Math.random() * 0.12;
+        }
+        if (e.path) {
+          const px = e.path.x - e.x, py = e.path.y - e.y;
+          const pd = Math.hypot(px,py);
+          if (pd > 0.08) dir = { x:px/pd, y:py/pd };
+        }
+        if (!dir) {
+          const dd = Math.max(dist,.001);
+          dir = { x:dx/dd, y:dy/dd };
+        }
+        const orbit=(e.type==="demon" ? .04 : .12)*e.strafe;
         const sp=d.speed*dt;
-        moveEnemy(e,(nx-ny*orbit)*sp,(ny+nx*orbit)*sp);
+        moveEnemy(e,(dir.x-dir.y*orbit)*sp,(dir.y+dir.x*orbit)*sp);
       } else {
         e.state="idle";
         e.phase += dt;
-        const sp=d.speed*.12*dt;
+        const sp=d.speed*.10*dt;
         moveEnemy(e,Math.cos(e.phase)*sp,Math.sin(e.phase)*sp);
       }
     }
@@ -488,15 +558,52 @@
 
   function updateProjectiles(dt) {
     for (const p of projectiles) {
-      p.life-=dt;
-      const step=p.speed*dt, nx=p.x+Math.cos(p.a)*step, ny=p.y+Math.sin(p.a)*step;
-      if (blocked(nx,ny,.07)) { p.life=0; impact(p.x,p.y,"255,120,50",4); continue; }
-      p.x=nx; p.y=ny;
-      if (Math.hypot(p.x-player.x,p.y-player.y) < .22) { p.life=0; hurt(p.damage); impact(p.x,p.y,"255,120,50",5); }
-    }
-    for(let i=projectiles.length-1;i>=0;i--) if(projectiles[i].life<=0) projectiles.splice(i,1);
-  }
+      p.life -= dt;
+      if (p.life <= 0) continue;
 
+      const step = p.speed * dt;
+      const nx = p.x + Math.cos(p.a) * step;
+      const ny = p.y + Math.sin(p.a) * step;
+
+      if (blocked(nx, ny, 0.07)) {
+        p.life = 0;
+        impact(p.x, p.y, "255,120,50", 5);
+        continue;
+      }
+
+      p.x = nx;
+      p.y = ny;
+
+      if (p.owner && Math.hypot(p.x - player.x, p.y - player.y) < 0.22) {
+        p.life = 0;
+        hurt(p.damage);
+        impact(p.x, p.y, "255,120,50", 7);
+        continue;
+      }
+
+      if (p.owner) {
+        for (const other of enemies) {
+          if (!other.alive || other === p.owner) continue;
+          if (Math.hypot(p.x - other.x, p.y - other.y) < ENEMIES[other.type].radius * 0.75) {
+            other.hp -= p.damage;
+            other.pain = 0.12;
+            other.state = "pain";
+            p.life = 0;
+            impact(other.x, other.y, "255,150,90", 5);
+            if (other.hp <= 0) killEnemy(other);
+            else {
+              other.target = p.owner;
+              other.state = "chase";
+            }
+            break;
+          }
+        }
+      }
+    }
+    for (let i = projectiles.length - 1; i >= 0; i--) {
+      if (projectiles[i].life <= 0) projectiles.splice(i, 1);
+    }
+  }
   function updateParticles(dt) {
     for (const p of particles) { p.life-=dt; p.x+=p.vx*dt; p.y+=p.vy*dt; p.vx*=.92; p.vy*=.92; }
     for(let i=particles.length-1;i>=0;i--) if(particles[i].life<=0) particles.splice(i,1);
@@ -545,6 +652,7 @@
   function update(dt) {
     if(state.mode!=="playing"||state.paused)return;
     state.time += dt;
+    soundAlert = Math.max(0, soundAlert - dt);
     state.damageFlash=Math.max(0,state.damageFlash-dt);
     state.pickupFlash=Math.max(0,state.pickupFlash-dt);
     player.attackTimer=Math.max(0,player.attackTimer-dt);
