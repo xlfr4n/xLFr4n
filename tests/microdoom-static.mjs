@@ -45,3 +45,6 @@ assert.equal(reachable(true,false).has("27,10"), false, "exit must remain locked
 assert.ok(reachable(true,true).has("27,10"), "exit must be reachable after blue door");
 assert.ok(js.includes('pistol: { name: "PISTOL"') && js.includes('auto: false'), "pistol must be single-shot");
 assert.ok(js.includes('chaingun: { name: "CHAINGUN"') && js.includes('auto: true'), "chaingun must support auto-fire");
+
+assert.ok(js.includes("const SIM_DT = 1 / 35;"), "simulation should run at a fixed 35Hz tick");
+assert.ok(js.includes("while(accumulator>=SIM_DT"), "render loop must decouple rendering from simulation tick");
