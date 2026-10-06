@@ -26,7 +26,7 @@
     "#.........#.........#.........#",
     "#.........#.........B.........#",
     "#.........#.........#.........#",
-    "######.################.######",
+    "######.################.#######",
     "#.........#.............#.....#",
     "#.........#.............#.....#",
     "#.........#.............#.....#",
@@ -623,40 +623,40 @@
     drawWeapon();
   }
 
+  function spriteRect(a,b,w,h,color,depth){
+    const left=Math.max(0,Math.floor(a)),right=Math.min(W-1,Math.ceil(a+w)-1);
+    const d=depth*Math.max(.72,1);
+    for(let sx=left;sx<=right;sx++)if(zBuffer[sx]>=d)rect(sx,b,1,h,color);
+  }
+
   function drawEnemy(e,sx,d){
     const z=clamp(11/Math.max(.25,d),.25,3),w=Math.max(5,Math.floor((e.type==="cacodemon"?34:e.type==="demon"?28:23)*z)),h=Math.max(8,Math.floor((e.type==="cacodemon"?31:e.type==="demon"?38:34)*z));
     const left=Math.floor(sx-w/2),top=Math.floor(80-h*.55+Math.sin(performance.now()/120+e.phase)*Math.min(2,z));
-    if(e.type==="cacodemon"){
-      rect(left,top+h*.18,w,h*.64,"#73423e");rect(left+w*.18,top,w*.64,h*.28,"#98564c");
-      rect(left+w*.25,top+h*.3,w*.16,h*.12,"#ffe56b");rect(left+w*.59,top+h*.3,w*.16,h*.12,"#ffe56b");
-      rect(left+w*.30,top+h*.32,w*.06,h*.07,"#111");rect(left+w*.64,top+h*.32,w*.06,h*.07,"#111");
-    }else if(e.type==="demon"){
-      rect(left+w*.12,top+h*.18,w*.76,h*.70,"#67251f");rect(left+w*.18,top,w*.64,h*.48,"#92382a");
-      rect(left+w*.26,top+h*.23,w*.13,h*.1,"#f3c958");rect(left+w*.61,top+h*.23,w*.13,h*.1,"#f3c958");
-      rect(left+w*.30,top+h*.25,w*.05,h*.06,"#111");rect(left+w*.65,top+h*.25,w*.05,h*.06,"#111");
-    }else{
-      const base=e.type==="imp"?"#883325":"#595b56";
-      rect(left+w*.2,top+h*.2,w*.6,h*.62,base);rect(left+w*.27,top+h*.06,w*.46,h*.30,e.type==="imp"?"#a6482e":"#6a6d67");
-      rect(left+w*.31,top+h*.22,w*.1,h*.09,"#ffe76a");rect(left+w*.59,top+h*.22,w*.1,h*.09,"#ffe76a");
-      rect(left+w*.34,top+h*.24,w*.04,h*.06,"#111");rect(left+w*.63,top+h*.24,w*.04,h*.06,"#111");
-    }
-    if(e.pain>0)rect(left,top,w,h,"rgba(255,255,255,.4)");
-    if(e.hp<e.maxHp){rect(left,top-3,w,2,"#161616");rect(left,top-3,Math.max(1,w*clamp(e.hp/e.maxHp,0,1)),2,"#d13b2c");}
+    const base=e.type==="cacodemon"?"#73423e":e.type==="demon"?"#67251f":e.type==="imp"?"#883325":"#595b56";
+    spriteRect(left,top+h*.18,w,h*.64,base,d);
+    spriteRect(left+w*.18,top,w*.64,h*(e.type==="cacodemon"?.28:.48),e.type==="cacodemon"?"#98564c":e.type==="demon"?"#92382a":e.type==="imp"?"#a6482e":"#6a6d67",d);
+    if(e.type!=="demon"&&e.type!=="cacodemon"){spriteRect(left+w*.31,top+h*.22,w*.10,h*.09,"#ffe76a",d);spriteRect(left+w*.59,top+h*.22,w*.10,h*.09,"#ffe76a",d);spriteRect(left+w*.34,top+h*.24,w*.04,h*.06,"#111",d);spriteRect(left+w*.63,top+h*.24,w*.04,h*.06,"#111",d);}
+    else {spriteRect(left+w*.26,top+h*.23,w*.13,h*.10,"#f3c958",d);spriteRect(left+w*.61,top+h*.23,w*.13,h*.10,"#f3c958",d);spriteRect(left+w*.30,top+h*.25,w*.05,h*.06,"#111",d);spriteRect(left+w*.65,top+h*.25,w*.05,h*.06,"#111",d);}
+    if(e.pain>0)spriteRect(left,top,w,h,"rgba(255,255,255,.4)",d);
+    if(e.hp<e.maxHp){spriteRect(left,top-3,w,2,"#161616",d);spriteRect(left,top-3,Math.max(1,w*clamp(e.hp/e.maxHp,0,1)),2,"#d13b2c",d);}
   }
 
   function pickupColor(t){return {clip:"#c9bd7b",clipbox:"#a58e55",shells:"#dbc58c",shellbox:"#b08d5a",stim:"#52a86a",medkit:"#e7e7e7",armor:"#3f8d94",shotgun:"#89633d",chaingun:"#707678",keyblue:"#4a87ea",soulsphere:"#59aaa3"}[t]||"#ddd";}
 
   function drawPickup(p,sx,d){
-    const z=clamp(7/Math.max(.25,d),.25,3),s=Math.max(4,Math.floor(8*z)),y=Math.floor(80-s+Math.sin(performance.now()/260+p.phase)*2*z);
-    rect(sx-s/2,y,s,s,pickupColor(p.type));rect(sx-s*.25,y+s*.25,s*.5,s*.5,"#111");
-    if(p.type==="keyblue")rect(sx-s*.1,y+s*.12,s*.2,s*.72,"#69a8ff");
-    if(p.type==="soulsphere"){ctx.strokeStyle=pickupColor(p.type);ctx.strokeRect(sx-s*.7,y-s*.15,s*1.4,s*1.4);}
+    const z=clamp(7/Math.max(.25,d),.25,3),s=Math.max(4,Math.floor(8*z)),y=Math.floor(80-s+Math.sin(performance.now()/260+p.phase)*2*z),left=sx-s/2;
+    spriteRect(left,y,s,s,pickupColor(p.type),d);
+    spriteRect(sx-s*.25,y+s*.25,s*.5,s*.5,"#111",d);
+    if(p.type==="keyblue")spriteRect(sx-s*.1,y+s*.12,s*.2,s*.72,"#69a8ff",d);
   }
+
 
   function drawFireball(sx,d){
     const z=clamp(4/Math.max(.25,d),.25,3),r=Math.max(2,Math.floor(4*z)),y=80+Math.sin(performance.now()/80+d)*2;
-    rect(sx-r,y-r,r*2,r*2,"#e85224");rect(sx-r*.4,y-r*.4,r*.8,r*.8,"#ffe66a");
+    spriteRect(sx-r,y-r,r*2,r*2,"#e85224",d);
+    spriteRect(sx-r*.4,y-r*.4,r*.8,r*.8,"#ffe66a",d);
   }
+
 
   function drawParticles(){
     for(const p of particles){
