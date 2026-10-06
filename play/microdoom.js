@@ -749,38 +749,53 @@
       p.life -= dt;
       if (p.life <= 0) continue;
 
-      const step = p.speed * dt;
-      const nx = p.x + Math.cos(p.a) * step;
-      const ny = p.y + Math.sin(p.a) * step;
-      if (blocked(nx, ny, .07)) {
-        if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
-        else impact(p.x,p.y,"120,190,255",4);
-        p.life=0;
-        continue;
-      }
+      // Substep fast projectiles so they cannot tunnel through thin enemies.
+      const travel = p.speed * dt;
+      const substeps = Math.max(1, Math.ceil(travel / 0.09));
+      const step = travel / substeps;
+      let consumed = false;
 
-      p.x=nx; p.y=ny;
+      for (let stepIndex = 0; stepIndex < substeps && !consumed && p.life > 0; stepIndex++) {
+        const nx = p.x + Math.cos(p.a) * step;
+        const ny = p.y + Math.sin(p.a) * step;
 
-      if (p.owner === player && Math.hypot(p.x-player.x,p.y-player.y) < .20) {
-        if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
-        p.life=0;
-        continue;
-      }
-
-      if (p.owner !== player && Math.hypot(p.x-player.x,p.y-player.y) < .22) {
-        p.life=0; hurt(p.damage); impact(p.x,p.y,"255,120,50",7); continue;
-      }
-
-      for (const other of enemies) {
-        if (!other.alive || other === p.owner) continue;
-        if (Math.hypot(p.x-other.x,p.y-other.y) >= ENEMIES[other.type].radius*.75) continue;
-        if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
-        else {
-          hitEnemy(other,p.damage,p.owner);
-          impact(other.x,other.y,"255,150,90",5);
+        if (blocked(nx, ny, .07)) {
+          if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
+          else impact(p.x,p.y,"120,190,255",4);
+          p.life=0;
+          consumed=true;
+          break;
         }
-        p.life=0;
-        break;
+
+        p.x=nx; p.y=ny;
+
+        if (p.owner === player && Math.hypot(p.x-player.x,p.y-player.y) < .20) {
+          if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
+          p.life=0;
+          consumed=true;
+          break;
+        }
+
+        if (p.owner !== player && Math.hypot(p.x-player.x,p.y-player.y) < .22) {
+          p.life=0;
+          hurt(p.damage);
+          impact(p.x,p.y,"255,120,50",7);
+          consumed=true;
+          break;
+        }
+
+        for (const other of enemies) {
+          if (!other.alive || other === p.owner) continue;
+          if (Math.hypot(p.x-other.x,p.y-other.y) >= ENEMIES[other.type].radius*.75) continue;
+          if (p.type === "rocket" || p.type === "bfg") explode(p.x,p.y,p.damage,p.type==="bfg"?4.5:2.2,p.owner);
+          else {
+            hitEnemy(other,p.damage,p.owner);
+            impact(other.x,other.y,"255,150,90",5);
+          }
+          p.life=0;
+          consumed=true;
+          break;
+        }
       }
     }
     for(let i=projectiles.length-1;i>=0;i--)if(projectiles[i].life<=0)projectiles.splice(i,1);
@@ -918,7 +933,7 @@
     if(atExit && state.kills>=state.totalKills && hasKeycard()) {
       toast("EXIT READY · PRESS E",.9);
     }
-    if(keys.MouseLeft){
+    if(keys.MouseLeft||keys.Space){
       const w=WEAPONS[player.ready];
       if(w.auto)shoot();
     }
@@ -1293,7 +1308,10 @@
 
     if(e.code==="Enter"&&!e.repeat&&state.mode==="title"){newGame();lockMouse();}
     if(e.code==="KeyR"&&!e.repeat&&(state.mode==="dead"||state.mode==="won")){newGame();lockMouse();}
-    if(e.code==="KeyP"&&!e.repeat&&state.mode==="playing")state.paused=!state.paused;
+    if(e.code==="KeyP"&&!e.repeat&&state.mode==="playing"){
+      state.paused=!state.paused;
+      if(state.paused)document.exitPointerLock?.();
+    }
     if(e.code==="Escape"&&!e.repeat&&state.mode==="playing"){
       state.paused=!state.paused;
       if(state.paused)document.exitPointerLock?.();
