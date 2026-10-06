@@ -40,7 +40,7 @@
   ];
 
   const playerSpawn = { x: 2.5, y: 2.5, a: 0 };
-  const exit = { x: 27.5, y: 20.5 };
+  const exit = { x: 27.5, y: 10.5 };
 
   const WEAPONS = {
     fist: { name: "FIST", ammo: null, damage: [20, 40], cooldown: 0.42, range: 0.95, pellets: 1, spread: 0, auto: false },
