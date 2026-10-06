@@ -54,3 +54,7 @@ for (const token of [
   'rocketlauncher', 'rockets', 'plasmagun', 'cellpack', 'chainsaw', 'bfg',
   'function weaponHasAmmo', 'version:2'
 ]) assert.ok(js.includes(token), 'missing expanded gameplay token: ' + token);
+
+assert.ok(js.includes('function completeLevel()'), 'explicit exit completion must exist');
+assert.ok(js.includes('EXIT READY · PRESS E'), 'exit must advertise explicit interaction');
+assert.ok(js.includes('if(atExit)'), 'exit interaction proximity must be checked');
