@@ -93,49 +93,16 @@ I am not interested in collecting tools for the sake of collecting them. I want 
 
 ## 📡 Signal board // Panel de señal
 
-<table>
-<tr>
-<td width="25%" align="center">
-
-### 🔎
-
-**RESEARCH**
-
-Public-source investigation
-
-</td>
-<td width="25%" align="center">
-
-### 🛠️
-
-**BUILD**
-
-Software & tooling
-
-</td>
-<td width="25%" align="center">
-
-### ✅
-
-**VERIFY**
-
-Tests & evidence
-
-</td>
-<td width="25%" align="center">
-
-### ⚙️
-
-**AUTOMATE**
-
-Scripts & workflows
-
-</td>
-</tr>
-</table>
-
 <div align="center">
 
+<table align="center" width="94%" cellpadding="12">
+<tr>
+<td width="25%" align="center" valign="middle">🔎<br><b>RESEARCH</b><br><sub>Public-source investigation</sub></td>
+<td width="25%" align="center" valign="middle">🛠️<br><b>BUILD</b><br><sub>Software & tooling</sub></td>
+<td width="25%" align="center" valign="middle">✅<br><b>VERIFY</b><br><sub>Tests & evidence</sub></td>
+<td width="25%" align="center" valign="middle">⚙️<br><b>AUTOMATE</b><br><sub>Scripts & workflows</sub></td>
+</tr>
+</table>
 
 </div>
 
@@ -299,68 +266,52 @@ Experimento original en canvas con combate, armas, IA, pickups, guardado y labor
 
 <div align="center">
 
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=xlfr4n&theme=github_dark&hide_border=true&bg_color=06080C&title_color=FF3344&text_color=F5F7FA&icon_color=FF6875&chart_color=19C3B1&animation=load&duration=3" alt="xLFr4n GitHub statistics load animation">
+<img src="https://github-readme-stats.vercel.app/api?username=xlfr4n&show_icons=true&include_all_commits=true&count_private=false&hide_border=true&theme=dark&bg_color=06080C&title_color=FF3344&text_color=F5F7FA&icon_color=FF6875&ring_color=FF3344&custom_title=xLFr4n%20%2F%2F%20PUBLIC%20SIGNAL" alt="xLFr4n GitHub statistics">
 
-<br><br>
-
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=xlfr4n&theme=github_dark&hide_border=true&bg_color=06080C&title_color=F5F7FA&text_color=8993A1&icon_color=FF3344&chart_color=7C5CFF&animation=rgb-soft&duration=10" alt="xLFr4n contribution profile RGB animation">
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=xlfr4n&layout=compact&langs_count=8&hide_border=true&theme=dark&bg_color=06080C&title_color=7C5CFF&text_color=F5F7FA&icon_color=7C5CFF&custom_title=LANGUAGE%20SIGNAL" alt="xLFr4n public repository languages">
 
 </div>
 
 <br>
 
-<table>
+<div align="center">
+
+<table align="center" width="94%" cellpadding="10">
 <tr>
-<td width="50%" align="center" valign="top">
-
-### 📚 Language signal
-
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=xlfr4n&theme=github_dark&hide_border=true&bg_color=06080C&title_color=F5F7FA&text_color=8993A1&icon_color=7C5CFF&chart_color=7C5CFF&animation=draw&duration=3" alt="xLFr4n repositories per language animation">
-
-</td>
-<td width="50%" align="center" valign="top">
-
-### ⏱️ Productive time
-
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=xlfr4n&theme=github_dark&utcOffset=2&hide_border=true&bg_color=06080C&title_color=F5F7FA&text_color=8993A1&icon_color=FF8A3D&chart_color=FF8A3D&animation=sequence&duration=4" alt="xLFr4n productive time sequence animation">
-
-</td>
-</tr>
-</table>
-
-<div align="center">
-
-<div align="center">
-
-<sub>Four data cards use four distinct animation presets: load · draw · sequence · rgb-soft.</sub>
-
-</div>
-
-<div align="center">
+<td width="50%" align="center" valign="middle">
 
 ### 🔥 Contribution rhythm
 
-<img src="https://streak-stats.demolab.com?user=xlfr4n&theme=github-dark-blue&hide_border=true&background=06080C&ring=FF3344&fire=FF8A3D&currStreakLabel=FF3344&sideLabels=8993A1&currStreakNum=F5F7FA&sideNums=F5F7FA&dates=667180&locale=en" alt="xLFr4n contribution streak">
+<img src="https://streak-stats.demolab.com?user=xlfr4n&theme=dark&hide_border=true&background=06080C&ring=FF3344&fire=FF8A3D&currStreakLabel=FF3344&sideLabels=8993A1&currStreakNum=F5F7FA&sideNums=F5F7FA&dates=667180&locale=en" alt="xLFr4n contribution streak">
 
-<br><br>
+</td>
+<td width="50%" align="center" valign="middle">
 
 ### 🏆 Achievements
 
 <img src="https://github-profile-trophy.vercel.app/?username=xlfr4n&theme=onedark&no-frame=true&margin-w=8&row=2&column=4" alt="xLFr4n GitHub trophies">
 
-<br><br>
-
-### 📈 Activity graph
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=xlfr4n&bg_color=06080C&color=F5F7FA&line=FF3344&point=19C3B1&area=true&hide_border=true&custom_title=xLFr4n%20%2F%2F%20ACTIVITY%20SIGNAL" alt="xLFr4n GitHub activity graph">
-
-<br>
-
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=xlfr4n&layout=compact&langs_count=8&hide_border=true&bg_color=06080C&title_color=7C5CFF&text_color=F5F7FA&custom_title=LANGUAGE%20SIGNAL" alt="xLFr4n public repository language statistics">
+</td>
+</tr>
+</table>
 
 </div>
 
-<sub>Las tarjetas de telemetría se generan desde datos públicos de GitHub. Algunas fuentes aplican caché; no se escribe ningún contador manualmente. / Telemetry cards are generated from public GitHub data. Some providers cache results; no counters are hard-coded.</sub>
+<br>
+
+<div align="center">
+
+### 📈 Activity signal
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=xlfr4n&bg_color=06080C&color=F5F7FA&line=FF3344&point=19C3B1&area=true&hide_border=true&custom_title=xLFr4n%20%2F%2F%20ACTIVITY%20SIGNAL" alt="xLFr4n GitHub activity graph">
+
+</div>
+
+<div align="center">
+
+<sub>All telemetry above is generated from GitHub-derived or dedicated counter services. No values are hard-coded.</sub>
+
+</div>
 
 ---
 
