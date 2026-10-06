@@ -19,11 +19,11 @@ El objetivo es reproducir el tipo de experiencia y sensaciones mecánicas del DO
 - pickups de salud, armadura verde/azul, munición, armas y keycard;
 - puertas normales y puerta azul bloqueada;
 - automapa explorado;
-- estados de título, partida, muerte y victoria;
+- menú principal, pausa, opciones persistentes, controles, muerte y victoria;
 - contador de kills/items;
 - save/load local con F2/F3, incluyendo estado de puertas, enemigos, armadura y automapa;
 - sonido procedural mediante Web Audio;
-- HUD retro, bob y recoil;
+- HUD retro rehecho con objetivo, salud/armadura, munición, arma, kills/items, keycard y cronómetro;
 - captura y liberación del mouse.
 
 ### ⌨️ Controles
@@ -41,7 +41,7 @@ El objetivo es reproducir el tipo de experiencia y sensaciones mecánicas del DO
 | E | usar puerta |
 | Tab / M | automapa |
 | P | pausa |
-| Esc | liberar mouse / pausa |
+| Esc | pausa / menú principal / salir a opciones |
 | F2 | guardar |
 | F3 | cargar |
 | R | reiniciar |

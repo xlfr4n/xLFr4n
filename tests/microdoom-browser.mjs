@@ -12,9 +12,20 @@ try {
 
   await page.goto('http://127.0.0.1:4173/play/', { waitUntil: 'networkidle' });
   const canvas = page.locator('#game');
+  const startButton = page.getByRole('button', { name: /START MISSION/ });
+  const optionsButton = page.getByRole('button', { name: /OPTIONS/ }).first();
   await canvas.waitFor();
+  await page.locator('#game-ui').waitFor();
+  if (!(await startButton.isVisible())) throw new Error('Title menu is not visible');
   const initial = await page.evaluate(() => document.getElementById('game').getContext('2d').getImageData(0, 0, 320, 200).data.join(','));
-  await canvas.click();
+  await optionsButton.click();
+  const sensitivity = page.locator('#setting-sensitivity');
+  if (!(await sensitivity.isVisible())) throw new Error('Options menu did not open');
+  await sensitivity.fill('45');
+  const savedSensitivity = await page.evaluate(() => JSON.parse(localStorage.getItem('xlfr4n-microdoom-settings-v1')));
+  if (Math.abs(savedSensitivity.mouseSensitivity - 0.00045) > 0.000001) throw new Error('Mouse sensitivity did not persist');
+  await page.getByRole('button', { name: /DONE/ }).click();
+  await startButton.click();
   await page.waitForTimeout(250);
   const afterStart = await page.evaluate(() => document.getElementById('game').getContext('2d').getImageData(0, 0, 320, 200).data.join(','));
   if (initial === afterStart) throw new Error('MICRODOOM canvas did not change after start');
@@ -24,9 +35,16 @@ try {
   await page.keyboard.up('w');
   await page.keyboard.press('m');
   await page.keyboard.press('m');
-  await page.keyboard.press('p');
+  await page.keyboard.press('Escape');
   await page.waitForTimeout(80);
-  await page.keyboard.press('p');
+  if (!(await page.getByRole('button', { name: /RESUME/ }).isVisible())) throw new Error('ESC did not open the pause menu');
+  await page.getByRole('button', { name: /OPTIONS/ }).last().click();
+  if (!(await page.locator('#setting-sensitivity').isVisible())) throw new Error('Pause options did not open');
+  await page.keyboard.press('Escape');
+  if (!(await page.getByRole('button', { name: /RESUME/ }).isVisible())) throw new Error('ESC did not return from options to pause');
+  await page.getByRole('button', { name: /RESUME/ }).click();
+  await page.waitForTimeout(80);
+
 
   await page.evaluate(() => {
     const save = {

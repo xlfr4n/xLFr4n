@@ -86,6 +86,14 @@ assert.ok(js.includes('function drawExit'), "exit must have a visible world repr
 assert.ok(js.includes('return Math.hypot(player.x-x,player.y-y) >= r + .16;'), "enemy movement must respect player collision radius");
 assert.ok(js.includes('Math.ceil(travel / 0.09)'), "fast projectiles must use collision substeps");
 assert.doesNotMatch(js, /if \(p\.owner === player && Math\.hypot\(p\.x-player\.x,p\.y-player\.y\) < \.20\)/, "player projectiles must not self-collide while leaving the weapon");
+assert.ok(html.includes('id="game-ui"') && html.includes('data-action="start"') && html.includes('data-action="exit"'), "Microdoom must expose a real in-game menu with start/exit actions");
+assert.ok(html.includes('id="setting-sensitivity"') && html.includes('id="setting-volume"'), "Microdoom must expose persistent control/audio options");
+assert.ok(js.includes('SETTINGS_KEY') && js.includes('DEFAULT_SETTINGS') && js.includes('settings.mouseSensitivity'), "Microdoom must persist mouse sensitivity settings");
+assert.ok(/movement=clamp\(e\.movementX,-90,90\)/.test(js), "mouse look must clamp extreme pointer deltas");
+assert.ok(/movement\*settings\.mouseSensitivity/.test(js), "mouse look must use configurable sensitivity");
+assert.ok(js.includes('function pauseGame()') && js.includes('function resumeGame()') && js.includes('function returnToTitle()'), "menu navigation actions must be explicit");
+assert.ok(js.includes('window.location.href = "../"'), "exit action must return to the lab");
+
 assert.ok(js.includes('if(keys.MouseLeft||keys.Space)'), "automatic weapons must fire while held through mouse or space");
 assert.ok(js.includes('if(e.code==="KeyP"&&!e.repeat&&state.mode==="playing")'), "pause toggle must remain discrete");
 

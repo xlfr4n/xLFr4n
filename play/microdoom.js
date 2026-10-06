@@ -12,6 +12,25 @@
   const MAX_DT = 0.05;
   const SIM_DT = 1 / 35;
   const SAVE_KEY = "xlfr4n-microdoom-save-v2";
+  const SETTINGS_KEY = "xlfr4n-microdoom-settings-v1";
+  const DEFAULT_SETTINGS = {
+    mouseSensitivity: 0.0009,
+    masterVolume: 0.72,
+    reducedFlash: false,
+    crosshair: true
+  };
+  function loadSettings() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "null");
+      return {
+        ...DEFAULT_SETTINGS,
+        ...(saved && typeof saved === "object" ? saved : {})
+      };
+    } catch {
+      return { ...DEFAULT_SETTINGS };
+    }
+  }
+  const settings = loadSettings();
 
   ctx.imageSmoothingEnabled = false;
 
@@ -76,7 +95,8 @@
     pickupFlash: 0,
     message: "",
     messageUntil: 0,
-    bestTime: Number(localStorage.getItem("xlfr4n-microdoom-best") || "0")
+    bestTime: Number(localStorage.getItem("xlfr4n-microdoom-best") || "0"),
+    menuReturn: "pause"
   };
 
   const player = {
@@ -102,6 +122,9 @@
   let last = performance.now();
   let accumulator = 0;
   let audio = null;
+  const gameUI = document.getElementById("game-ui");
+  const menuPanels = [...document.querySelectorAll("[data-menu]")];
+  let visibleMenu = "";
 
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function rand(a, b) { return a + Math.random() * (b - a); }
@@ -331,6 +354,7 @@
     setupLevel();
     state.mode = "playing";
     state.paused = false;
+    state.menuReturn = "pause";
     state.time = 0;
     state.damageFlash = 0;
     state.pickupFlash = 0;
@@ -341,6 +365,134 @@
   function toast(msg, seconds) {
     state.message = msg;
     state.messageUntil = performance.now() + (seconds || 2) * 1000;
+  }
+
+  function persistSettings() {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  }
+
+  function showMenu(name) {
+    if (!gameUI) return;
+    visibleMenu = name || "";
+    gameUI.dataset.screen = visibleMenu || "hidden";
+    gameUI.hidden = !visibleMenu;
+    for (const panel of menuPanels) panel.hidden = panel.dataset.menu !== visibleMenu;
+    const sens = document.getElementById("setting-sensitivity");
+    const sensValue = document.getElementById("setting-sensitivity-value");
+    const volume = document.getElementById("setting-volume");
+    const volumeValue = document.getElementById("setting-volume-value");
+    const reducedFlash = document.getElementById("setting-reduced-flash");
+    const crosshair = document.getElementById("setting-crosshair");
+    if (sens) sens.value = String(Math.round(settings.mouseSensitivity * 100000));
+    if (sensValue) sensValue.textContent = (settings.mouseSensitivity * 1000).toFixed(2);
+    if (volume) volume.value = String(Math.round(settings.masterVolume * 100));
+    if (volumeValue) volumeValue.textContent = String(Math.round(settings.masterVolume * 100)) + "%";
+    if (reducedFlash) reducedFlash.checked = !!settings.reducedFlash;
+    if (crosshair) crosshair.checked = !!settings.crosshair;
+
+    if (gameUI) {
+      const menu = gameUI.querySelector("[data-menu=\"" + (visibleMenu || "title") + "\"]");
+      if (menu) {
+        menu.querySelector(".menu-kills")?.replaceChildren(document.createTextNode(
+          String(state.kills).padStart(2, "0") + " / " + String(state.totalKills).padStart(2, "0")
+        ));
+        menu.querySelector(".menu-items")?.replaceChildren(document.createTextNode(
+          String(state.items).padStart(2, "0") + " / " + String(state.totalItems).padStart(2, "0")
+        ));
+        menu.querySelector(".menu-time")?.replaceChildren(document.createTextNode(state.time.toFixed(1) + "s"));
+      }
+    }
+  }
+
+  function syncMenu() {
+    let next = "";
+    if (state.mode === "title") {
+      next = (visibleMenu === "options" || visibleMenu === "controls") ? visibleMenu : "title";
+    } else if (state.mode === "playing" && state.paused) {
+      next = (visibleMenu === "options" || visibleMenu === "controls") ? visibleMenu : (state.menuReturn || "pause");
+    } else if (state.mode === "dead") next = "dead";
+    else if (state.mode === "won") next = "won";
+
+    if (next !== visibleMenu) showMenu(next);
+  }
+
+  function returnToTitle() {
+    state.paused = false;
+    state.mode = "title";
+    state.menuReturn = "pause";
+    document.exitPointerLock?.();
+    for (const k of Object.keys(keys)) keys[k] = false;
+    showMenu("title");
+  }
+
+  function pauseGame() {
+    if (state.mode !== "playing" || state.paused) return;
+    state.paused = true;
+    state.menuReturn = "pause";
+    document.exitPointerLock?.();
+    for (const k of Object.keys(keys)) keys[k] = false;
+    showMenu("pause");
+  }
+
+  function resumeGame() {
+    if (state.mode !== "playing") return;
+    state.paused = false;
+    showMenu("");
+    lockMouse();
+  }
+
+  function objectiveText() {
+    if (!hasKeycard()) return "OBJECTIVE · FIND BLUE KEYCARD";
+    if (state.kills < state.totalKills) return "OBJECTIVE · CLEAR THE SECTOR";
+    return "OBJECTIVE · REACH THE EXIT";
+  }
+
+  function buttonAction(action) {
+    if (action === "start" || action === "restart") {
+      newGame();
+      showMenu("");
+      lockMouse();
+      return;
+    }
+    if (action === "resume") {
+      resumeGame();
+      return;
+    }
+    if (action === "pause") {
+      pauseGame();
+      return;
+    }
+    if (action === "controls") {
+      state.menuReturn = state.mode === "playing" && state.paused ? "pause" : "title";
+      showMenu("controls");
+      return;
+    }
+    if (action === "options") {
+      state.menuReturn = state.mode === "playing" && state.paused ? "pause" : "title";
+      showMenu("options");
+      return;
+    }
+    if (action === "back") {
+      showMenu(state.menuReturn || "title");
+      return;
+    }
+    if (action === "main-menu") {
+      returnToTitle();
+      return;
+    }
+    if (action === "save") {
+      if (state.mode === "playing" && state.paused) saveGame();
+      return;
+    }
+    if (action === "exit") {
+      window.location.href = "../";
+      return;
+    }
+    if (action === "reset-settings") {
+      Object.assign(settings, DEFAULT_SETTINGS);
+      persistSettings();
+      showMenu(visibleMenu);
+    }
   }
 
   function initAudio() {
@@ -374,7 +526,9 @@
     const o = audio.createOscillator(), g = audio.createGain();
     o.type = p[3]; o.frequency.setValueAtTime(p[0], now);
     o.frequency.exponentialRampToValueAtTime(Math.max(20,p[1]), now + p[2]);
-    g.gain.setValueAtTime(p[4], now); g.gain.exponentialRampToValueAtTime(.0001, now + p[2]);
+    const volume = p[4] * clamp(settings.masterVolume, 0, 1);
+    g.gain.setValueAtTime(volume, now);
+    g.gain.exponentialRampToValueAtTime(.0001, now + p[2]);
     o.connect(g); g.connect(audio.destination); o.start(now); o.stop(now + p[2] + .01);
   }
 
@@ -393,6 +547,7 @@
     if(player.hp<=0){
       player.hp=0;
       state.mode="dead";
+      state.paused=false;
       document.exitPointerLock?.();
       beep("death");
     }
@@ -405,6 +560,7 @@
 
   function completeLevel() {
     state.mode="won";
+    state.paused=false;
     if(!state.bestTime || state.time<state.bestTime){
       state.bestTime=state.time;
       localStorage.setItem("xlfr4n-microdoom-best",String(state.time));
@@ -1129,28 +1285,49 @@
   function label(t,x,y,size,color,align){ctx.font="700 "+size+"px monospace";ctx.textAlign=align||"left";ctx.textBaseline="top";ctx.fillStyle=color;ctx.fillText(t,Math.floor(x),Math.floor(y));}
 
   function drawFace(){
-    const cx=286,cy=177;
+    const cx=228,cy=177;
     rect(cx-11,cy-10,22,22,player.hp<35?"#713527":"#a16d4c");
     rect(cx-7,cy-5,4,3,"#eee4bd");rect(cx+3,cy-5,4,3,"#eee4bd");
     rect(cx-6,cy-5,2,3,"#111");rect(cx+4,cy-5,2,3,"#111");rect(cx-5,cy+6,10,3,"#39130e");
   }
 
+  function hudBar(x, y, w, value, max, fill) {
+    rect(x, y, w, 4, "#14161a");
+    rect(x + 1, y + 1, Math.max(1, (w - 2) * clamp(value / max, 0, 1)), 2, fill);
+  }
+
   function drawHUD(){
-    rect(0,160,W,40,"#2b2b2b");rect(0,160,W,2,"#5a5a5a");
-    label("xLFr4n",28,165,7,"#bcbcbc","center");
-    label(String(Math.max(0,player.hp|0)).padStart(3,"0")+"%",82,170,12,player.hp<35?"#e44":"#e7e7e7","center");
-    label("HEALTH",82,184,5,"#777","center");
-    label(String(Math.max(0,player.armor|0)).padStart(3,"0")+"%",134,170,12,"#e5e5e5","center");
-    label("ARMOR",134,184,5,"#777","center");
+    rect(0,160,W,40,"#101217");
+    rect(0,160,W,2,"#542025");
+    rect(0,162,W,1,"#2c3038");
+
+    rect(4,166,58,29,"#171a20"); rect(63,166,52,29,"#171a20");
+    rect(116,166,91,29,"#171a20"); rect(208,166,40,29,"#171a20"); rect(249,166,67,29,"#171a20");
+    rect(62,166,1,29,"#30343b"); rect(115,166,1,29,"#30343b");
+    rect(207,166,1,29,"#30343b"); rect(248,166,1,29,"#30343b");
+
+    label("⚡ xLFr4n", 8, 164, 5, "#e7e7e7");
+    label("HEALTH", 8, 169, 5, "#7e828a");
+    label(String(Math.max(0,player.hp|0)).padStart(3,"0"), 8, 174, 11, player.hp<35 ? "#ff5360" : "#f0f1f2");
+    hudBar(8,188,48,player.hp,200,player.hp<35?"#d6424f":"#d9dadd");
+
+    label(player.armorType===2 ? "BLUE" : player.armorType===1 ? "GREEN" : "ARMOR", 67, 169, 5, player.armorType ? "#7dbbcb" : "#7e828a");
+    label(String(Math.max(0,player.armor|0)).padStart(3,"0"), 67, 174, 11, "#e7eaed");
+    hudBar(67,188,41,player.armor,200,player.armorType===2?"#73c4d6":"#648b91");
+
     const w=WEAPONS[player.ready],ammo=w.ammo?player.ammo[w.ammo]:"-";
-    label(String(ammo).padStart(3,"0"),186,170,12,"#f0f0f0","center");
-    label(w.ammo?w.ammo.toUpperCase():"MELEE",186,184,5,"#777","center");
-    label("KILLS",232,164,5,"#777","center");
-    label(String(state.kills).padStart(2,"0")+"/"+String(state.totalKills).padStart(2,"0"),232,171,10,"#eee","center");
-    label("ITEMS",299,164,5,"#777","center");
-    label(String(state.items).padStart(2,"0")+"/"+String(state.totalItems).padStart(2,"0"),299,171,9,"#eee","center");
+    label(w.name, 121, 168, 6, "#f0f1f2");
+    label("AMMO", 121, 176, 5, "#7e828a");
+    label(String(ammo).padStart(3,"0"), 143, 174, 12, ammo === 0 ? "#ff5360" : "#e7eaed");
+    label(w.ammo ? w.ammo.toUpperCase() : "MELEE", 121, 188, 5, "#777b84");
+
     drawFace();
-    label(w.name,159,191,5,"#999","center");
+    label("KILLS", 256, 168, 5, "#7e828a");
+    label(String(state.kills).padStart(2,"0")+"/"+String(state.totalKills).padStart(2,"0"), 256, 174, 8, "#e7eaed");
+    label("ITEMS", 256, 183, 5, "#7e828a");
+    label(String(state.items).padStart(2,"0")+"/"+String(state.totalItems).padStart(2,"0"), 283, 181, 7, "#e7eaed");
+    label(hasKeycard() ? "KEY" : "—", 308, 168, 5, hasKeycard() ? "#6ba9ff" : "#555963", "right");
+    label(String(state.time|0).padStart(3,"0")+"s", 308, 187, 6, "#8f949d", "right");
   }
 
   function drawAutomap(){
@@ -1172,36 +1349,53 @@
   }
 
   function overlays(){
-    if(state.mode==="playing"&&!state.paused)return;
-    rect(0,0,W,160,"rgba(0,0,0,.72)");
-    if(state.mode==="title"){
-      label("MICRODOOM",160,42,16,"#eee","center");
-      label("xLFr4n // SECTOR 01",160,64,7,"#ff5564","center");
-      label("CLICK TO START · MOUSE LOOK",160,88,7,"#fff","center");
-      label("WASD MOVE · SHIFT RUN · 1-8 WEAPONS · E USE",160,102,5,"#aaa","center");
-      label("TAB/M MAP · P PAUSE · R RESTART · F2 SAVE · F3 LOAD",160,113,5,"#aaa","center");
-    } else if(state.mode==="dead"){
-      label("YOU DIED",160,52,16,"#e04444","center");
-      label("KILLS "+state.kills+"/"+state.totalKills,160,76,6,"#bbb","center");
-      label("PRESS R OR CLICK TO RESTART",160,94,7,"#fff","center");
-    } else if(state.mode==="won"){
-      label("SECTOR CLEARED",160,48,14,"#eee","center");
-      label("TIME "+state.time.toFixed(1)+"s",160,70,7,"#ff5a68","center");
-      label("KILLS "+state.kills+"/"+state.totalKills+" · ITEMS "+state.items+"/"+state.totalItems,160,82,6,"#fff","center");
-      if(state.bestTime)label("BEST "+state.bestTime.toFixed(1)+"s",160,94,6,"#aaa","center");
-      label("PRESS R TO RUN IT AGAIN",160,108,7,"#fff","center");
-    } else if(state.paused){
-      label("PAUSED",160,63,15,"#eee","center");
-      label("PRESS P OR ESC TO RESUME",160,90,7,"#aaa","center");
+    if(state.mode==="playing"&&!state.paused){
+      if(state.messageUntil<=performance.now()) {
+        label(objectiveText(),160,20,5,"#9aa1ab","center");
+      }
+      const atExit=Math.hypot(player.x-exit.x,player.y-exit.y)<.95;
+      if(atExit && state.kills>=state.totalKills && hasKeycard()) {
+        label("E // EXIT SECTOR",160,31,6,"#dfffeF","center");
+      }
+      return;
     }
+    rect(0,0,W,VIEW_H,"rgba(0,0,0,.58)");
+  }
+
+  function drawCrosshair() {
+    if (!settings.crosshair) return;
+    const x = W / 2, y = VIEW_H / 2;
+    const hit = player.muzzle > 0;
+    const c = hit ? "#ffffff" : "#d9d9d9";
+    rect(x - 4, y - 1, 3, 2, c);
+    rect(x + 1, y - 1, 3, 2, c);
+    rect(x - 1, y - 4, 2, 3, c);
+    rect(x - 1, y + 1, 2, 3, c);
+    rect(x - 1, y - 1, 2, 2, hit ? "#ff5968" : "#111");
+  }
+
+  function drawTopStatus() {
+    rect(5, 5, 92, 10, "rgba(6,8,12,.65)");
+    rect(W - 97, 5, 92, 10, "rgba(6,8,12,.65)");
+    label("MICRODOOM // S01", 9, 7, 5, "#d7d9dc");
+    const armorName = player.armorType === 2 ? "BLUE ARMOR" : player.armorType === 1 ? "GREEN ARMOR" : "NO ARMOR";
+    label(armorName, W - 9, 7, 5, player.armorType ? "#7cd0ff" : "#777", "right");
   }
 
   function render(){
-    drawWorld(); drawHUD(); drawAutomap();
-    if(state.damageFlash>0)rect(0,0,W,160,"rgba(220,30,25,"+clamp(state.damageFlash*2.4,0,.42)+")");
-    if(state.pickupFlash>0)rect(0,0,W,160,"rgba(80,200,160,"+clamp(state.pickupFlash,0,.12)+")");
-    if(state.messageUntil>performance.now()&&state.mode==="playing"){rect(45,7,230,11,"rgba(0,0,0,.65)");label(state.message,160,9,5,"#eee","center");}
+    drawWorld();
+    drawTopStatus();
+    drawCrosshair();
+    drawHUD();
+    drawAutomap();
+    if(state.damageFlash>0)rect(0,0,W,160,"rgba(220,30,25,"+clamp(state.damageFlash*(settings.reducedFlash?1.05:2.4),0,settings.reducedFlash?.18:.42)+")");
+    if(state.pickupFlash>0)rect(0,0,W,160,"rgba(80,200,160,"+clamp(state.pickupFlash*(settings.reducedFlash?.45:1),0,settings.reducedFlash?.06:.12)+")");
+    if(state.messageUntil>performance.now()&&state.mode==="playing"){
+      rect(36,7,248,13,"rgba(0,0,0,.72)");
+      label(state.message,160,10,5,"#f1f1f1","center");
+    }
     overlays();
+    syncMenu();
   }
 
   function saveGame(){
@@ -1278,12 +1472,47 @@
 
   canvas.addEventListener("click",()=>{
     initAudio();
-    if(state.mode==="title"||state.mode==="dead"||state.mode==="won"){newGame();lockMouse();}
-    else if(state.mode==="playing"&&!state.paused)lockMouse();
+    if(state.mode==="playing"&&!state.paused) lockMouse();
+  });
+
+  gameUI?.addEventListener("click", (e)=>{
+    const button=e.target.closest("[data-action]");
+    if(button)buttonAction(button.dataset.action);
+  });
+
+  document.getElementById("setting-sensitivity")?.addEventListener("input",(e)=>{
+    settings.mouseSensitivity = clamp(Number(e.target.value) / 100000, 0.00035, 0.0022);
+    persistSettings();
+    const out=document.getElementById("setting-sensitivity-value");
+    if(out)out.textContent=(settings.mouseSensitivity*1000).toFixed(2);
+  });
+
+  document.getElementById("setting-volume")?.addEventListener("input",(e)=>{
+    settings.masterVolume = clamp(Number(e.target.value) / 100, 0, 1);
+    persistSettings();
+    const out=document.getElementById("setting-volume-value");
+    if(out)out.textContent=String(Math.round(settings.masterVolume*100))+"%";
+  });
+
+  document.getElementById("setting-reduced-flash")?.addEventListener("change",(e)=>{
+    settings.reducedFlash=!!e.target.checked;
+    persistSettings();
+  });
+
+  document.getElementById("setting-crosshair")?.addEventListener("change",(e)=>{
+    settings.crosshair=!!e.target.checked;
+    persistSettings();
   });
 
   document.addEventListener("mousemove",(e)=>{
-    if(state.mode==="playing"&&!state.paused&&document.pointerLockElement===canvas)player.a=wrapAngle(player.a+e.movementX*.00255);
+    if(state.mode==="playing"&&!state.paused&&document.pointerLockElement===canvas){
+      const movement=clamp(e.movementX,-90,90);
+      player.a=wrapAngle(player.a+movement*settings.mouseSensitivity);
+    }
+  });
+
+  document.addEventListener("pointerlockchange",()=>{
+    if(state.mode==="playing"&&!state.paused&&document.pointerLockElement!==canvas) pauseGame();
   });
 
   addEventListener("mousedown",(e)=>{
@@ -1295,22 +1524,35 @@
     }
   });
   addEventListener("mouseup",(e)=>{if(e.button===0)keys.MouseLeft=false;});
-  addEventListener("blur",()=>{for(const k of Object.keys(keys))keys[k]=false;});
+  addEventListener("blur",()=>{
+    for(const k of Object.keys(keys))keys[k]=false;
+    if(state.mode==="playing"&&!state.paused)pauseGame();
+  });
 
   addEventListener("keydown",(e)=>{
     keys[e.code]=true;
     if(["Space","Tab","ArrowUp","ArrowDown","ArrowLeft","ArrowRight","F2","F3"].includes(e.code))e.preventDefault();
     initAudio();
 
-    if(e.code==="Enter"&&!e.repeat&&state.mode==="title"){newGame();lockMouse();}
-    if(e.code==="KeyR"&&!e.repeat&&(state.mode==="dead"||state.mode==="won")){newGame();lockMouse();}
-    if(e.code==="KeyP"&&!e.repeat&&state.mode==="playing"){
-      state.paused=!state.paused;
-      if(state.paused)document.exitPointerLock?.();
+    if(e.code==="Enter"&&!e.repeat&&(state.mode==="title"||state.mode==="dead"||state.mode==="won")){
+      newGame(); showMenu(""); lockMouse();
     }
-    if(e.code==="Escape"&&!e.repeat&&state.mode==="playing"){
-      state.paused=!state.paused;
-      if(state.paused)document.exitPointerLock?.();
+    if(e.code==="KeyR"&&!e.repeat&&(state.mode==="dead"||state.mode==="won")){
+      newGame(); showMenu(""); lockMouse();
+    }
+    if(e.code==="KeyP"&&!e.repeat&&state.mode==="playing"){
+      if(state.paused)resumeGame(); else pauseGame();
+    }
+    if(e.code==="Escape"&&!e.repeat){
+      if(visibleMenu==="options"||visibleMenu==="controls"){
+        showMenu(state.mode==="playing"&&state.paused ? "pause" : "title");
+      }else if(state.mode==="playing"&&!state.paused){
+        pauseGame();
+      }else if(state.mode==="playing"&&state.paused){
+        returnToTitle();
+      }else if(state.mode==="dead"||state.mode==="won"){
+        returnToTitle();
+      }
     }
     if((e.code==="Tab"||e.code==="KeyM")&&!e.repeat)state.automap=!state.automap;
     if(e.code==="KeyE"&&!e.repeat&&state.mode==="playing"&&!state.paused)useDoor();
@@ -1346,5 +1588,7 @@
 
   newGame();
   state.mode="title";
+  state.paused=false;
+  showMenu("title");
   requestAnimationFrame(loop);
 })();
