@@ -70,14 +70,14 @@
   const exit = { x: 27.5, y: 10.5 };
 
   const WEAPONS = {
-    fist: { name: "FIST", ammo: null, damage: [2, 20], cooldown: 0.42, range: 1.0, pellets: 1, spread: 0, auto: false },
-    pistol: { name: "PISTOL", ammo: "bullets", damage: [3, 12], cooldown: 0.18, range: 18, pellets: 1, spread: 0.018, auto: false },
-    shotgun: { name: "SHOTGUN", ammo: "shells", damage: [3, 12], cooldown: 0.82, range: 16, pellets: 7, spread: 0.085, auto: false },
-    chaingun: { name: "CHAINGUN", ammo: "bullets", damage: [3, 12], cooldown: 0.10, range: 18, pellets: 1, spread: 0.035, auto: true },
-    rocket: { name: "ROCKET LAUNCHER", ammo: "rockets", damage: [20, 160], cooldown: 0.82, range: 24, pellets: 1, spread: 0, auto: false },
-    plasma: { name: "PLASMA RIFLE", ammo: "cells", damage: [5, 40], cooldown: 0.08, range: 24, pellets: 1, spread: 0.012, auto: true },
+    fist: { name: "PUÑOS", ammo: null, damage: [2, 20], cooldown: 0.42, range: 1.0, pellets: 1, spread: 0, auto: false },
+    pistol: { name: "PISTOLA", ammo: "bullets", damage: [3, 12], cooldown: 0.18, range: 18, pellets: 1, spread: 0.018, auto: false },
+    shotgun: { name: "ESCOPETA", ammo: "shells", damage: [3, 12], cooldown: 0.82, range: 16, pellets: 7, spread: 0.085, auto: false },
+    chaingun: { name: "AMETRALLADORA", ammo: "bullets", damage: [3, 12], cooldown: 0.10, range: 18, pellets: 1, spread: 0.035, auto: true },
+    rocket: { name: "LANZACOHETES", ammo: "rockets", damage: [20, 160], cooldown: 0.82, range: 24, pellets: 1, spread: 0, auto: false },
+    plasma: { name: "RIFLE DE PLASMA", ammo: "cells", damage: [5, 40], cooldown: 0.08, range: 24, pellets: 1, spread: 0.012, auto: true },
     bfg: { name: "BFG9000", ammo: "cells", damage: [50, 200], cooldown: 1.10, range: 24, pellets: 1, spread: 0, auto: false },
-    chainsaw: { name: "CHAINSAW", ammo: null, damage: [2, 20], cooldown: 0.09, range: 1.10, pellets: 1, spread: 0, auto: true }
+    chainsaw: { name: "MOTOSIERRA", ammo: null, damage: [2, 20], cooldown: 0.09, range: 1.10, pellets: 1, spread: 0, auto: true }
   };
 
   const ENEMIES = {
@@ -367,7 +367,7 @@
     state.time = 0;
     state.damageFlash = 0;
     state.pickupFlash = 0;
-    toast("FIND THE BLUE KEYCARD · CLEAR THE SECTOR · REACH THE EXIT", 4);
+    toast("ENCUENTRA LA TARJETA AZUL · LIMPIA EL SECTOR · LLEGA A LA SALIDA", 4);
     beep("start");
   }
 
@@ -451,9 +451,9 @@
   }
 
   function objectiveText() {
-    if (!hasKeycard()) return "OBJECTIVE · FIND BLUE KEYCARD";
-    if (state.kills < state.totalKills) return "OBJECTIVE · CLEAR THE SECTOR";
-    return "OBJECTIVE · REACH THE EXIT";
+    if (!hasKeycard()) return "OBJETIVO · ENCUENTRA LA TARJETA AZUL";
+    if (state.kills < state.totalKills) return "OBJETIVO · LIMPIA EL SECTOR";
+    return "OBJETIVO · LLEGA A LA SALIDA";
   }
 
   function buttonAction(action) {
@@ -582,15 +582,15 @@
     const nearExit=Math.hypot(player.x-exit.x,player.y-exit.y)<.95;
     if(nearExit){
       if(!hasKeycard()){
-        toast("BLUE KEYCARD REQUIRED",1.4);
+        toast("NECESITAS LA TARJETA AZUL",1.4);
         beep("door");
         return;
       }
       if(state.kills<state.totalKills){
-        toast("SECTOR NOT CLEAR",1.4);
+        toast("EL SECTOR NO ESTÁ DESPEJADO",1.4);
         return;
       }
-      toast("EXITING SECTOR",.8);
+      toast("SALIENDO DEL SECTOR",.8);
       completeLevel();
       return;
     }
@@ -599,12 +599,12 @@
     const fy=player.y+Math.sin(player.a)*1.15;
     const tx=Math.floor(fx),ty=Math.floor(fy),t=tile(tx,ty);
     if(t!=="D"&&t!=="B"){
-      toast("NOTHING TO USE",1.0);
+      toast("NADA QUE USAR AQUÍ",1.0);
       return;
     }
     const d=doors.get(key(tx,ty));
     if(d.locked&&!hasKeycard()){
-      toast("BLUE KEYCARD REQUIRED",1.5);
+      toast("NECESITAS LA TARJETA AZUL",1.5);
       beep("door");
       return;
     }
@@ -613,13 +613,13 @@
       const blockedByPlayer=Math.hypot(player.x-cx,player.y-cy)<.68;
       const blockedByEnemy=enemies.some(e=>e.alive&&Math.hypot(e.x-cx,e.y-cy)<ENEMIES[e.type].radius+.20);
       if(blockedByPlayer||blockedByEnemy){
-        toast("DOOR BLOCKED",1.0);
+        toast("PUERTA BLOQUEADA",1.0);
         beep("door");
         return;
       }
     }
     d.open=!d.open;
-    toast(d.open?"DOOR OPEN":"DOOR CLOSED",1.0);
+    toast(d.open?"PUERTA ABIERTA":"PUERTA CERRADA",1.0);
     beep("door");
   }
 
@@ -707,7 +707,7 @@
     if (w.ammo && player.ammo[w.ammo] < cost) {
       const fallback = chooseFallback();
       if (fallback !== name) selectWeapon(fallback);
-      toast("NO AMMO", 1.0);
+      toast("SIN MUNICIÓN", 1.0);
       return;
     }
 
@@ -1022,7 +1022,7 @@
         player.owned.chainsaw=true;
         selectWeapon("chainsaw");
       } else if (p.type==="keyblue") {
-        toast("BLUE KEYCARD ACQUIRED",2);
+        toast("TARJETA AZUL CONSEGUIDA",2);
       }
 
       if(!take)continue;
@@ -1092,7 +1092,7 @@
 
     const atExit=Math.hypot(player.x-exit.x,player.y-exit.y)<.95;
     if(atExit && state.kills>=state.totalKills && hasKeycard()) {
-      toast("EXIT READY · PRESS E",.9);
+      toast("SALIDA LISTA · PULSA E",.9);
     }
     if(keys.MouseLeft||keys.Space){
       const w=WEAPONS[player.ready];
@@ -1316,26 +1316,26 @@
     rect(207,166,1,29,"#30343b"); rect(248,166,1,29,"#30343b");
 
     label("⚡ xLFr4n", 8, 164, 5, "#e7e7e7");
-    label("HEALTH", 8, 169, 5, "#7e828a");
+    label("SALUD", 8, 169, 5, "#7e828a");
     label(String(Math.max(0,player.hp|0)).padStart(3,"0"), 8, 174, 11, player.hp<35 ? "#ff5360" : "#f0f1f2");
     hudBar(8,188,48,player.hp,200,player.hp<35?"#d6424f":"#d9dadd");
 
-    label(player.armorType===2 ? "BLUE" : player.armorType===1 ? "GREEN" : "ARMOR", 67, 169, 5, player.armorType ? "#7dbbcb" : "#7e828a");
+    label(player.armorType===2 ? "BLUE" : player.armorType===1 ? "GREEN" : "ARMADURA", 67, 169, 5, player.armorType ? "#7dbbcb" : "#7e828a");
     label(String(Math.max(0,player.armor|0)).padStart(3,"0"), 67, 174, 11, "#e7eaed");
     hudBar(67,188,41,player.armor,200,player.armorType===2?"#73c4d6":"#648b91");
 
     const w=WEAPONS[player.ready],ammo=w.ammo?player.ammo[w.ammo]:"-";
     label(w.name, 121, 168, 6, "#f0f1f2");
-    label("AMMO", 121, 176, 5, "#7e828a");
+    label("MUNICIÓN", 121, 176, 5, "#7e828a");
     label(String(ammo).padStart(3,"0"), 143, 174, 12, ammo === 0 ? "#ff5360" : "#e7eaed");
-    label(w.ammo ? w.ammo.toUpperCase() : "MELEE", 121, 188, 5, "#777b84");
+    label(w.ammo ? w.ammo.toUpperCase() : "CUERPO A CUERPO", 121, 188, 5, "#777b84");
 
     drawFace();
-    label("KILLS", 256, 168, 5, "#7e828a");
+    label("BAJAS", 256, 168, 5, "#7e828a");
     label(String(state.kills).padStart(2,"0")+"/"+String(state.totalKills).padStart(2,"0"), 256, 174, 8, "#e7eaed");
-    label("ITEMS", 256, 183, 5, "#7e828a");
+    label("OBJETOS", 256, 183, 5, "#7e828a");
     label(String(state.items).padStart(2,"0")+"/"+String(state.totalItems).padStart(2,"0"), 283, 181, 7, "#e7eaed");
-    label(hasKeycard() ? "KEY" : "—", 308, 168, 5, hasKeycard() ? "#6ba9ff" : "#555963", "right");
+    label(hasKeycard() ? "LLAVE" : "—", 308, 168, 5, hasKeycard() ? "#6ba9ff" : "#555963", "right");
     label(String(state.time|0).padStart(3,"0")+"s", 308, 187, 6, "#8f949d", "right");
   }
 
@@ -1353,7 +1353,7 @@
     rect(ox+player.x*s+Math.cos(player.a)*6,oy+player.y*s+Math.sin(player.a)*6,3,3,"#fff");
     for(const e of enemies)if(e.alive&&explored.has(key(Math.floor(e.x),Math.floor(e.y))))rect(ox+e.x*s-1,oy+e.y*s-1,3,3,"#d14433");
     for(const p of pickups)if(!p.taken&&explored.has(key(Math.floor(p.x),Math.floor(p.y))))rect(ox+p.x*s-1,oy+p.y*s-1,2,2,"#53a79c");
-    label("AUTOMAP",W-6,5,7,"#ddd","right");
+    label("MAPA",W-6,5,7,"#ddd","right");
     label("TAB / M",W-6,15,5,"#888","right");
   }
 
@@ -1364,7 +1364,7 @@
       }
       const atExit=Math.hypot(player.x-exit.x,player.y-exit.y)<.95;
       if(atExit && state.kills>=state.totalKills && hasKeycard()) {
-        label("E // EXIT SECTOR",160,31,6,"#dfffeF","center");
+        label("E // SALIR DEL SECTOR",160,31,6,"#dfffeF","center");
       }
       return;
     }
@@ -1387,7 +1387,7 @@
     rect(5, 5, 92, 10, "rgba(6,8,12,.65)");
     rect(W - 97, 5, 92, 10, "rgba(6,8,12,.65)");
     label("MICRODOOM // S01", 9, 7, 5, "#d7d9dc");
-    const armorName = player.armorType === 2 ? "BLUE ARMOR" : player.armorType === 1 ? "GREEN ARMOR" : "NO ARMOR";
+    const armorName = player.armorType === 2 ? "ARMADURA AZUL" : player.armorType === 1 ? "ARMADURA VERDE" : "SIN ARMADURA";
     label(armorName, W - 9, 7, 5, player.armorType ? "#7cd0ff" : "#777", "right");
   }
 
@@ -1433,13 +1433,13 @@
       pickups:pickups.map(p=>({type:p.type,x:p.x,y:p.y,value:p.value,taken:p.taken,phase:p.phase}))
     };
     localStorage.setItem(SAVE_KEY,JSON.stringify(payload));
-    toast("GAME SAVED",1.2);
+    toast("PARTIDA GUARDADA",1.2);
   }
 
   function loadGame(){
     try{
       const raw=localStorage.getItem(SAVE_KEY);
-      if(!raw){toast("NO SAVE FOUND",1.2);return;}
+      if(!raw){toast("NO HAY PARTIDA GUARDADA",1.2);return;}
       const s=JSON.parse(raw);
       if(s.version!==2&&s.version!==3)throw new Error("unsupported save");
       setupLevel();
@@ -1470,9 +1470,9 @@
       state.mode="playing";
       state.paused=false;
       soundAlert=0;
-      toast("GAME LOADED",1.2);
+      toast("PARTIDA CARGADA",1.2);
     }catch(e){
-      toast("SAVE DATA INVALID",1.3);
+      toast("DATOS DE GUARDADO NO VÁLIDOS",1.3);
     }
   }
 
@@ -1561,7 +1561,7 @@
   document.addEventListener("pointerlockerror",()=>{
     pointerLockRequested=false;
     pointerLockFailed=true;
-    if(state.mode==="playing"&&!state.paused) toast("CLICK TO CAPTURE MOUSE",1.6);
+    if(state.mode==="playing"&&!state.paused) toast("HAZ CLIC PARA CAPTURAR EL RATÓN",1.6);
   });
 
   addEventListener("mousedown",(e)=>{
