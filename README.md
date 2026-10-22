@@ -1,15 +1,22 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=25&duration=3600&pause=1300&color=FF3344&center=true&vCenter=true&width=760&height=48&lines=Hola%2C+soy+xLFr4n;Linux+%C2%B7+Software+%C2%B7+Seguridad+%C2%B7+Automatizaci%C3%B3n" alt="Hola, soy xLFr4n">
+<a href="https://xlfr4n.github.io/xLFr4n/">
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=25&duration=3400&pause=1200&color=FF3344&center=true&vCenter=true&repeat=true&width=760&height=58&lines=Hola%2C+soy+xLFr4n;Desarrollo+%C2%B7+Linux+%C2%B7+Seguridad;Investigar+%E2%86%92+Construir+%E2%86%92+Verificar" alt="Hola, soy xLFr4n: desarrollo, Linux y seguridad">
+</a>
+
+<h1>⚡ xLFr4n</h1>
 
 <p><strong>Construyo, investigo y automatizo.</strong></p>
-<p>Me gusta entender cómo funcionan las cosas, resolver problemas y dejar soluciones que otra persona pueda mantener.</p>
+<p>Me gusta entender los problemas, probar soluciones y dejar el trabajo claro para quien venga después.</p>
 
-<a href="https://xlfr4n.github.io/xLFr4n/"><img src="https://img.shields.io/badge/Mi%20laboratorio-Visitar-FF3344?style=for-the-badge&labelColor=111318" alt="Visitar mi laboratorio"></a>
-<a href="https://github.com/xlfr4n?tab=repositories"><img src="https://img.shields.io/badge/Repositorios-Ver-252A34?style=for-the-badge&logo=github&logoColor=white" alt="Ver repositorios"></a>
+<p>
+  <a href="https://xlfr4n.github.io/xLFr4n/"><img src="https://img.shields.io/badge/Laboratorio-Visitar-FF3344?style=for-the-badge&labelColor=111318" alt="Visitar el laboratorio"></a>
+  <a href="https://github.com/xlfr4n?tab=repositories"><img src="https://img.shields.io/badge/Repositorios-Explorar-252A34?style=for-the-badge&logo=github&logoColor=white" alt="Explorar repositorios"></a>
+</p>
 
-<img src="https://komarev.com/ghpvc/?username=xlfr4n&label=Visitas%20al%20perfil&color=FF3344&style=flat-square" alt="Visitas al perfil">
-<img src="https://img.shields.io/github/followers/xlfr4n?label=Seguidores&style=flat-square&color=252A34" alt="Seguidores de GitHub">
+<p>
+  <img src="https://komarev.com/ghpvc/?username=xlfr4n&label=Profile%20views&color=FF3344&style=flat-square" alt="Profile views">
+</p>
 
 </div>
 
@@ -67,6 +74,14 @@ La lista refleja tecnologías con las que trabajo o experimento; no pretende ser
 - **Cuidar lo que ya funciona:** corregir sin rehacer por capricho.
 - **Dejarlo claro:** nombres, documentación y pasos reproducibles.
 - **Compartir con respeto:** aprender de otras personas y recibir comentarios útiles.
+
+## Actividad en GitHub
+
+<div align="center">
+
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=xlfr4n&bg_color=0d1117&color=ff5262&line=ff3344&point=ffffff&area=true&hide_border=true&custom_title=Actividad%20de%20xLFr4n" alt="Gráfico de actividad de GitHub de xLFr4n">
+
+</div>
 
 ## Contacto y enlaces
 
