@@ -66,7 +66,9 @@ try {
     localStorage.setItem('xlfr4n-microdoom-save-v2', JSON.stringify(save));
   });
   await page.keyboard.press('F3');
-  await page.waitForTimeout(300);
+  // Allow the fixed 35 Hz simulation to finish both lowering and raising the weapon.
+  // CI can miss a frame while Chromium is starting up, so do not sample the save too early.
+  await page.waitForTimeout(650);
   await page.keyboard.press('F2');
   const weaponPickupState = await page.evaluate(() => JSON.parse(localStorage.getItem('xlfr4n-microdoom-save-v2')));
   if (weaponPickupState.player.ready !== 'shotgun' || weaponPickupState.player.weaponState !== 'ready' || !weaponPickupState.pickups[0]?.taken) {
