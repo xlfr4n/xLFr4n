@@ -43,8 +43,8 @@ const reachable = (openD, openB) => {
 assert.ok(reachable(true,false).has("16,9"), "blue key must be reachable after the normal door");
 assert.equal(reachable(true,false).has("27,10"), false, "exit must remain locked before blue door");
 assert.ok(reachable(true,true).has("27,10"), "exit must be reachable after blue door");
-assert.ok(js.includes('pistol: { name: "PISTOL"') && js.includes('auto: false'), "pistol must be single-shot");
-assert.ok(js.includes('chaingun: { name: "CHAINGUN"') && js.includes('auto: true'), "chaingun must support auto-fire");
+assert.ok(js.includes('pistol: { name: "PISTOLA"') && js.includes('auto: false'), "pistol must be single-shot");
+assert.ok(js.includes('chaingun: { name: "AMETRALLADORA"') && js.includes('auto: true'), "chaingun must support auto-fire");
 
 assert.ok(js.includes("const SIM_DT = 1 / 35;"), "simulation should run at a fixed 35Hz tick");
 assert.ok(js.includes("while(accumulator>=SIM_DT"), "render loop must decouple rendering from simulation tick");
@@ -56,7 +56,7 @@ for (const token of [
 ]) assert.ok(js.includes(token), 'missing expanded gameplay token: ' + token);
 
 assert.ok(js.includes('function completeLevel()'), 'explicit exit completion must exist');
-assert.ok(js.includes('EXIT READY · PRESS E'), 'exit must advertise explicit interaction');
+assert.ok(js.includes('SALIDA LISTA · PULSA E'), 'exit must advertise explicit interaction');
 assert.ok(js.includes('const atExit='), 'exit interaction proximity must be checked');
 
 for (const token of ['shotguy:', 'baron:', 'type:e.type==="baron"?"baronball":"fireball"', 'e.code==="Space"']) {
