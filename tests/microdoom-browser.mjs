@@ -12,8 +12,8 @@ try {
 
   await page.goto('http://127.0.0.1:4173/play/', { waitUntil: 'networkidle' });
   const canvas = page.locator('#game');
-  const startButton = page.getByRole('button', { name: /START MISSION/ });
-  const optionsButton = page.getByRole('button', { name: /OPTIONS/ }).first();
+  const startButton = page.getByRole('button', { name: /EMPEZAR MISIÓN/ });
+  const optionsButton = page.getByRole('button', { name: /OPCIONES/ }).first();
   await canvas.waitFor();
   await page.locator('#game-ui').waitFor();
   if (!(await startButton.isVisible())) throw new Error('Title menu is not visible');
@@ -28,7 +28,7 @@ try {
   await sensitivity.fill('45');
   const savedSensitivity = await page.evaluate(() => JSON.parse(localStorage.getItem('xlfr4n-microdoom-settings-v3')));
   if (Math.abs(savedSensitivity.mouseSensitivity - 0.00045) > 0.000001) throw new Error('Mouse sensitivity did not persist');
-  await page.getByRole('button', { name: /DONE/ }).click();
+  await page.getByRole('button', { name: /LISTO/ }).click();
   await startButton.click();
   await page.waitForTimeout(250);
   const afterStart = await page.evaluate(() => document.getElementById('game').getContext('2d').getImageData(0, 0, 320, 200).data.join(','));
@@ -41,12 +41,12 @@ try {
   await page.keyboard.press('m');
   await page.keyboard.press('Escape');
   await page.waitForTimeout(80);
-  if (!(await page.getByRole('button', { name: /RESUME/ }).isVisible())) throw new Error('ESC did not open the pause menu');
-  await page.locator('[data-menu="pause"]').getByRole('button', { name: /OPTIONS/ }).click();
+  if (!(await page.getByRole('button', { name: /CONTINUAR/ }).isVisible())) throw new Error('ESC did not open the pause menu');
+  await page.locator('[data-menu="pause"]').getByRole('button', { name: /OPCIONES/ }).click();
   if (!(await page.locator('#setting-sensitivity').isVisible())) throw new Error('Pause options did not open');
   await page.keyboard.press('Escape');
-  if (!(await page.getByRole('button', { name: /RESUME/ }).isVisible())) throw new Error('ESC did not return from options to pause');
-  await page.getByRole('button', { name: /RESUME/ }).click();
+  if (!(await page.getByRole('button', { name: /CONTINUAR/ }).isVisible())) throw new Error('ESC did not return from options to pause');
+  await page.getByRole('button', { name: /CONTINUAR/ }).click();
   await page.waitForTimeout(80);
 
 
