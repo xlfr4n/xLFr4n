@@ -11,7 +11,7 @@
 </style></head><body><div class="shell"><header class="nav"><a class="brand" href="../"><span class="sig">⚡</span> xLFr4n // PLAY</a><nav class="navlinks"><a href="../">INICIO</a><a href="../status/">PROYECTOS</a><a href="../terminal/">TERMINAL</a><a href="https://github.com/xlfr4n">GITHUB ↗</a></nav></header><main class="game-wrap">
 <div class="game-head">
 <strong>MICRODOOM <span style="color:var(--red)">// MODO 1993</span></strong>
-<span class="hint">WASD MOVERSER · RATÓN / FLECHAS GIRAR · MAYÚS CORRER · 1-8 ARMAS · E USAR · TAB MAPAA</span>
+<span class="hint">WASD MOVERSE · RATÓN / FLECHAS GIRAR · MAYÚS CORRER · 1-8 ARMAS · E USAR · TAB MAPA</span>
 </div>
 <div id="frame"><div id="game-ui" data-screen="title" role="dialog" aria-label="MICRODOOM menu">
   <section class="menu-panel" data-menu="title">
@@ -29,7 +29,7 @@
 
   <section class="menu-panel" data-menu="pause" hidden>
     <div class="menu-kicker">misión en pausa</div>
-    <div class="menu-title">PAUSARD</div>
+    <div class="menu-title">EN PAUSA</div>
     <div class="menu-subtitle">La simulación está detenida. Continúa cuando quieras o ajusta los controles antes de volver al combate.</div>
     <div class="menu-grid">
       <button class="menu-btn primary" data-action="resume">▶ CONTINUAR</button>
@@ -47,9 +47,9 @@
     <div class="menu-title">CONTROLES</div>
     <div class="controls">
       <div class="control"><span>MOVERSE</span><strong>W A S D</strong></div>
-      <div class="control"><span>GIRAR</span><strong>MOUSAR / ← →</strong></div>
+      <div class="control"><span>GIRAR</span><strong>RATÓN / ← →</strong></div>
       <div class="control"><span>CORRER</span><strong>SHIFT</strong></div>
-      <div class="control"><span>DISPARAR</span><strong>LMB / SPACE</strong></div>
+      <div class="control"><span>DISPARAR</span><strong>CLIC / ESPACIO</strong></div>
       <div class="control"><span>ARMAS</span><strong>1–8 / Q</strong></div>
       <div class="control"><span>USAR</span><strong>E</strong></div>
       <div class="control"><span>MAPA</span><strong>TAB / M</strong></div>
@@ -80,27 +80,27 @@
       <input id="setting-crosshair" class="check" type="checkbox" checked>
     </div>
     <div class="option-row">
-      <div><label for="setting-reduced-flash">Reduced flashes</label><span class="option-desc">Lower damage and pickup screen flashes.</span></div>
+      <div><label for="setting-reduced-flash">Destellos reducidos</label><span class="option-desc">Reduce los destellos de daño y de objetos recogidos.</span></div>
       <input id="setting-reduced-flash" class="check" type="checkbox">
     </div>
-    <div class="menu-actions"><button class="menu-btn" data-action="reset-settings">RESET DEFAULTS</button><button class="menu-btn primary" data-action="back">DONE</button></div>
+    <div class="menu-actions"><button class="menu-btn" data-action="reset-settings">RESTABLECER AJUSTES</button><button class="menu-btn primary" data-action="back">LISTO</button></div>
   </section>
 
   <section class="menu-panel" data-menu="dead" hidden>
-    <div class="menu-kicker">mission failed</div>
-    <div class="menu-title">YOU <span class="accent">DIED</span></div>
-    <div class="menu-subtitle">The sector remains active. Re-enter the mission and try another route.</div>
-    <div class="menu-stats"><div class="stat"><span class="stat-label">KILLS</span><span class="stat-value" class="menu-kills">00 / 12</span></div><div class="stat"><span class="stat-label">ITEMS</span><span class="stat-value" class="menu-items">00 / 19</span></div><div class="stat"><span class="stat-label">TIME</span><span class="stat-value" class="menu-time">0.0s</span></div></div>
+    <div class="menu-kicker">misión fallida</div>
+    <div class="menu-title">YOU <span class="accent">MUERTO</span></div>
+    <div class="menu-subtitle">El sector sigue activo. Vuelve a entrar en la misión e intenta otra ruta.</div>
+    <div class="menu-stats"><div class="stat"><span class="stat-label">BAJAS</span><span class="stat-value" class="menu-kills">00 / 12</span></div><div class="stat"><span class="stat-label">OBJETOS</span><span class="stat-value" class="menu-items">00 / 19</span></div><div class="stat"><span class="stat-label">TIEMPO</span><span class="stat-value" class="menu-time">0.0s</span></div></div>
     <div class="menu-grid"><button class="menu-btn primary" data-action="restart">↻ REINICIAR MISIÓN</button><button class="menu-btn" data-action="main-menu">↩ MENÚ PRINCIPAL</button></div>
   </section>
 
   <section class="menu-panel" data-menu="won" hidden>
-    <div class="menu-kicker">mission complete</div>
-    <div class="menu-title">SECTOR <span class="accent">CLEARED</span></div>
-    <div class="menu-subtitle">All hostiles eliminated. Exit sequence complete.</div>
-    <div class="menu-stats"><div class="stat"><span class="stat-label">KILLS</span><span class="stat-value" class="menu-kills">12 / 12</span></div><div class="stat"><span class="stat-label">ITEMS</span><span class="stat-value" class="menu-items">00 / 19</span></div><div class="stat"><span class="stat-label">TIME</span><span class="stat-value" class="menu-time">0.0s</span></div></div>
-    <div class="menu-grid"><button class="menu-btn primary" data-action="restart">↻ CORRER AGAIN</button><button class="menu-btn" data-action="main-menu">↩ MENÚ PRINCIPAL</button></div>
+    <div class="menu-kicker">misión completada</div>
+    <div class="menu-title">SECTOR <span class="accent">DESPEJADO</span></div>
+    <div class="menu-subtitle">Todos los enemigos han sido eliminados. La salida está despejada.</div>
+    <div class="menu-stats"><div class="stat"><span class="stat-label">BAJAS</span><span class="stat-value" class="menu-kills">12 / 12</span></div><div class="stat"><span class="stat-label">OBJETOS</span><span class="stat-value" class="menu-items">00 / 19</span></div><div class="stat"><span class="stat-label">TIEMPO</span><span class="stat-value" class="menu-time">0.0s</span></div></div>
+    <div class="menu-grid"><button class="menu-btn primary" data-action="restart">↻ VOLVER A JUGAR</button><button class="menu-btn" data-action="main-menu">↩ MENÚ PRINCIPAL</button></div>
   </section>
 </div><canvas id="game" width="320" height="200" aria-label="MICRODOOM retro first-person game"></canvas></div>
-<div class="under"><span class="note">320x200 LOW-RES // ORIGINAL CODE // ORIGINAL PIXEL ART</span><span>ONE MAPA // CLEAR IT // FIND THE EXIT // OPCIONES IN-ENGINE</span></div>
-</main><footer class="footer"><span><span class="sig">⚡</span> xLFr4n</span><span>Technical playground / browser canvas</span><span data-year>2026</span></footer></div><script src="../assets/xlfr4n.js"></script><script src="./microdoom.js"></script></body></html>
+<div class="under"><span class="note">320x200 LOW-RES // ORIGINAL CODE // ORIGINAL PIXEL ART</span><span>UN MAPA // DESPEJA LA ZONA // ENCUENTRA LA SALIDA // AJUSTES EN EL JUEGO</span></div>
+</main><footer class="footer"><span><span class="sig">⚡</span> xLFr4n</span><span>Experimento técnico / canvas en navegador</span><span data-year>2026</span></footer></div><script src="../assets/xlfr4n.js"></script><script src="./microdoom.js"></script></body></html>
